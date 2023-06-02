@@ -1,3 +1,10 @@
 {
+<<<<<<< HEAD
     "extends": "expo/tsconfig.base"
+=======
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "allowJs": false
+    }
+>>>>>>> df5488e4e3dd253c38e37618d6c6518a3376545e
 }
