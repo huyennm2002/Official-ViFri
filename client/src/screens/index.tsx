@@ -3,7 +3,7 @@ import SignInScreen from "./SignInScreen";
 import SignUpScreen from "./SignUpScreen";
 import HomeScreen from "./HomeScreen";
 import FridgeItemListScreen from "./FridgeItemListScreen";
-import FridgeItemScreen from "./FridgeItemScreen";
+import FridgeItemDetailScreen from "./FridgeItemDetailScreen";
 import RecipeListScreen from "./RecipeListScreen";
 import RecipeDetailScreen from "./RecipeDetailScreen";
 
@@ -13,7 +13,7 @@ export {
     SignUpScreen,
     HomeScreen,
     FridgeItemListScreen,
-    FridgeItemScreen,
+    FridgeItemDetailScreen,
     RecipeListScreen,
     RecipeDetailScreen
 }
