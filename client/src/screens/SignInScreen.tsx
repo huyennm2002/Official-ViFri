@@ -2,11 +2,28 @@ import { View, Text, StyleSheet, Image, Button } from 'react-native'
 import React from 'react'
 import DismissKeyBoardView from '../components/DismissKeyboardView';
 import { TextInput } from 'react-native-gesture-handler';
+import { useState } from 'react';
+
+type SignInData = {
+  email: string,
+  password: string
+}
 
 export default function SignInScreen({ navigation }) {
+  const [data, setData] = useState<SignInData>({
+    email: '',
+    password: ''
+  })
 
   const handleSubmit = async () => {
     navigation.navigate("Main")
+  }
+
+  const handleChange = (key : string, value: string) => {
+    setData(currentData => ({
+      ...currentData,
+      [key]: value
+    }));
   }
 
   return (
