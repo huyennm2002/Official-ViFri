@@ -5,7 +5,9 @@ import {
     SignUpScreen,
     SignInScreen,
     ProfileScreen,
-    HomeScreen
+    HomeScreen,
+    FridgeItemListScreen,
+    RecipeListScreen
 } from '../screens';
 
 const AppNavigationStack = createStackNavigator();
@@ -15,6 +17,8 @@ const MainBottomTabNavigation = () => {
     return (
         <MainBottomTabBar.Navigator>
             <MainBottomTabBar.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
+            <MainBottomTabBar.Screen name="Fridge" component={FridgeItemListScreen} options={{headerShown: false}}/>
+            <MainBottomTabBar.Screen name="Recipes" component={RecipeListScreen} options={{headerShown: false}}/>
             <MainBottomTabBar.Screen name="Profile" component={ProfileScreen} options={{headerShown: false}}/>
         </MainBottomTabBar.Navigator>
     )
