@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, Animated } from 'react-native'
-import React, { useState, useRef } from 'react'
-import { ScrollView } from 'react-native-gesture-handler'
+import React, { useState, useRef } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 import { FAB } from '@rneui/themed';
 import FridgeItem from '../components/FridgeItem';
 
@@ -27,7 +27,7 @@ export default function FridgeItemListScreen() {
         <SafeAreaView style={{ flex: 1 }}>
             <Header/>
             <ScrollView style={styles.container}>
-                {fridgeList.map(item => <FridgeItem />)}
+                {fridgeList.map(item => <FridgeItem key={item.id} />)}
             </ScrollView>
             <View style={styles.fabContainer}>
                 {isSubFabOpen && (
