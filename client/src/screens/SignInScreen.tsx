@@ -13,7 +13,7 @@ type SignInData = {
   password: string
 }
 
-export default function SignInScreen() {
+export default function SignInScreen({navigation}) {
   const dispatch = useDispatch();
   const [data, setData] = useState<SignInData>({
     email: '',

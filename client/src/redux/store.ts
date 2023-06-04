@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import persistReducer from "redux-persist/es/persistReducer";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/lib/persistStore";
 import userReducer from "./features/authSlice";
 import signInWatcher from "./saga/auth";

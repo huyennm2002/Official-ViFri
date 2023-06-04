@@ -6,7 +6,7 @@ import { login } from '../features/authSlice';
 
 const handleSignIn = (data) => {
     return axios({
-        url: `http://${LOCAL_IP}:3005/login`,
+        url: `http://192.168.1.9:3005/login`,
         method: "POST",
         data,
         headers: { "Access-Control-Allow-Origin": "*"}
@@ -14,13 +14,12 @@ const handleSignIn = (data) => {
 }
 
 function* signInFlow(action) {
-    const {email, password} = action;
+    const {email, password} = action.payload;
     const res = yield call(handleSignIn, {email, password});
-    if (res.ok) {
-        const navigation = useNavigation();
-        const {token} = res.data;
+    if (res.status === 200) {
+        const token = res.data;
+        console.log(res);
         yield put(login({token}));
-        // navigation.navigate("Main", {});
     } else {
         yield call(() => {
             Alert.alert(res.message);
