@@ -1,10 +1,14 @@
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
 import React from 'react'
 import DismissKeyboardView from '../components/DismissKeyboardView'
+import Header from '../components/Header';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
   return (
-    <DismissKeyboardView style={styles.container}>
+    <SafeAreaProvider>
+      <Header/>
+      <DismissKeyboardView style={styles.container}>
       <Text style={styles.brandname}>Update info</Text>
       <TextInput style={styles.textinput}
         placeholder="Username"
@@ -15,7 +19,12 @@ export default function ProfileScreen() {
       <Button
         title="Submit"
       />
+      <Button
+        title="Logout"
+      />
     </DismissKeyboardView>
+    </SafeAreaProvider>
+    
   )
 }
 

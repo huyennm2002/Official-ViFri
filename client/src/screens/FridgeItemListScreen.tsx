@@ -1,16 +1,13 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, Animated } from 'react-native'
 import React, { useState, useRef } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { FAB } from '@rneui/themed';
+import { FAB, Header as HeaderRNE, HeaderProps, Icon } from '@rneui/themed';
 import FridgeItem from '../components/FridgeItem';
-
-const Header = () => {
-    return (
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Fridge Items</Text>
-      </View>
-    );
-  };
+import { faBarcode } from '@fortawesome/free-solid-svg-icons/faBarcode';
+import Header from '../components/Header';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import ViFriLogo from '../components/ViFriLogo';
 
 export default function FridgeItemListScreen() {
     const fridgeList = [{
@@ -18,13 +15,13 @@ export default function FridgeItemListScreen() {
     }];
 
     const [isSubFabOpen, setSubFabOpen] = useState(false);
-    
+
     const toggleSubFab = () => {
         setSubFabOpen(!isSubFabOpen);
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaProvider style={{ flex: 1 }}>
             <Header/>
             <ScrollView style={styles.container}>
                 {fridgeList.map(item => <FridgeItem key={item.id} />)}
@@ -34,15 +31,19 @@ export default function FridgeItemListScreen() {
                     <View style={styles.subFabContainer}>
                         <FAB
                             visible={true}
-                            icon={{ name: 'camera-alt', color: 'white' }}
-                            color="red"
-                            style={{marginBottom: 8}}
+                            icon={<FontAwesomeIcon
+                                icon={faBarcode}
+                                color="white"
+                            />}
+                            color="crimson"
+                            style={{ marginBottom: 8 }}
                             size="large"
+
                         />
                         <FAB
                             visible={true}
                             icon={{ name: 'post-add', color: 'white' }}
-                            color="blue"
+                            color="#E63B19"
                             style={styles.subFab}
                             size="large"
                         />
@@ -50,13 +51,15 @@ export default function FridgeItemListScreen() {
                 )}
                 <FAB
                     visible={true}
-                    icon={{ name: 'add', color: 'white' }}
-                    color="green"
+                    icon={
+                        { name: 'add', color: 'white' }
+                    }
+                    color="tomato"
                     onPress={toggleSubFab}
                     style={styles.fab}
                 />
             </View>
-        </SafeAreaView>
+        </SafeAreaProvider>
     )
 }
 
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
 
     },
     subFab: {
-        
+
     },
     header: {
         paddingVertical: 12,
@@ -89,9 +92,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderBottomWidth: 1,
         borderBottomColor: 'lightgray',
-      },
-      headerText: {
+    },
+    headerText: {
         fontSize: 18,
         fontWeight: 'bold',
-      },
+    },
 })
