@@ -16,15 +16,11 @@ const handleSignIn = (data) => {
 
 function* signInFlow(action) {
     const {email, password} = action.payload;
-    const res = yield call(handleSignIn, {email, password});
-    if (res.status === 200) {
-        const token = res.data;
-        console.log(res);
-        yield put(login({token}));
-    } else {
-        yield call(() => {
-            Alert.alert(res.message);
-        })
+    try {
+        const res = yield call(handleSignIn, {email,password});
+        yield put(login({token: res.data}));
+    } catch(error) {
+        Alert.alert("Unable to login! Please try again.");
     }
 }
 
