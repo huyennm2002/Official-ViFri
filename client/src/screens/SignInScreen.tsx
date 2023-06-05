@@ -25,13 +25,14 @@ export default function SignInScreen({navigation}) {
     }));
   }
   const handleSubmit = () => {
-    if (!(isEmpty(data.email) && isEmpty(data.password))) {
+    console.log(data);
+    if ((isEmpty(data.email) || isEmpty(data.password))) {
+      Alert.alert('Please enter both email and password');
+    } else {
       dispatch({
         type: 'USER_SIGN_IN',
         payload: data
       })
-    } else {
-      Alert.alert('Please enter both email and password');
     }
   }
 
