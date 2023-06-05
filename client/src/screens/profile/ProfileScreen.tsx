@@ -1,10 +1,16 @@
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { Text, StyleSheet, TextInput, Button } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DismissKeyboardView from '../../components/DismissKeyboardView'
 import Header from '../../components/Header';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { USER_LOG_OUT } from '../../redux/action';
 
-export default function ProfileScreen() {
+export default function ProfileScreen({navigation}) {
+  const dispatch = useDispatch();
+  const handleLogOut = () => {
+    dispatch(USER_LOG_OUT);
+  }
   return (
     <SafeAreaProvider>
       <Header/>
@@ -21,6 +27,7 @@ export default function ProfileScreen() {
       />
       <Button
         title="Logout"
+        onPress={handleLogOut}
       />
     </DismissKeyboardView>
     </SafeAreaProvider>

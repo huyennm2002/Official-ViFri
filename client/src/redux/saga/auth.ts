@@ -1,9 +1,8 @@
-import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { Alert } from 'react-native';
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { login } from '../features/authSlice';
-import { LOGIN_API } from '../../apis/userAPIs';
+import { login, logout } from '../features/authSlice';
+import { LOGIN_API, LOGOUT_API } from '../../apis/userAPIs';
 
 const handleSignIn = (data) => {
     return axios({
@@ -13,7 +12,6 @@ const handleSignIn = (data) => {
         headers: { "Access-Control-Allow-Origin": "*"}
     })
 }
-
 function* signInFlow(action) {
     const {email, password} = action.payload;
     try {
@@ -24,8 +22,27 @@ function* signInFlow(action) {
     }
 }
 
-function* signInWatcher() {
-    yield takeLatest('USER_SIGN_IN', signInFlow);
+const handleLogOut = () => {
+    return axios({
+        url: LOGOUT_API,
+        method: "POST",
+        headers: { "Access-Control-Allow-Origin": "*"}
+    })
 }
 
-export default signInWatcher;
+function* logOutFlow() {
+    try {
+        const res = yield call(handleLogOut);
+        yield put(logout());
+        console.log("LOGGED OUT");
+    } catch(error) {
+        Alert.alert("Unable to logout!");
+    }
+}
+
+function* authWatcher() {
+    yield takeLatest('USER_SIGN_IN', signInFlow);
+    yield takeLatest('USER_LOG_OUT', logOutFlow);
+}
+
+export default authWatcher;

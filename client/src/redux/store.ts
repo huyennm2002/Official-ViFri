@@ -4,7 +4,7 @@ import createSagaMiddleware from "@redux-saga/core";
 // import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/lib/persistStore";
 import userReducer from "./features/authSlice";
-import signInWatcher from "./saga/auth";
+import authWatcher from "./saga/auth";
 
 //middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -34,7 +34,7 @@ const store = configureStore({
 })
 
 const persistor = persistStore(store)
-sagaMiddleware.run(signInWatcher);
+sagaMiddleware.run(authWatcher);
 
 export type RootState = ReturnType<typeof store.getState>
 

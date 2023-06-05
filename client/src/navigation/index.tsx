@@ -88,9 +88,10 @@ const AppNavigation = () => {
     return (
         <AppNavigationStack.Navigator screenOptions={{ gestureEnabled: false, headerShown:false }}>
             {
-                !loggedIn && <AppNavigationStack.Screen name={AUTHENTICATION_NAVIGATION} component={AuthenticationNavigation} options={{ headerShown: false }}></AppNavigationStack.Screen>
+                loggedIn ?
+                <AppNavigationStack.Screen name={MAIN_BOTTOM_TAB_NAVIGATION} component={MainBottomTabNavigation} options={{ headerShown: false }} />
+                : <AppNavigationStack.Screen name={AUTHENTICATION_NAVIGATION} component={AuthenticationNavigation} options={{ headerShown: false }}></AppNavigationStack.Screen>
             }
-            <AppNavigationStack.Screen name={MAIN_BOTTOM_TAB_NAVIGATION} component={MainBottomTabNavigation} options={{ headerShown: false }} />
         </AppNavigationStack.Navigator>
     )
 }
