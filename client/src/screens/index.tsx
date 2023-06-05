@@ -5,7 +5,7 @@ import HomeScreen from "./home/HomeScreen";
 import FridgeItemListScreen from "./fridge/FridgeItemListScreen";
 import RecipeListScreen from "./recipes/RecipeListScreen";
 import ShhowFridgeItemDetailScreen from "./fridge/ShowFridgeItemDetailScreen";
-import AddFoodItemScreen from "./fridge/AddFoodItemScreen";
+import AddFoodItemByFormScreen from "./fridge/AddFoodItemByFormScreen";
 
 export {
     ProfileScreen,
@@ -14,6 +14,6 @@ export {
     HomeScreen,
     FridgeItemListScreen,
     RecipeListScreen,
-    AddFoodItemScreen,
+    AddFoodItemByFormScreen,
     ShhowFridgeItemDetailScreen
 }

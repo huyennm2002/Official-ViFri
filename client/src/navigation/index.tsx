@@ -9,13 +9,13 @@ import {
     HomeScreen,
     FridgeItemListScreen,
     ShhowFridgeItemDetailScreen,
-    AddFoodItemScreen,
+    AddFoodItemByFormScreen,
     RecipeListScreen
 } from '../screens';
 import {
     FRIDGE_ITEM_LIST_SCREEN,
     SHOW_FRIDGE_ITEM_DETAIL_SCREEN,
-    ADD_FOOD_ITEM_SCREEN,
+    ADD_FOOD_ITEM_BY_FORM_SCREEN,
     HOME_SCREEN,
     FRIDGE_ACTION_NAVIGATION,
     RECIPES_ACTION_NAVIGATION,
@@ -39,7 +39,7 @@ const FridgeActionNavigation = () => {
         <FridgeActionStack.Navigator screenOptions={{headerShown:false}}>
             <FridgeActionStack.Screen name={FRIDGE_ITEM_LIST_SCREEN} component={FridgeItemListScreen}/>
             <FridgeActionStack.Screen name={SHOW_FRIDGE_ITEM_DETAIL_SCREEN} component={ShhowFridgeItemDetailScreen}/>
-            <FridgeActionStack.Screen name={ADD_FOOD_ITEM_SCREEN} component={AddFoodItemScreen}/>
+            <FridgeActionStack.Screen name={ADD_FOOD_ITEM_BY_FORM_SCREEN} component={AddFoodItemByFormScreen}/>
         </FridgeActionStack.Navigator>
     )
 }

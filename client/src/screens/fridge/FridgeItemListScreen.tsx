@@ -1,13 +1,12 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, Animated } from 'react-native'
-import React, { useState, useRef } from 'react';
+import { View, StyleSheet, Dimensions, Pressable } from 'react-native'
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { FAB, Header as HeaderRNE, HeaderProps, Icon } from '@rneui/themed';
+import { FAB } from '@rneui/themed';
 import FridgeItem from '../../components/FridgeItem';
 import { faBarcode } from '@fortawesome/free-solid-svg-icons/faBarcode';
 import Header from '../../components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import ViFriLogo from '../../components/ViFriLogo';
 
 export default function FridgeItemListScreen() {
     const fridgeList = [{
@@ -29,24 +28,29 @@ export default function FridgeItemListScreen() {
             <View style={styles.fabContainer}>
                 {isSubFabOpen && (
                     <View style={styles.subFabContainer}>
-                        <FAB
-                            visible={true}
-                            icon={<FontAwesomeIcon
-                                icon={faBarcode}
-                                color="white"
-                            />}
-                            color="crimson"
-                            style={{ marginBottom: 8 }}
-                            size="large"
+                        <Pressable>
+                            <FAB
+                                visible={true}
+                                icon={<FontAwesomeIcon
+                                    icon={faBarcode}
+                                    color="white"
+                                />}
+                                color="crimson"
+                                style={{ marginBottom: 8 }}
+                                size="large"
 
-                        />
-                        <FAB
-                            visible={true}
-                            icon={{ name: 'post-add', color: 'white' }}
-                            color="#E63B19"
-                            style={styles.subFab}
-                            size="large"
-                        />
+                            />
+                        </Pressable>
+                        <Pressable>
+                            <FAB
+                                visible={true}
+                                icon={{ name: 'post-add', color: 'white' }}
+                                color="#E63B19"
+                                style={styles.subFab}
+                                size="large"
+                            />
+                        </Pressable>
+                        
                     </View>
                 )}
                 <FAB
