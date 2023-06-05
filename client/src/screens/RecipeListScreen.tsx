@@ -5,17 +5,20 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Card } from '@rneui/themed';
 import { CardImage } from '@rneui/base/dist/Card/Card.Image';
 import RecipeItem from '../components/RecipeItem';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Header from '../components/Header';
 
 export default function RecipeListScreen() {
     const recipeList = [{
         id: 1
     }]
     return (
-        <SafeAreaView style={{ flex: 1}}>
+        <SafeAreaProvider>
+            <Header />
             <ScrollView style={styles.container}>
-                {recipeList.map(recipe => <RecipeItem key={recipe.id}/>)}
+                {recipeList.map(recipe => <RecipeItem key={recipe.id} />)}
             </ScrollView>
-        </SafeAreaView>
+        </SafeAreaProvider>
     )
 }
 
