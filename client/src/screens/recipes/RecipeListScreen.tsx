@@ -4,9 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Card } from '@rneui/themed';
 import { CardImage } from '@rneui/base/dist/Card/Card.Image';
-import RecipeItem from '../components/RecipeItem';
+import RecipeItem from '../../components/RecipeItem';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 
 export default function RecipeListScreen() {
     const recipeList = [{

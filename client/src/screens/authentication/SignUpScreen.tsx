@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Image, Button } from 'react-native'
 import React from 'react'
-import DismissKeyboardView from '../components/DismissKeyboardView'
+import DismissKeyboardView from '../../components/DismissKeyboardView'
 
 export default function SignUpScreen({navigation}) {
   const handleSubmit = () => {
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,
-    backgroundColor: '#f2f2f2',
     borderRadius: 23,
     margin: 10,
     width: 290,

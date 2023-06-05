@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function RecipesListScreen() {
+export default function ShowFridgeItemDetailScreen() {
   return (
     <View>
-      <Text>RecipesListScreen</Text>
+      <Text>ShowFridgeItemDetailScreen</Text>
     </View>
   )
 }

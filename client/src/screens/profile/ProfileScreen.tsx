@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
 import React from 'react'
-import DismissKeyboardView from '../components/DismissKeyboardView'
-import Header from '../components/Header';
+import DismissKeyboardView from '../../components/DismissKeyboardView'
+import Header from '../../components/Header';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,
-    backgroundColor: '#f2f2f2',
     borderRadius: 23,
     margin: 15,
     width: 290,

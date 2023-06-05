@@ -1,11 +1,11 @@
-import ProfileScreen from "./ProfileScreen";
-import SignInScreen from "./SignInScreen";
-import SignUpScreen from "./SignUpScreen";
-import HomeScreen from "./HomeScreen";
-import FridgeItemListScreen from "./FridgeItemListScreen";
-import FridgeItemDetailScreen from "./FridgeItemDetailScreen";
-import RecipeListScreen from "./RecipeListScreen";
-import RecipeDetailScreen from "./RecipeDetailScreen";
+import ProfileScreen from "./profile/ProfileScreen";
+import SignInScreen from "./authentication/SignInScreen";
+import SignUpScreen from "./authentication/SignUpScreen";
+import HomeScreen from "./home/HomeScreen";
+import FridgeItemListScreen from "./fridge/FridgeItemListScreen";
+import RecipeListScreen from "./recipes/RecipeListScreen";
+import ShhowFridgeItemDetailScreen from "./fridge/ShowFridgeItemDetailScreen";
+import AddFoodItemScreen from "./fridge/AddFoodItemScreen";
 
 export {
     ProfileScreen,
@@ -13,7 +13,7 @@ export {
     SignUpScreen,
     HomeScreen,
     FridgeItemListScreen,
-    FridgeItemDetailScreen,
     RecipeListScreen,
-    RecipeDetailScreen
+    AddFoodItemScreen,
+    ShhowFridgeItemDetailScreen
 }

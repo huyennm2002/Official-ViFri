@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { isEmpty } from 'lodash';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
-import DismissKeyBoardView from '../components/DismissKeyboardView';
+import DismissKeyBoardView from '../../components/DismissKeyboardView';
 import { Alert } from 'react-native';
 
 type SignInData = {
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,
-    backgroundColor: '#f2f2f2',
     borderRadius: 23,
     margin: 15,
     width: 290,

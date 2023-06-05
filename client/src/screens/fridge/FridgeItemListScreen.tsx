@@ -2,12 +2,12 @@ import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, Animated } fro
 import React, { useState, useRef } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FAB, Header as HeaderRNE, HeaderProps, Icon } from '@rneui/themed';
-import FridgeItem from '../components/FridgeItem';
+import FridgeItem from '../../components/FridgeItem';
 import { faBarcode } from '@fortawesome/free-solid-svg-icons/faBarcode';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import ViFriLogo from '../components/ViFriLogo';
+import ViFriLogo from '../../components/ViFriLogo';
 
 export default function FridgeItemListScreen() {
     const fridgeList = [{
