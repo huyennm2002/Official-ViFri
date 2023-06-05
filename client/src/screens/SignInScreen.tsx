@@ -1,31 +1,41 @@
 import { View, Text, StyleSheet, Image, Button } from 'react-native'
 import React from 'react'
-import DismissKeyBoardView from '../components/DismissKeyboardView';
-import { TextInput } from 'react-native-gesture-handler';
 import { useState } from 'react';
+import { isEmpty } from 'lodash';
+import { TextInput } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
+import DismissKeyBoardView from '../components/DismissKeyboardView';
+// import { loginUser } from '../redux/saga/auth';
+import { Alert } from 'react-native';
 
 type SignInData = {
   email: string,
   password: string
 }
 
-export default function SignInScreen({ navigation }) {
+export default function SignInScreen({navigation}) {
+  const dispatch = useDispatch();
   const [data, setData] = useState<SignInData>({
     email: '',
     password: ''
   })
-
-  const handleSubmit = async () => {
-    navigation.navigate("Main")
-  }
-
   const handleChange = (key : string, value: string) => {
     setData(currentData => ({
       ...currentData,
       [key]: value
     }));
   }
-
+  const handleSubmit = () => {
+    if (!(isEmpty(data.email) && isEmpty(data.password))) {
+      dispatch({
+        type: 'USER_SIGN_IN',
+        payload: data
+      })
+    } else {
+      Alert.alert('Please enter both email and password');
+    }
+  }
+  
   return (
     <DismissKeyBoardView style={styles.container}>
       <Text style={styles.brandname}>ViFri</Text>

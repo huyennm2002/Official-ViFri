@@ -1,23 +1,39 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
-import storage from "redux-persist/lib/storage";
-import persistReducer from "redux-persist/es/persistReducer";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/lib/persistStore";
-import { reducer } from "./reducer";
+import userReducer from "./features/authSlice";
+import signInWatcher from "./saga/auth";
 
-const initialState = {};
+//middleware
 const sagaMiddleware = createSagaMiddleware();
-const persistConfig = {
-    key: 'root',
-    storage,
-}
-const persistedReducer = persistReducer(persistConfig, reducer)
+
+//redux persist
+// const persistConfig = {
+//     key: 'root',
+//     storage: AsyncStorage,
+// }
+// const userPersistConfig = {
+//     key: 'user',
+//     storage: sessionStorage
+// }
+
+// const reducer = combineReducers({
+//     user: persistReducer(userPersistConfig, userReducer)
+// })
+// const persistedReducer = persistReducer(persistConfig, reducer)
+
+//create store
+const reducer = combineReducers({
+    user: userReducer
+})
 const store = configureStore({
-    reducer: persistedReducer,
+    reducer,
     middleware: [sagaMiddleware],
 })
 
 const persistor = persistStore(store)
-// sagaMiddleware.run();
+sagaMiddleware.run(signInWatcher);
 
 export { store, persistor };
