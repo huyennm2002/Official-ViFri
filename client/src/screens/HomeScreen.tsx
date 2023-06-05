@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 1,
-    backgroundColor: 'lightsteelblue',
   },
   hometitle: {
     fontWeight: 'bold',

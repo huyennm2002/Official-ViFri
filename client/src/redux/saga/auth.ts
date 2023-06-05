@@ -3,10 +3,11 @@ import axios from 'axios';
 import { Alert } from 'react-native';
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { login } from '../features/authSlice';
+import { LOGIN_API } from '../../apis/userAPIs';
 
 const handleSignIn = (data) => {
     return axios({
-        url: `http://192.168.1.9:3005/login`,
+        url: LOGIN_API,
         method: "POST",
         data,
         headers: { "Access-Control-Allow-Origin": "*"}

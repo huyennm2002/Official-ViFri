@@ -1,11 +1,26 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Card } from '@rneui/themed';
+import { CardImage } from '@rneui/base/dist/Card/Card.Image';
+import RecipeItem from '../components/RecipeItem';
 
 export default function RecipeListScreen() {
-  return (
-    <SafeAreaView>
-      <Text>RecipeListScreen</Text>
-    </SafeAreaView>
-  )
+    const recipeList = [{
+        id: 1
+    }]
+    return (
+        <SafeAreaView style={{ flex: 1}}>
+            <ScrollView style={styles.container}>
+                {recipeList.map(recipe => <RecipeItem key={recipe.id}/>)}
+            </ScrollView>
+        </SafeAreaView>
+    )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flexGrow: 1
+    }
+})
