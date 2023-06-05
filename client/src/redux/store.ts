@@ -36,4 +36,6 @@ const store = configureStore({
 const persistor = persistStore(store)
 sagaMiddleware.run(signInWatcher);
 
+export type RootState = ReturnType<typeof store.getState>
+
 export { store, persistor };

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -10,9 +11,11 @@ import {
     RecipeListScreen
 } from '../screens';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { RootState } from "../redux/store";
 
 const AppNavigationStack = createStackNavigator();
 const MainBottomTabBar = createBottomTabNavigator();
+const AuthenticationStack = createStackNavigator();
 
 const MainBottomTabNavigation = () => {
     return (
@@ -20,7 +23,6 @@ const MainBottomTabNavigation = () => {
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ color, size }) => {
                     let iconName;
-
                     if (route.name === 'Home') {
                         iconName = 'home-outline';
                     } else if (route.name === 'Fridge') {
@@ -45,11 +47,21 @@ const MainBottomTabNavigation = () => {
     )
 }
 
+const AuthenticationNavigation = () => {
+    return (
+        <AuthenticationStack.Navigator>
+            <AuthenticationStack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
+            <AuthenticationStack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
+        </AuthenticationStack.Navigator>
+    )
+}
 const AppNavigation = () => {
+    const loggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
     return (
         <AppNavigationStack.Navigator screenOptions={{ gestureEnabled: false }}>
-            <AppNavigationStack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
-            <AppNavigationStack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
+            {
+                !loggedIn && <AppNavigationStack.Screen name="Auth" component={AuthenticationNavigation} options={{ headerShown: false }}></AppNavigationStack.Screen>
+            }
             <AppNavigationStack.Screen name="Main" component={MainBottomTabNavigation} options={{ headerShown: false }} />
         </AppNavigationStack.Navigator>
     )

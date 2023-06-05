@@ -1,11 +1,10 @@
-import { View, Text, StyleSheet, Image, Button } from 'react-native'
+import { Text, StyleSheet, Image, Button } from 'react-native'
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { isEmpty } from 'lodash';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import DismissKeyBoardView from '../components/DismissKeyboardView';
-// import { loginUser } from '../redux/saga/auth';
 import { Alert } from 'react-native';
 
 type SignInData = {
@@ -35,7 +34,7 @@ export default function SignInScreen({navigation}) {
       Alert.alert('Please enter both email and password');
     }
   }
-  
+
   return (
     <DismissKeyBoardView style={styles.container}>
       <Text style={styles.brandname}>ViFri</Text>

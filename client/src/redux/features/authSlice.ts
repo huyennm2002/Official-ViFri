@@ -3,10 +3,11 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { GestureStateManager } from "react-native-gesture-handler/lib/typescript/handlers/gestures/gestureStateManager";
 
 const initialState = {
-    token: null
+    token: null,
+    isLoggedIn: false
 }
 
-const authSlice = createSlice( {
+const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
@@ -15,6 +16,7 @@ const authSlice = createSlice( {
             return {
                 ...state,
                 token,
+                isLoggedIn: true
             }
         },
         signup() {
@@ -22,6 +24,7 @@ const authSlice = createSlice( {
         },
         logout(state) {
             state.token = null;
+            state.isLoggedIn = false;
             return state;
         }
     }
