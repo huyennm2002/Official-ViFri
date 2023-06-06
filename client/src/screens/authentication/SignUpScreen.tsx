@@ -1,16 +1,19 @@
 import { View, Text, StyleSheet, TextInput, Image, Button } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import DismissKeyboardView from '../../components/DismissKeyboardView'
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { SIGNIN_SCREEN } from '../../navigation/screenNames';
 
 export default function SignUpScreen({navigation}) {
+  const [photo, setPhoto] = React.useState(null);
+
   const handleSubmit = () => {
     navigation.navigate('Main');
   }
-  
+
   return (
     <DismissKeyboardView style={styles.container}>
       <Text style={styles.brandname}>Welcome to ViFri!</Text>
-      <Text style={styles.newusertext}>Enter a username and password to get started</Text>
       <TextInput style={styles.textinput}
         placeholder="First Name"
       />
@@ -24,15 +27,18 @@ export default function SignUpScreen({navigation}) {
         placeholder="Password"
         secureTextEntry={true}
       />
+      <DateTimePicker value={new Date()} />
       <Button
-        title='Create New Account'
-        onPress={handleSubmit}
-      />
-      <Image style={styles.logo}
-                source={{
-                    uri: 'https://www.galanz.com/us/wp-content/uploads/2020/10/GLR31TBEER2_45%C2%B0.png',
-                }}
-            />
+          title='Create an account'
+          onPress={() => navigation.navigate(SIGNIN_SCREEN)}
+        />
+      <View>
+        <Text>Already have an Account?</Text>
+        <Button
+          title='Sign In'
+          onPress={() => navigation.navigate(SIGNIN_SCREEN)}
+        />
+      </View>
     </DismissKeyboardView>
   )
 }
