@@ -18,7 +18,7 @@ function* signInFlow(action) {
         const res = yield call(handleSignIn, {email,password});
         yield put(login({token: res.data}));
     } catch(error) {
-        Alert.alert("Unable to login! Please try again.");
+        Alert.alert("Unable to login!\nPlease try again.");
     }
 }
 
