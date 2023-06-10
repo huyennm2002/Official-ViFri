@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { SIGNIN_SCREEN } from '../../navigation/screenNames';
 import { Alert } from 'react-native';
 import { SIGNUP_API } from '../../apis/userAPIs';
+import ImageUploader from '../../components/ImageUploader';
 
 type SignUpData = {
   first_name: string,
@@ -16,6 +17,7 @@ type SignUpData = {
   dob: Date
 }
 
+
 export default function SignUpScreen({navigation}) {
   const [data, setData] = useState<SignUpData>({
     first_name: '',
@@ -24,18 +26,15 @@ export default function SignUpScreen({navigation}) {
     password: '',
     dob: null
   })
-
   const checkEmpty = () => {
     return isEmpty(data.first_name) || isEmpty(data.last_name) || isEmpty(data.email) || isEmpty(data.password);
   }
-
   const handleChange = (key : string, value: any) => {
     setData(currentData => ({
       ...currentData,
       [key]: value
     }));
   }
-
   const handleSubmit = () => {
     if (checkEmpty()) {
       Alert.alert('All fields are required');
@@ -46,7 +45,7 @@ export default function SignUpScreen({navigation}) {
       method: "POST",
       data,
       headers: { "Access-Control-Allow-Origin": "*" }
-    }).then((res) => {
+    }).then(() => {
       setData({
         first_name: '',
         last_name: '',
@@ -86,9 +85,10 @@ export default function SignUpScreen({navigation}) {
         onChange={(e) => handleChange('dob', e)}
       />
       <Button
-          title='Create an account'
-          onPress={handleSubmit}
-        />
+        title='Create an account'
+        onPress={handleSubmit}
+      />
+      <ImageUploader/>
       <View>
         <Text>Already have an Account?</Text>
         <Button
