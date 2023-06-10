@@ -8,9 +8,10 @@ import {
     ProfileScreen,
     HomeScreen,
     FridgeItemListScreen,
-    ShhowFridgeItemDetailScreen,
+    ShowFridgeItemDetailScreen,
     AddFoodItemByFormScreen,
-    RecipeListScreen
+    RecipeListScreen,
+    CameraScreen
 } from '../screens';
 import {
     FRIDGE_ITEM_LIST_SCREEN,
@@ -23,7 +24,9 @@ import {
     SIGNIN_SCREEN,
     SIGNUP_SCREEN,
     AUTHENTICATION_NAVIGATION,
-    MAIN_BOTTOM_TAB_NAVIGATION
+    MAIN_BOTTOM_TAB_NAVIGATION,
+    CAMERA_SCREEN,
+    ADD_BY_FORM_NAVIGATION
 } from './screenNames';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RootState } from "../redux/store";
@@ -33,13 +36,23 @@ const AppNavigationStack = createStackNavigator();
 const MainBottomTabBar = createBottomTabNavigator();
 const AuthenticationStack = createStackNavigator();
 const FridgeActionStack = createStackNavigator();
+const AddFoodItemByFormStack = createStackNavigator();
+
+const AddFoodItemByFormNavigation = () => {
+    return (
+        <AddFoodItemByFormStack.Navigator screenOptions={{headerShown:false}}>
+            <AddFoodItemByFormStack.Screen name={ADD_FOOD_ITEM_BY_FORM_SCREEN} component={AddFoodItemByFormScreen}/>
+            <AddFoodItemByFormStack.Screen name={CAMERA_SCREEN} component={CameraScreen}/>
+        </AddFoodItemByFormStack.Navigator>
+    )
+}
 
 const FridgeActionNavigation = () => {
     return (
         <FridgeActionStack.Navigator screenOptions={{headerShown:false}}>
             <FridgeActionStack.Screen name={FRIDGE_ITEM_LIST_SCREEN} component={FridgeItemListScreen}/>
-            <FridgeActionStack.Screen name={SHOW_FRIDGE_ITEM_DETAIL_SCREEN} component={ShhowFridgeItemDetailScreen}/>
-            <FridgeActionStack.Screen name={ADD_FOOD_ITEM_BY_FORM_SCREEN} component={AddFoodItemByFormScreen}/>
+            <FridgeActionStack.Screen name={SHOW_FRIDGE_ITEM_DETAIL_SCREEN} component={ShowFridgeItemDetailScreen}/>
+            <FridgeActionStack.Screen name={ADD_BY_FORM_NAVIGATION} component={AddFoodItemByFormNavigation}/>
         </FridgeActionStack.Navigator>
     )
 }

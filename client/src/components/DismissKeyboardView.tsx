@@ -11,5 +11,5 @@ const DismissKeyboardHOC = (Comp: any) => {
     </TouchableWithoutFeedback>
   );
 };
-const DismissKeyboardView = DismissKeyboardHOC(SafeAreaView)
+const DismissKeyboardView = DismissKeyboardHOC(View)
 export default DismissKeyboardView;
