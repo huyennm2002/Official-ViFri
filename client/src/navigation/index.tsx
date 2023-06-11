@@ -29,7 +29,6 @@ import {
     ADD_BY_FORM_NAVIGATION
 } from './screenNames';
 import { memo } from 'react';
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RootState } from "../redux/store";
 
