@@ -24,7 +24,7 @@ import {
     SIGNUP_SCREEN,
     AUTHENTICATION_NAVIGATION,
     MAIN_BOTTOM_TAB_NAVIGATION
-} from './screenNames';
+} from '../constants/screenNames';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RootState } from "../redux/store";
 
