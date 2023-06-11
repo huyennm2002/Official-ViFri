@@ -6,7 +6,7 @@ import { formStyles } from '../../styles/commonStyles';
 import { TextInput } from 'react-native-gesture-handler';
 import DismissKeyboardView from '../../components/DismissKeyboardView';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { CAMERA_SCREEN } from '../../navigation/screenNames';
+import { CAMERA_SCREEN } from '../../constants/screenNames';
 
 export default function AddFoodItemByFormScreen({navigation}) {
   const [items, setItems] = useState([
