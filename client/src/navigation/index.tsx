@@ -28,6 +28,8 @@ import {
     CAMERA_SCREEN,
     ADD_BY_FORM_NAVIGATION
 } from './screenNames';
+import { memo } from 'react';
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RootState } from "../redux/store";
 
@@ -57,7 +59,10 @@ const FridgeActionNavigation = () => {
     )
 }
 
-const MainBottomTabNavigation = () => {
+const MainBottomTabNavigation = memo((props: {routeName: string}) => {
+    const {routeName}  = props;
+    const hide = routeName == CAMERA_SCREEN;
+
     return (
         <MainBottomTabBar.Navigator
             screenOptions={({ route }) => ({
@@ -78,14 +83,17 @@ const MainBottomTabNavigation = () => {
                 headerShown: false, // Hides the header for all screens in the tab bar
                 tabBarActiveTintColor: 'tomato', // Sets the active tab icon color
                 tabBarInactiveTintColor: 'gray', // Sets the inactive tab icon color
+                tabBarStyle: { display: hide ? 'none' : 'flex' }
             })}>
             <MainBottomTabBar.Screen name={HOME_SCREEN} component={HomeScreen} />
-            <MainBottomTabBar.Screen name={FRIDGE_ACTION_NAVIGATION} component={FridgeActionNavigation} />
+            <MainBottomTabBar.Screen name={FRIDGE_ACTION_NAVIGATION} component={FridgeActionNavigation} options= {{
+                tabBarStyle: { display: hide ? "none" : "flex" }
+            }} />
             <MainBottomTabBar.Screen name={RECIPES_ACTION_NAVIGATION} component={RecipeListScreen} />
             <MainBottomTabBar.Screen name={PROFILE_SCREEN} component={ProfileScreen} />
         </MainBottomTabBar.Navigator>
     )
-}
+})
 
 const AuthenticationNavigation = () => {
     return (
@@ -96,13 +104,15 @@ const AuthenticationNavigation = () => {
     )
 }
 
-const AppNavigation = () => {
+const AppNavigation = (props) => {
+    const {routeName} = props;
     const loggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+
     return (
         <AppNavigationStack.Navigator screenOptions={{ gestureEnabled: false, headerShown:false }}>
             {
                 loggedIn ?
-                <AppNavigationStack.Screen name={MAIN_BOTTOM_TAB_NAVIGATION} component={MainBottomTabNavigation} options={{ headerShown: false }} />
+                <AppNavigationStack.Screen name={MAIN_BOTTOM_TAB_NAVIGATION} children={() => <MainBottomTabNavigation routeName={routeName}/>} options={{ headerShown: false }} initialParams={{routeName: routeName}} />
                 : <AppNavigationStack.Screen name={AUTHENTICATION_NAVIGATION} component={AuthenticationNavigation} options={{ headerShown: false }}></AppNavigationStack.Screen>
             }
         </AppNavigationStack.Navigator>

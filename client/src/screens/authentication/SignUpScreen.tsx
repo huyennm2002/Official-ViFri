@@ -8,6 +8,7 @@ import { SIGNIN_SCREEN } from '../../navigation/screenNames';
 import { Alert } from 'react-native';
 import { SIGNUP_API } from '../../apis/userAPIs';
 import ImageUploader from '../../components/ImageUploader';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type SignUpData = {
   first_name: string,
@@ -62,6 +63,7 @@ export default function SignUpScreen({navigation}) {
 
   return (
     <DismissKeyboardView style={styles.container}>
+      <SafeAreaView>
       <Text style={styles.brandname}>Welcome to ViFri!</Text>
       <TextInput style={styles.textinput}
         placeholder="First Name"
@@ -96,6 +98,7 @@ export default function SignUpScreen({navigation}) {
           onPress={() => navigation.navigate(SIGNIN_SCREEN)}
         />
       </View>
+      </SafeAreaView>
     </DismissKeyboardView>
   )
 }
