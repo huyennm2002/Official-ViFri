@@ -7,7 +7,7 @@ import { faBarcode } from '@fortawesome/free-solid-svg-icons/faBarcode';
 import Header from '../../components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ADD_BY_FORM_NAVIGATION } from '../../navigation/screenNames';
+import { ADD_BY_FORM_NAVIGATION } from '../../constants/screenNames';
 
 export default function FridgeItemListScreen({navigation}) {
     const fridgeList = [{

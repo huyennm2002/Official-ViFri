@@ -4,9 +4,9 @@ import axios from 'axios';
 import { isEmpty } from 'lodash';
 import DismissKeyboardView from '../../components/DismissKeyboardView'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { SIGNIN_SCREEN } from '../../navigation/screenNames';
+import { SIGNIN_SCREEN } from '../../constants/screenNames';
 import { Alert } from 'react-native';
-import { SIGNUP_API } from '../../apis/userAPIs';
+import { SIGNUP_API } from '../../constants/APIs';
 import ImageUploader from '../../components/ImageUploader';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

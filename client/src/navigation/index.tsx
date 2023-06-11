@@ -27,7 +27,7 @@ import {
     MAIN_BOTTOM_TAB_NAVIGATION,
     CAMERA_SCREEN,
     ADD_BY_FORM_NAVIGATION
-} from './screenNames';
+} from '../constants/screenNames';
 import { memo } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RootState } from "../redux/store";

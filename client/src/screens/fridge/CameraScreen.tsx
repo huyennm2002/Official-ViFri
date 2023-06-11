@@ -4,7 +4,7 @@ import { Camera, CameraType } from 'expo-camera'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CameraButton from '../../components/CameraButton'
-import { ADD_FOOD_ITEM_BY_FORM_SCREEN } from '../../navigation/screenNames'
+import { ADD_FOOD_ITEM_BY_FORM_SCREEN } from '../../constants/screenNames'
 
 export default function CameraScreen({navigation}) {
     const [type, setType] = useState(CameraType.back);
