@@ -7,8 +7,9 @@ import { faBarcode } from '@fortawesome/free-solid-svg-icons/faBarcode';
 import Header from '../../components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ADD_BY_FORM_NAVIGATION } from '../../navigation/screenNames';
 
-export default function FridgeItemListScreen() {
+export default function FridgeItemListScreen({navigation}) {
     const fridgeList = [{
         id: 1
     }];
@@ -48,6 +49,7 @@ export default function FridgeItemListScreen() {
                                 color="#E63B19"
                                 style={styles.subFab}
                                 size="large"
+                                onPress={() => {navigation.navigate(ADD_BY_FORM_NAVIGATION)}}
                             />
                         </Pressable>
                         

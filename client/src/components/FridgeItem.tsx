@@ -7,11 +7,11 @@ export default function FridgeItem() {
     <ListItem containerStyle={styles.container}>
       <Image source={require('../assets/images/chicken-breast.jpg')} style={styles.itemImage}/>
       <ListItem.Content>
-        <ListItem.Subtitle>
-            <Text>Chicken Breast</Text>
-        </ListItem.Subtitle>
-        <ListItem.Subtitle>Exp: Today</ListItem.Subtitle>
-        <ListItem.Subtitle>Serving: 3</ListItem.Subtitle>
+        <ListItem.Title>
+            <Text style={styles.foodTitle}>Chicken Breast</Text>
+        </ListItem.Title>
+        <ListItem.Subtitle>Expire in 1 day</ListItem.Subtitle>
+        <ListItem.Subtitle>3 Servings</ListItem.Subtitle>
       </ListItem.Content>
     </ListItem>
   )
@@ -33,5 +33,8 @@ const styles = StyleSheet.create({
         height: 100,
         width: 100,
         borderRadius: 10
+    },
+    foodTitle: {
+      fontWeight: 'bold'
     }
 })
