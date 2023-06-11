@@ -15,9 +15,9 @@ type SignUpData = {
   last_name: string,
   email: string,
   password: string,
-  dob: Date
+  dob: Date,
+  avatar: Blob
 }
-
 
 export default function SignUpScreen({navigation}) {
   const [data, setData] = useState<SignUpData>({
@@ -25,7 +25,8 @@ export default function SignUpScreen({navigation}) {
     last_name: '',
     email: '',
     password: '',
-    dob: null
+    dob: null,
+    avatar: null
   })
   const checkEmpty = () => {
     return isEmpty(data.first_name) || isEmpty(data.last_name) || isEmpty(data.email) || isEmpty(data.password);
@@ -37,28 +38,34 @@ export default function SignUpScreen({navigation}) {
     }));
   }
   const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("first_name", data.first_name);
+    formData.append("last_name", data.last_name);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("avatar", data.avatar);
     if (checkEmpty()) {
       Alert.alert('All fields are required');
       return;
     }
-    axios({
-      url: SIGNUP_API,
-      method: "POST",
-      data,
-      headers: { "Access-Control-Allow-Origin": "*" }
-    }).then(() => {
-      setData({
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        dob: null
-      });
-      Alert.alert('Sucessfully signed up!\nPlease log in to continue');
-      navigation.navigate("SignIn");
-    }).catch((err) => {
-      Alert.alert(err.message);
-    })
+    const config = {
+      headers: { 'content-type': 'multipart/form-data' }
+    }
+    axios.post(SIGNUP_API, formData, config)
+      .then(() => {
+        setData({
+          first_name: '',
+          last_name: '',
+          email: '',
+          password: '',
+          dob: null,
+          avatar: null
+        });
+        Alert.alert('Sucessfully signed up!\nPlease log in to continue');
+        navigation.navigate("SignIn");
+      }).catch((err) => {
+        Alert.alert(err.message);
+      })
   }
 
   return (
@@ -90,7 +97,10 @@ export default function SignUpScreen({navigation}) {
         title='Create an account'
         onPress={handleSubmit}
       />
-      <ImageUploader/>
+      <ImageUploader
+        image={data.avatar}
+        setImage={(image) => handleChange('avatar', image)}
+      />
       <View>
         <Text>Already have an Account?</Text>
         <Button
