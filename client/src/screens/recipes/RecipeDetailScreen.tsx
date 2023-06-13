@@ -19,7 +19,7 @@ const missingIngredients = [
 
 export default function RecipeDetailScreen() {
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Header />
       <ScrollView>
 
