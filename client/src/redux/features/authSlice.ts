@@ -7,8 +7,8 @@ const initialState = {
         email: '',
         dob: null,
         avatar: null,
-        token: '',
     },
+    token: '',
     isLoggedIn: false
 }
 
@@ -17,10 +17,11 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         login(state, action) {
-            const { user } = action.payload;
+            const { user, token } = action.payload;
             return {
                 ...state,
                 user,
+                token,
                 isLoggedIn: true
             }
         },

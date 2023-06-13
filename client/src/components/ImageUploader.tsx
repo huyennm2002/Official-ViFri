@@ -19,7 +19,6 @@ const ImageUploader = (props) => {
         quality: 1,
         base64: true,
       });
-
       if (!result.canceled) {
         setImage({
           name: new Date() + '_avatar',

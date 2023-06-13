@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { Text, StyleSheet, TextInput, Button } from 'react-native'
+import { Text, StyleSheet, TextInput, Button, Image } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DismissKeyboardView from '../../components/DismissKeyboardView'
 import Header from '../../components/Header';
@@ -8,6 +8,7 @@ import { USER_LOG_OUT } from '../../redux/action';
 
 export default function ProfileScreen({navigation}) {
   const dispatch = useDispatch();
+
   const handleLogOut = () => {
     dispatch(USER_LOG_OUT);
   }
@@ -15,23 +16,27 @@ export default function ProfileScreen({navigation}) {
     <SafeAreaProvider>
       <Header/>
       <DismissKeyboardView style={styles.container}>
-      <Text style={styles.brandname}>Update info</Text>
-      <TextInput style={styles.textinput}
-        placeholder="Username"
-      />
-      <TextInput style={styles.textinput}
-        placeholder="Email"
-      />
-      <Button
-        title="Submit"
-      />
-      <Button
-        title="Logout"
-        onPress={handleLogOut}
-      />
-    </DismissKeyboardView>
+        <Image style={styles.logo}
+          source={{
+            uri: 'https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_60.jpg',
+          }}
+        />
+        <Text style={styles.brandname}>Update info</Text>
+        <TextInput style={styles.textinput}
+          placeholder="Username"
+        />
+        <TextInput style={styles.textinput}
+          placeholder="Email"
+        />
+        <Button
+          title="Submit"
+        />
+        <Button
+          title="Logout"
+          onPress={handleLogOut}
+        />
+      </DismissKeyboardView>
     </SafeAreaProvider>
-    
   )
 }
 
@@ -69,5 +74,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     paddingBottom: 10
-  }
+  },
+  logo: {
+    width: 300,
+    height: 300,
+    margin: 20
+  },
 });
