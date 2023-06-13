@@ -1,14 +1,15 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Text, StyleSheet, TextInput, Button, Image } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DismissKeyboardView from '../../components/DismissKeyboardView'
 import Header from '../../components/Header';
 import { USER_LOG_OUT } from '../../redux/action';
+import { RootState, store } from '../../redux/store';
 
 export default function ProfileScreen({navigation}) {
   const dispatch = useDispatch();
-
+  const user = useSelector((state: RootState) => state.user.user)
   const handleLogOut = () => {
     dispatch(USER_LOG_OUT);
   }
@@ -18,7 +19,7 @@ export default function ProfileScreen({navigation}) {
       <DismissKeyboardView style={styles.container}>
         <Image style={styles.logo}
           source={{
-            uri: 'https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_60.jpg',
+            uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${user.id}.jpg`,
           }}
         />
         <Text style={styles.brandname}>Update info</Text>

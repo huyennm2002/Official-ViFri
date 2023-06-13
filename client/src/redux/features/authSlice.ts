@@ -28,7 +28,15 @@ const authSlice = createSlice({
         logout(state) {
             return {
                 ...state,
-                initialState
+                user: {
+                    first_name: '',
+                    last_name: '',
+                    email: '',
+                    dob: null,
+                    avatar: null,
+                },
+                token: '',
+                isLoggedIn: false
             };
         }
     }
