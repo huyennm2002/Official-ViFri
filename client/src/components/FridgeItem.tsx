@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { ListItem } from '@rneui/themed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMinus, faPenToSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../navigation/screenNames';
+import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../constants/screenNames';
 
 export default function FridgeItem({ navigation }) {
   const [quantity, setQuantity] = useState(0);

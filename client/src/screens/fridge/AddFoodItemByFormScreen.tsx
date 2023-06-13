@@ -7,13 +7,11 @@ import { TextInput } from 'react-native-gesture-handler';
 import DismissKeyboardView from '../../components/DismissKeyboardView';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CAMERA_SCREEN } from '../../constants/screenNames';
+import foodItemUnits from '../../constants/foodItemUnits';
+import FoodItemForm from '../../components/FoodItemForm';
 
 export default function AddFoodItemByFormScreen({navigation}) {
-  const [items, setItems] = useState([
-    { label: 'Serving', value: 'serving' },
-    { label: 'Package', value: 'package' },
-    { label: 'Custom Unit', value: 'custom' }
-  ])
+  const [items, setItems] = useState(foodItemUnits)
 
   const [value, setValue] = useState(null);
   const [open, setOpen] = useState(false);

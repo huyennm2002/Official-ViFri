@@ -8,15 +8,16 @@ import RecipeItem from '../../components/RecipeItem';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Header from '../../components/Header';
 
-export default function RecipeListScreen() {
+export default function RecipeListScreen({navigation}) {
     const recipeList = [{
         id: 1
     }]
+    
     return (
         <SafeAreaProvider>
             <Header />
             <ScrollView style={styles.container}>
-                {recipeList.map(recipe => <RecipeItem key={recipe.id} />)}
+                {recipeList.map(recipe => <RecipeItem navigation={navigation} key={recipe.id} />)}
             </ScrollView>
         </SafeAreaProvider>
     )
