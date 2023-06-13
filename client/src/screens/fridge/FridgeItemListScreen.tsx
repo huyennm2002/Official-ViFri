@@ -24,7 +24,7 @@ export default function FridgeItemListScreen({navigation}) {
         <SafeAreaProvider style={{ flex: 1 }}>
             <Header/>
             <ScrollView style={styles.container}>
-                {fridgeList.map(item => <FridgeItem key={item.id} />)}
+                {fridgeList.map(item => <FridgeItem key={item.id} navigation={navigation} />)}
             </ScrollView>
             <View style={styles.fabContainer}>
                 {isSubFabOpen && (

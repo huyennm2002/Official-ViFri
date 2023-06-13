@@ -11,7 +11,8 @@ import {
     ShowFridgeItemDetailScreen,
     AddFoodItemByFormScreen,
     RecipeListScreen,
-    CameraScreen
+    CameraScreen,
+    RecipeDetailScreen
 } from '../screens';
 import {
     FRIDGE_ITEM_LIST_SCREEN,
@@ -26,10 +27,11 @@ import {
     AUTHENTICATION_NAVIGATION,
     MAIN_BOTTOM_TAB_NAVIGATION,
     CAMERA_SCREEN,
-    ADD_BY_FORM_NAVIGATION
+    ADD_BY_FORM_NAVIGATION,
+    RECIPE_LIST_SCREEN,
+    RECIPE_DETAILS_SCREEN
 } from '../constants/screenNames';
 import { memo } from 'react';
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RootState } from "../redux/store";
 
@@ -39,6 +41,7 @@ const MainBottomTabBar = createBottomTabNavigator();
 const AuthenticationStack = createStackNavigator();
 const FridgeActionStack = createStackNavigator();
 const AddFoodItemByFormStack = createStackNavigator();
+const RecipesActionNavigationStack = createStackNavigator();
 
 const AddFoodItemByFormNavigation = () => {
     return (
@@ -56,6 +59,15 @@ const FridgeActionNavigation = () => {
             <FridgeActionStack.Screen name={SHOW_FRIDGE_ITEM_DETAIL_SCREEN} component={ShowFridgeItemDetailScreen}/>
             <FridgeActionStack.Screen name={ADD_BY_FORM_NAVIGATION} component={AddFoodItemByFormNavigation}/>
         </FridgeActionStack.Navigator>
+    )
+}
+
+const RecipesActionNavigation = () => {
+    return (
+        <RecipesActionNavigationStack.Navigator screenOptions={{headerShown:false}}>
+            <RecipesActionNavigationStack.Screen name={RECIPE_LIST_SCREEN} component={RecipeListScreen}/>
+            <RecipesActionNavigationStack.Screen name={RECIPE_DETAILS_SCREEN} component={RecipeDetailScreen}/>
+        </RecipesActionNavigationStack.Navigator>
     )
 }
 
@@ -89,7 +101,7 @@ const MainBottomTabNavigation = memo((props: {routeName: string}) => {
             <MainBottomTabBar.Screen name={FRIDGE_ACTION_NAVIGATION} component={FridgeActionNavigation} options= {{
                 tabBarStyle: { display: hide ? "none" : "flex" }
             }} />
-            <MainBottomTabBar.Screen name={RECIPES_ACTION_NAVIGATION} component={RecipeListScreen} />
+            <MainBottomTabBar.Screen name={RECIPES_ACTION_NAVIGATION} component={RecipesActionNavigation} />
             <MainBottomTabBar.Screen name={PROFILE_SCREEN} component={ProfileScreen} />
         </MainBottomTabBar.Navigator>
     )
