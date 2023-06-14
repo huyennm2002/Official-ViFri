@@ -6,6 +6,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import DismissKeyBoardView from '../../components/DismissKeyboardView';
 import { Alert } from 'react-native';
+import { USER_SIGN_IN } from '../../redux/action';
 
 type SignInData = {
   email: string,
@@ -28,10 +29,7 @@ export default function SignInScreen({navigation}) {
     if ((isEmpty(data.email) || isEmpty(data.password))) {
       Alert.alert('Please enter both email and password');
     } else {
-      dispatch({
-        type: 'USER_SIGN_IN',
-        payload: data
-      })
+      dispatch(USER_SIGN_IN(data))
     }
   }
 
