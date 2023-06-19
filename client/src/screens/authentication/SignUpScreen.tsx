@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TextInput, Image, Button } from 'react-native'
 import React, { useState } from 'react'
 import axios from 'axios';
+import moment from 'moment';
 import { isEmpty } from 'lodash';
 import DismissKeyboardView from '../../components/DismissKeyboardView'
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -25,7 +26,7 @@ export default function SignUpScreen({navigation}) {
     last_name: '',
     email: '',
     password: '',
-    dob: null,
+    dob: new Date(moment().format('YYYY-MM-DDTHH:mm:ss')),
     avatar: null
   })
   const checkEmpty = () => {
@@ -43,6 +44,7 @@ export default function SignUpScreen({navigation}) {
     formData.append("last_name", data.last_name);
     formData.append("email", data.email);
     formData.append("password", data.password);
+    formData.append("dob", data.dob.toString());
     formData.append("avatar", data.avatar);
     if (checkEmpty()) {
       Alert.alert('All fields are required');
@@ -58,7 +60,7 @@ export default function SignUpScreen({navigation}) {
           last_name: '',
           email: '',
           password: '',
-          dob: null,
+          dob: new Date(moment().format('YYYY-MM-DDTHH:mm:ss')),
           avatar: null
         });
         Alert.alert('Sucessfully signed up!\nPlease log in to continue');
@@ -67,7 +69,7 @@ export default function SignUpScreen({navigation}) {
         Alert.alert(err.message);
       })
   }
-
+  console.log(moment().format('YYYY-MM-DDTHH:mm:ss'))
   return (
     <DismissKeyboardView style={styles.container}>
       <SafeAreaView>
@@ -90,8 +92,12 @@ export default function SignUpScreen({navigation}) {
         onChangeText={(e) => handleChange('password', e)}
       />
       <DateTimePicker
-        value={new Date()}
-        onChange={(e) => handleChange('dob', e)}
+        // maximumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
+        value={data.dob}
+        // onChange={(e) => {
+        //   console.log(e);
+        //   handleChange('dob', new Date(moment(e.toString()).format('YYYY-MM-DDTHH:mm:ss')))
+        // }}
       />
       <Button
         title='Create an account'
