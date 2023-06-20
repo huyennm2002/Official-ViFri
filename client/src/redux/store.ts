@@ -1,10 +1,11 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/lib/persistStore";
 import userReducer from "./features/authSlice";
 import authWatcher from "./saga/auth";
+import RootSaga from "./saga";
 
 //middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -30,12 +31,14 @@ const reducer = combineReducers({
 })
 const store = configureStore({
     reducer,
-    middleware: [sagaMiddleware],
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware({ thunk: false }).prepend(sagaMiddleware);
+    },
 })
 
-const persistor = persistStore(store)
-sagaMiddleware.run(authWatcher);
+// const persistor = persistStore(store)
+sagaMiddleware.run(RootSaga);
 
 export type RootState = ReturnType<typeof store.getState>
 
-export { store, persistor };
+export { store };

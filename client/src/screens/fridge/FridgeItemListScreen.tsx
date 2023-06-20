@@ -8,12 +8,14 @@ import Header from '../../components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ADD_BY_FORM_NAVIGATION } from '../../constants/screenNames';
+import { store } from '../../redux/store';
 
 export default function FridgeItemListScreen({navigation}) {
     const fridgeList = [{
         id: 1
     }];
-
+    const state = store.getState().items;
+    console.log(state);
     const [isSubFabOpen, setSubFabOpen] = useState(false);
 
     const toggleSubFab = () => {

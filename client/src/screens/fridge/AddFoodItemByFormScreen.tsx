@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { View, Text, Button } from 'react-native'
+import { store } from '../../redux/store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { isEmpty, isNull } from 'lodash';
+import { Alert } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { TextInput } from 'react-native-gesture-handler';
 import Header from '../../components/Header';
 import { formStyles } from '../../styles/commonStyles';
-import { TextInput } from 'react-native-gesture-handler';
 import DismissKeyboardView from '../../components/DismissKeyboardView';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { CAMERA_SCREEN, FRIDGE_ITEM_LIST_SCREEN } from '../../constants/screenNames';
 import foodItemUnits from '../../constants/foodItemUnits';
 import FoodItemForm from '../../components/FoodItemForm';
-import { Alert } from 'react-native';
-import axios from 'axios';
 import { AUTHENTICATED_AXIOS_HEADER, ITEMS_API } from '../../constants/APIs';
-import { store } from '../../redux/store';
+import { ADD_ITEM } from '../../redux/action';
 
 type ItemData = {
   name: string,
@@ -36,6 +38,7 @@ export default function AddFoodItemByFormScreen({navigation}) {
     expiration: new Date()
   })
   const { token } = store.getState().user;
+  const dispatch = useDispatch();
   const checkEmpty = () => {
     return isEmpty(data.name) || data.quantity == 0 || isEmpty(value) || isNull(data.expiration) ;
   }
@@ -48,7 +51,6 @@ export default function AddFoodItemByFormScreen({navigation}) {
 
   const handleSubmit = () => {
     if (checkEmpty()) {
-      console.log()
       Alert.alert('All fields are required');
       return;
     }
@@ -61,7 +63,6 @@ export default function AddFoodItemByFormScreen({navigation}) {
     const config = {
       headers: AUTHENTICATED_AXIOS_HEADER(token)
     }
-    console.log(config);
     axios.post(ITEMS_API, formData, config)
       .then(() => {
         setData({
@@ -72,6 +73,7 @@ export default function AddFoodItemByFormScreen({navigation}) {
           expiration: new Date()
         });
         Alert.alert('Item added');
+        dispatch(ADD_ITEM)
         navigation.navigate(FRIDGE_ITEM_LIST_SCREEN);
       }).catch((err) => {
         Alert.alert(err.message);
