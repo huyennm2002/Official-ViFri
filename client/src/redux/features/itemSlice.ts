@@ -19,15 +19,9 @@ const itemSlice = createSlice({
     name: 'items',
     initialState,
     reducers: {
-        handleUpdateItemList: (state, action) => {
-            console.log("HERE");
-            console.log(action);
-            console.log(action.payload);
-            return {
-                ...state,
-                items: action.payload
-            }
-        }
+        handleUpdateItemList: (state, action: PayloadAction<ItemType[]>) => {
+            state.items = action.payload;
+        },
     }
 })
 

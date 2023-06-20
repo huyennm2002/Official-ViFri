@@ -14,8 +14,7 @@ export default function FridgeItemListScreen({navigation}) {
     const fridgeList = [{
         id: 1
     }];
-    const state = store.getState().items;
-    console.log(state);
+    const { items } = store.getState();
     const [isSubFabOpen, setSubFabOpen] = useState(false);
 
     const toggleSubFab = () => {

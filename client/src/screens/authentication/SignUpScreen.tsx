@@ -69,7 +69,6 @@ export default function SignUpScreen({navigation}) {
         Alert.alert(err.message);
       })
   }
-  console.log(moment().format('YYYY-MM-DDTHH:mm:ss'))
   return (
     <DismissKeyboardView style={styles.container}>
       <SafeAreaView>

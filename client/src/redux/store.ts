@@ -4,6 +4,7 @@ import createSagaMiddleware from "@redux-saga/core";
 // import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/lib/persistStore";
 import userReducer from "./features/authSlice";
+import itemReducer from "./features/itemSlice";
 import authWatcher from "./saga/auth";
 import RootSaga from "./saga";
 
@@ -27,7 +28,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 //create store
 const reducer = combineReducers({
-    user: userReducer
+    user: userReducer,
+    items: itemReducer
 })
 const store = configureStore({
     reducer,

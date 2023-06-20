@@ -47,8 +47,7 @@ const handleLogOut = () => {
 
 function* logOutFlow() {
     try {
-        const res = yield call(handleLogOut);
-        console.log('Logging out')
+        yield call(handleLogOut);
         yield put(logout());
     } catch(error) {
         Alert.alert('Unable to logout!');
