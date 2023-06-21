@@ -11,11 +11,8 @@ import { ADD_BY_FORM_NAVIGATION } from '../../constants/screenNames';
 import { store } from '../../redux/store';
 
 export default function FridgeItemListScreen({navigation}) {
-    const fridgeList = [{
-        id: 1
-    }];
     const { items } = store.getState();
-    const [isSubFabOpen, setSubFabOpen] = useState(false);
+   const [isSubFabOpen, setSubFabOpen] = useState(false);
 
     const toggleSubFab = () => {
         setSubFabOpen(!isSubFabOpen);
@@ -25,7 +22,7 @@ export default function FridgeItemListScreen({navigation}) {
         <SafeAreaProvider style={{ flex: 1 }}>
             <Header/>
             <ScrollView style={styles.container}>
-                {fridgeList.map(item => <FridgeItem key={item.id} navigation={navigation} />)}
+                {items.map(item => <FridgeItem item={item} navigation={navigation} />)}
             </ScrollView>
             <View style={styles.fabContainer}>
                 {isSubFabOpen && (

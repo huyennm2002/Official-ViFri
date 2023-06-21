@@ -5,9 +5,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMinus, faPenToSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../constants/screenNames';
 
-export default function FridgeItem({ navigation }) {
-  const [quantity, setQuantity] = useState(0);
+type ItemType = {
+  id: Number,
+  name: string,
+  status: string,
+  expiration: Date,
+  image: string,
+  amount: Number,
+  unit: string,
+  added_at: Date
+}
 
+export default function FridgeItem({ navigation, item }) {
+  const [quantity, setQuantity] = useState(Number(item.quantity));
   const updateQuanity = (value) => {
     const newQuantity = quantity + value;
     if (newQuantity >= 0) {
@@ -20,7 +30,7 @@ export default function FridgeItem({ navigation }) {
       <Image source={require('../assets/images/chicken-breast.jpg')} style={styles.itemImage} />
       <ListItem.Content>
         <ListItem.Title>
-          <Text style={styles.foodTitle}>Chicken Breast</Text>
+          <Text style={styles.foodTitle}>{item.name}</Text>
         </ListItem.Title>
         <ListItem.Subtitle>Expire in 1 day</ListItem.Subtitle>
         <View>
@@ -31,14 +41,14 @@ export default function FridgeItem({ navigation }) {
                 <FontAwesomeIcon icon={faPlus} size={24} color='green' />
               </View>
             </Pressable>
-            <Text style={styles.quantityText}>{quantity}</Text>
+            <Text style={styles.quantityText}></Text>
             <Pressable onPress={() => updateQuanity(-1)}>
               <View style={styles.minusIconContainer}>
                 <FontAwesomeIcon icon={faMinus} size={24} color='crimson' />
               </View>
             </Pressable>
           </View>
-          <Text>Servings</Text>
+          <Text>{item.unit}</Text>
         </View>
       </ListItem.Content>
       <View style={styles.editActionsContainer}>
