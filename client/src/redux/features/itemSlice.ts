@@ -11,17 +11,13 @@ type ItemType = {
     added_at: Date
 }
 
-const initialState = {
-    items: [] as ItemType[],
-}
+const initialState = [] as ItemType[];
 
 const itemSlice = createSlice({
     name: 'items',
     initialState,
     reducers: {
-        handleUpdateItemList: (state, action: PayloadAction<ItemType[]>) => {
-            state.items = action.payload;
-        },
+        handleUpdateItemList: (state, action: PayloadAction<ItemType[]>) => action.payload,
     }
 })
 

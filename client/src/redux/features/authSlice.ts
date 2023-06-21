@@ -11,13 +11,13 @@ type User = {
 type AuthState = {
     isLoggedIn: boolean;
     token: string;
-    user: User;
+    info: User;
 }
   
 const initialState: AuthState = {
     isLoggedIn: false,
     token: '',
-    user: {
+    info: {
       avatar: null,
       dob: null,
       email: '',
@@ -30,29 +30,26 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login(state, action: PayloadAction<{ user: User; token: string }>) {
+        login: (state, action: PayloadAction<{ user: User; token: string }>) => {
             const { user, token } = action.payload;
             return {
-                user,
+                info: user,
                 token,
                 isLoggedIn: true
             }
         },
-        logout(state) {
-            return {
-                user: {
-                    first_name: '',
-                    last_name: '',
-                    email: '',
-                    dob: null,
-                    avatar: null,
-                },
-                token: '',
-                isLoggedIn: false
-            };
-        }
+        logout: (state) => ({
+            info: {
+                first_name: '',
+                last_name: '',
+                email: '',
+                dob: null,
+                avatar: null,
+            },
+            token: '',
+            isLoggedIn: false
+        }),
     }
-
 })
 
 export const { login, logout } = authSlice.actions;
