@@ -5,17 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMinus, faPenToSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../constants/screenNames';
 
-type ItemType = {
-  id: Number,
-  name: string,
-  status: string,
-  expiration: Date,
-  image: string,
-  amount: Number,
-  unit: string,
-  added_at: Date
-}
-
 export default function FridgeItem({ navigation, item }) {
   const [quantity, setQuantity] = useState(Number(item.quantity));
   const updateQuanity = (value) => {

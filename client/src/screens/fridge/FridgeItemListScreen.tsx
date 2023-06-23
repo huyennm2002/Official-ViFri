@@ -22,7 +22,7 @@ export default function FridgeItemListScreen({navigation}) {
         <SafeAreaProvider style={{ flex: 1 }}>
             <Header/>
             <ScrollView style={styles.container}>
-                {items.map(item => <FridgeItem item={item} navigation={navigation} />)}
+                {items.map(item => <FridgeItem key={item.id.toString()} item={item} navigation={navigation} />)}
             </ScrollView>
             <View style={styles.fabContainer}>
                 {isSubFabOpen && (

@@ -1,15 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-
-type ItemType = {
-    id: Number,
-    name: string,
-    status: string,
-    expiration: Date,
-    image: string,
-    amount: Number,
-    unit: string,
-    added_at: Date
-}
+import { ItemType } from "../../../types";
 
 const initialState = [] as ItemType[];
 

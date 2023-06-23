@@ -10,15 +10,7 @@ import { Alert } from 'react-native';
 import { SIGNUP_API } from '../../constants/APIs';
 import ImageUploader from '../../components/ImageUploader';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-type SignUpData = {
-  first_name: string,
-  last_name: string,
-  email: string,
-  password: string,
-  dob: Date,
-  avatar: Blob
-}
+import { SignUpData } from '../../../types';
 
 export default function SignUpScreen({navigation}) {
   const [data, setData] = useState<SignUpData>({
