@@ -4,6 +4,7 @@ import { ListItem } from '@rneui/themed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMinus, faPenToSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../constants/screenNames';
+import { s3URL } from '../constants/URL';
 
 export default function FridgeItem({ navigation, item }) {
   const [quantity, setQuantity] = useState(Number(item.quantity));
@@ -13,10 +14,14 @@ export default function FridgeItem({ navigation, item }) {
       setQuantity(newQuantity);
     }
   }
+  const imageUri = item.image ? s3URL + item.image : ''
 
   return (
     <ListItem containerStyle={styles.container}>
-      <Image source={require('../assets/images/chicken-breast.jpg')} style={styles.itemImage} />
+      {
+        imageUri ? <Image source={{uri: imageUri}} style={styles.itemImage}/>
+          : <Image source={require('../assets/images/chicken-breast.jpg')} style={styles.itemImage} />
+      }
       <ListItem.Content>
         <ListItem.Title>
           <Text style={styles.foodTitle}>{item.name}</Text>

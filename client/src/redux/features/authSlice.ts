@@ -5,11 +5,12 @@ const initialState: AuthState = {
     isLoggedIn: false,
     token: '',
     info: {
-      avatar: null,
-      dob: null,
-      email: '',
-      first_name: '',
-      last_name: '',
+        id: null,
+        avatar: null,
+        dob: null,
+        email: '',
+        first_name: '',
+        last_name: '',
     },
 };
 
@@ -27,6 +28,7 @@ const authSlice = createSlice({
         },
         logout: (state) => ({
             info: {
+                id: null,
                 first_name: '',
                 last_name: '',
                 email: '',

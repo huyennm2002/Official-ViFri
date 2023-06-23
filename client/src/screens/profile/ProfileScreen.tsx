@@ -9,7 +9,7 @@ import { RootState, store } from '../../redux/store';
 
 export default function ProfileScreen({navigation}) {
   const dispatch = useDispatch();
-  const info = useSelector((state: RootState) => state.info.user)
+  const { info } = useSelector((state: RootState) => state.user)
   const handleLogOut = () => {
     dispatch(USER_LOG_OUT);
   }
