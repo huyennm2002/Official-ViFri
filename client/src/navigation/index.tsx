@@ -119,7 +119,6 @@ const AuthenticationNavigation = () => {
 const AppNavigation = (props) => {
     const {routeName} = props;
     const loggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
-
     return (
         <AppNavigationStack.Navigator screenOptions={{ gestureEnabled: false, headerShown:false }}>
             {

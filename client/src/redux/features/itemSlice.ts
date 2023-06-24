@@ -1,30 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { ItemType } from "../../../types";
 
-type ItemType = {
-    id: Number,
-    name: string,
-    status: string,
-    expiration: Date,
-    image: string,
-    amount: Number,
-    unit: string,
-    added_at: Date
-}
-
-const initialState = {
-    items: [] as ItemType[],
-}
+const initialState = [] as ItemType[];
 
 const itemSlice = createSlice({
     name: 'items',
     initialState,
     reducers: {
-        handleUpdateItemList: (state, action: PayloadAction<ItemType[]>) => {
-            return {
-                ...state,
-                items: action.payload
-            }
-        }
+        handleUpdateItemList: (state, action: PayloadAction<ItemType[]>) => (action.payload)
     }
 })
 

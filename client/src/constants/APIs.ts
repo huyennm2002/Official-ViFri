@@ -1,4 +1,4 @@
-const HOSTNAME = '192.168.1.78'
+const HOSTNAME = '10.0.75.128'
 export const AUTHENTICATED_AXIOS_HEADER = (token: string)  => ({
     'Access-Control-Allow-Origin': '*',
     'Authorization': `Bearer ${token}`

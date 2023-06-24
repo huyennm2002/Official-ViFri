@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import { Camera, CameraType } from 'expo-camera'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CameraButton from '../../components/CameraButton'
 import { ADD_FOOD_ITEM_BY_FORM_SCREEN } from '../../constants/screenNames'
+import { store } from '../../redux/store'
 
 export default function CameraScreen({navigation}) {
     const [type, setType] = useState(CameraType.back);
     const cameraRef = useRef(null);
-    const [hasPermisison, setHasPermission] = useState(null);
+    const [hasPermisison, setHasPermission] = useState<boolean>(null);
     const [imageUri, setImageUri] = useState(null);
-
+    const { id } = store.getState().user.info
     useEffect(() => {
         (async () => {
             const permissionStatus = await Camera.requestCameraPermissionsAsync();
@@ -30,28 +30,48 @@ export default function CameraScreen({navigation}) {
     const takePicure = async () => {
         if (cameraRef) {
             try {
-                const data = await cameraRef.current.takePictureAsync();
-                console.log(data);
-                setImageUri(data.uri);
+                const options = {
+                    quality: 1,
+                    base64: true,
+                    exif: false,
+                };
+                const data = await cameraRef.current.takePictureAsync(options);
+                setImageUri(data);
             } catch (e) {
                 console.log(e);
             }
         }
     }
+    const addFoodImage = () => {
+        navigation.navigate({
+            name: ADD_FOOD_ITEM_BY_FORM_SCREEN,
+            params: { image: imageUri },
+            merge: true,
+        })
+    }
 
     return (
         <View style={styles.container}>
-            <Camera style={styles.camera} type={type} ref={cameraRef}/>
             {
                 imageUri ?
-                <View style={styles.afterPictureGroup}>
-                    <CameraButton title={"Re-take"} icon="retweet" onPress={() => {setImageUri(null)}} color={null}/>
-                    <CameraButton title={"Save"} icon="check" onPress={() => {navigation.navigate(ADD_FOOD_ITEM_BY_FORM_SCREEN)}} color={null}/>
-                </View> 
+                <Image
+                    source={{ uri: 'data:image/jpg;base64,' + imageUri.base64 }}
+                    style={styles.camera}
+                />
+                :
+                <Camera style={styles.camera} type={type} ref={cameraRef}/>
+            }
+            {
+                imageUri ?
+                <SafeAreaView>
+                    <View style={styles.afterPictureGroup}>
+                        <CameraButton title={"Re-take"} icon="retweet" onPress={() => {setImageUri(null)}} color={null}/>
+                        <CameraButton title={"Save"} icon="check" onPress={addFoodImage} color={null}/>
+                    </View> 
+                </SafeAreaView>
                 :
                 <CameraButton title={'Take a picture'} icon="camera" onPress={takePicure} color={null} />
             }
-            
         </View>
     )
 }

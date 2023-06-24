@@ -4,25 +4,44 @@ import { ListItem } from '@rneui/themed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMinus, faPenToSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../constants/screenNames';
+import { s3URL } from '../constants/URL';
 
-export default function FridgeItem({ navigation }) {
-  const [quantity, setQuantity] = useState(0);
-
-  const updateQuanity = (value) => {
+export default function FridgeItem({ navigation, item }) {
+  const [quantity, setQuantity] = useState(item.quantity);
+  const updateQuanity = (value: Number) => {
     const newQuantity = quantity + value;
     if (newQuantity >= 0) {
       setQuantity(newQuantity);
     }
   }
+  const daysLeft = () => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const today = new Date();
+    const itemExp = new Date(item.expiration);
+    return Math.round(Math.abs(itemExp.getTime() - today.getTime()) / oneDay);
+  }
+  const getExpiration = () => {
+    const exp = daysLeft();
+    if (exp > 1) {
+      return `Expires in ${exp} days`;
+    } else {
+      return `Expires in ${exp} day`;
+    }
+  }
+
+  const imageUri = item.image ? s3URL + item.image : ''
 
   return (
     <ListItem containerStyle={styles.container}>
-      <Image source={require('../assets/images/chicken-breast.jpg')} style={styles.itemImage} />
+      {
+        imageUri ? <Image source={{uri: imageUri}} style={styles.itemImage}/>
+          : <Image source={require('../assets/images/chicken-breast.jpg')} style={styles.itemImage} />
+      }
       <ListItem.Content>
         <ListItem.Title>
-          <Text style={styles.foodTitle}>Chicken Breast</Text>
+          <Text style={styles.foodTitle}>{item.name}</Text>
         </ListItem.Title>
-        <ListItem.Subtitle>Expire in 1 day</ListItem.Subtitle>
+        <ListItem.Subtitle>{getExpiration()}</ListItem.Subtitle>
         <View>
           <Text>Quantity: </Text>
           <View style={styles.numericContainer}>
@@ -38,7 +57,7 @@ export default function FridgeItem({ navigation }) {
               </View>
             </Pressable>
           </View>
-          <Text>Servings</Text>
+          <Text>{item.unit}</Text>
         </View>
       </ListItem.Content>
       <View style={styles.editActionsContainer}>

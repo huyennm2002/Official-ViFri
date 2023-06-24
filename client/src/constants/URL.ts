@@ -1,0 +1,1 @@
+export const s3URL = 'https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/'

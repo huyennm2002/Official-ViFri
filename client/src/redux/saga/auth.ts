@@ -3,6 +3,8 @@ import { Alert } from 'react-native';
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { login, logout } from '../features/authSlice';
 import { AUTHENTICATED_AXIOS_HEADER, GET_USER_INFO_API, LOGIN_API, LOGOUT_API } from '../../constants/APIs';
+import { handleFetchItems } from './items';
+import { handleUpdateItemList } from '../features/itemSlice';
 
 const handleSignIn = (data) => {
     return axios({
@@ -28,6 +30,8 @@ function* signInFlow(action) {
         const token = res.data;
         const { data } = yield call(getUserInfo, token);
         yield put(login({user: data, token}));
+        const items = yield call(handleFetchItems, token);
+        yield put(handleUpdateItemList(items.data));
     } catch(error) {
         Alert.alert('Unable to login!\nPlease try again.');
     }
@@ -43,8 +47,7 @@ const handleLogOut = () => {
 
 function* logOutFlow() {
     try {
-        const res = yield call(handleLogOut);
-        console.log('Logging out')
+        yield call(handleLogOut);
         yield put(logout());
     } catch(error) {
         Alert.alert('Unable to logout!');

@@ -7,11 +7,7 @@ import { useDispatch } from 'react-redux';
 import DismissKeyBoardView from '../../components/DismissKeyboardView';
 import { Alert } from 'react-native';
 import { USER_SIGN_IN } from '../../redux/action';
-
-type SignInData = {
-  email: string,
-  password: string
-}
+import { SignInData } from '../../../types';
 
 export default function SignInScreen({navigation}) {
   const dispatch = useDispatch();

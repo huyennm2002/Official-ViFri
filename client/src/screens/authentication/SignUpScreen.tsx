@@ -10,15 +10,7 @@ import { Alert } from 'react-native';
 import { SIGNUP_API } from '../../constants/APIs';
 import ImageUploader from '../../components/ImageUploader';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-type SignUpData = {
-  first_name: string,
-  last_name: string,
-  email: string,
-  password: string,
-  dob: Date,
-  avatar: Blob
-}
+import { SignUpData } from '../../../types';
 
 export default function SignUpScreen({navigation}) {
   const [data, setData] = useState<SignUpData>({
@@ -69,7 +61,6 @@ export default function SignUpScreen({navigation}) {
         Alert.alert(err.message);
       })
   }
-  console.log(moment().format('YYYY-MM-DDTHH:mm:ss'))
   return (
     <DismissKeyboardView style={styles.container}>
       <SafeAreaView>
@@ -92,12 +83,11 @@ export default function SignUpScreen({navigation}) {
         onChangeText={(e) => handleChange('password', e)}
       />
       <DateTimePicker
-        // maximumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
+        maximumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
         value={data.dob}
-        // onChange={(e) => {
-        //   console.log(e);
-        //   handleChange('dob', new Date(moment(e.toString()).format('YYYY-MM-DDTHH:mm:ss')))
-        // }}
+        onChange={(e) => {
+          handleChange('dob', new Date(e.nativeEvent.timestamp))
+        }}
       />
       <Button
         title='Create an account'

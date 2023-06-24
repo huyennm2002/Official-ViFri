@@ -9,7 +9,7 @@ import { RootState, store } from '../../redux/store';
 
 export default function ProfileScreen({navigation}) {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user.user)
+  const { info } = useSelector((state: RootState) => state.user)
   const handleLogOut = () => {
     dispatch(USER_LOG_OUT);
   }
@@ -19,7 +19,7 @@ export default function ProfileScreen({navigation}) {
       <DismissKeyboardView style={styles.container}>
         <Image style={styles.logo}
           source={{
-            uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${user.id}.jpg`,
+            uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${info.id}.jpg`,
           }}
         />
         <Text style={styles.brandname}>Update info</Text>
