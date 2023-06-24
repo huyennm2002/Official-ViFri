@@ -1,5 +1,5 @@
 export default [
-    { label: 'Serving', value: 'serving' },
-    { label: 'Package', value: 'package' },
+    { label: 'Servings', value: 'servings' },
+    { label: 'Packages', value: 'packages' },
     { label: 'Custom Unit', value: 'custom' }
   ];

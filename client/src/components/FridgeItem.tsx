@@ -7,13 +7,28 @@ import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../constants/screenNames';
 import { s3URL } from '../constants/URL';
 
 export default function FridgeItem({ navigation, item }) {
-  const [quantity, setQuantity] = useState(Number(item.quantity));
-  const updateQuanity = (value) => {
+  const [quantity, setQuantity] = useState(item.quantity);
+  const updateQuanity = (value: Number) => {
     const newQuantity = quantity + value;
     if (newQuantity >= 0) {
       setQuantity(newQuantity);
     }
   }
+  const daysLeft = () => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const today = new Date();
+    const itemExp = new Date(item.expiration);
+    return Math.round(Math.abs(itemExp.getTime() - today.getTime()) / oneDay);
+  }
+  const getExpiration = () => {
+    const exp = daysLeft();
+    if (exp > 1) {
+      return `Expires in ${exp} days`;
+    } else {
+      return `Expires in ${exp} day`;
+    }
+  }
+
   const imageUri = item.image ? s3URL + item.image : ''
 
   return (
@@ -26,7 +41,7 @@ export default function FridgeItem({ navigation, item }) {
         <ListItem.Title>
           <Text style={styles.foodTitle}>{item.name}</Text>
         </ListItem.Title>
-        <ListItem.Subtitle>Expire in 1 day</ListItem.Subtitle>
+        <ListItem.Subtitle>{getExpiration()}</ListItem.Subtitle>
         <View>
           <Text>Quantity: </Text>
           <View style={styles.numericContainer}>
@@ -35,7 +50,7 @@ export default function FridgeItem({ navigation, item }) {
                 <FontAwesomeIcon icon={faPlus} size={24} color='green' />
               </View>
             </Pressable>
-            <Text style={styles.quantityText}></Text>
+            <Text style={styles.quantityText}>{quantity}</Text>
             <Pressable onPress={() => updateQuanity(-1)}>
               <View style={styles.minusIconContainer}>
                 <FontAwesomeIcon icon={faMinus} size={24} color='crimson' />
