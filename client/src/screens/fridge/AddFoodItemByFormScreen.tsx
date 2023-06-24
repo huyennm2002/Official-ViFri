@@ -14,7 +14,6 @@ import { formStyles } from '../../styles/commonStyles';
 import DismissKeyboardView from '../../components/DismissKeyboardView';
 import { CAMERA_SCREEN, FRIDGE_ITEM_LIST_SCREEN } from '../../constants/screenNames';
 import foodItemUnits from '../../constants/foodItemUnits';
-import FoodItemForm from '../../components/FoodItemForm';
 import { AUTHENTICATED_AXIOS_HEADER, ITEMS_API } from '../../constants/APIs';
 import { ADD_ITEM } from '../../redux/action';
 import { ItemData } from '../../../types';
@@ -37,6 +36,9 @@ export default function AddFoodItemByFormScreen({navigation, route}) {
     return isEmpty(data.name) || data.quantity == 0 || isEmpty(value) || isNull(data.expiration) ;
   }
   const handleChange = (key: string, value: any) => {
+    if (key === 'expiration') {
+      value = new Date(value.nativeEvent.timestamp);
+    }
     setData(currentData => ({
       ...currentData,
       [key]: value

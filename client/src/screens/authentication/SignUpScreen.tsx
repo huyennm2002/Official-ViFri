@@ -83,12 +83,11 @@ export default function SignUpScreen({navigation}) {
         onChangeText={(e) => handleChange('password', e)}
       />
       <DateTimePicker
-        // maximumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
+        maximumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
         value={data.dob}
-        // onChange={(e) => {
-        //   console.log(e);
-        //   handleChange('dob', new Date(moment(e.toString()).format('YYYY-MM-DDTHH:mm:ss')))
-        // }}
+        onChange={(e) => {
+          handleChange('dob', new Date(e.nativeEvent.timestamp))
+        }}
       />
       <Button
         title='Create an account'
