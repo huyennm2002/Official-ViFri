@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { View, Text, Image, StyleSheet, Pressable, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMinus, faPenToSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../constants/screenNames';
 import { s3URL } from '../constants/URL';
-import { AUTHENTICATED_AXIOS_HEADER, ITEMS_API } from '../constants/APIs';
 import { RootState } from '../redux/store';
 import { DELETE_ITEM, UPDATE_ITEM } from '../redux/action';
 
@@ -24,9 +22,8 @@ export default function FridgeItem({ navigation, item }) {
           id: item.id,
           quantity: newQuantity
         }
-      }))
+      }));
     }
-
   }
   const daysLeft = () => {
     const oneDay = 24 * 60 * 60 * 1000;
@@ -43,17 +40,7 @@ export default function FridgeItem({ navigation, item }) {
     }
   }
   const handleDeleteItem = () => {
-    axios({
-      url: ITEMS_API,
-      method: 'DELETE',
-      params: {id: item.id},
-      headers: AUTHENTICATED_AXIOS_HEADER(token)
-    }).then((res) => {
-      Alert.alert('Item deleted');
-      dispatch(DELETE_ITEM);
-    }).catch((e) => {
-      console.log(e);
-    })
+    dispatch(DELETE_ITEM({ token, id: item.id }))
   }
 
   return (

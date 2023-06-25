@@ -8,4 +8,7 @@ export const UPDATE_ITEM = (payload) => ({
     type: 'UPDATE_ITEM',
     payload
 })
-export const DELETE_ITEM = { type: 'DELETE_ITEM' }
+export const DELETE_ITEM = (payload) => ({
+    type: 'DELETE_ITEM',
+    payload
+})
