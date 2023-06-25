@@ -5,19 +5,12 @@ import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handl
 import RecipeItem from '../../components/RecipeItem';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Header from '../../components/Header';
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import DropDownPicker from 'react-native-dropdown-picker';
+import HumanRecipesProvider from './HumanRecipesProvider';
+import GptRecipesProvider from './GptRecipesProvider';
 
 export default function RecipeListScreen({ navigation }) {
-    const recipeList = [{
-        id: 1,
-    },
-    {
-        id: 2
-    },
-    {
-        id: 3
-    }]
-
     const [value, setValue] = useState(['']);
     const [items, setItems] = useState([
         { label: 'Apple', value: 'apple' },
@@ -31,10 +24,12 @@ export default function RecipeListScreen({ navigation }) {
     ]);
     const [open, setOpen] = useState(false);
 
+    const RecipesProvidersTab = createMaterialTopTabNavigator();
+
     return (
-        <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flex: 1 }}>
             <Header />
-            {/* <View> */}
+            <View style={styles.dropdownContainer}>
             <DropDownPicker
                 searchable={true}
                 containerStyle={styles.ingredientsContainer}
@@ -49,12 +44,14 @@ export default function RecipeListScreen({ navigation }) {
                 setItems={setItems}
                 mode="BADGE"
                 badgeDotColors={["#e76f51", "#00b4d8", "#e9c46a", "#e76f51", "#8ac926", "#00b4d8", "#e9c46a"]}
-                placeholder="Search or add Ingredients" />
-            <Button title="Let's cook!" />
-            {/* </View> */}
-            <ScrollView style={styles.container} >
-                {recipeList.map(recipe => <RecipeItem navigation={navigation} key={recipe.id} />)}
-            </ScrollView>
+                placeholder="Search or add Ingredients" 
+                />
+            <Button title="Let's cook!" />  
+            </View>
+            <RecipesProvidersTab.Navigator style={styles.recipesNavigationContainer}>
+                <RecipesProvidersTab.Screen name="HumanProvider" component={HumanRecipesProvider} options={{title: "Human Recipes"}}/>
+                <RecipesProvidersTab.Screen name="GptProvider" component={GptRecipesProvider} options={{title: "AI Recipes"}}/>
+            </RecipesProvidersTab.Navigator>
         </View>
     )
 }
@@ -68,6 +65,10 @@ const styles = StyleSheet.create({
         borderRadius: 0,
         marginTop: 16,
     },
+    dropdownContainer: {
+        alignItems: 'center', 
+        zIndex: 100
+    },
     dropdownStyle: {
         height: 80,
         borderRadius: 10,
@@ -80,5 +81,10 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 2,
         borderWidth: 1
+    },
+    recipesNavigationContainer: {
+        flexGrow: 1, 
+        zIndex: 50, 
+        marginBottom: 10
     }
 })
