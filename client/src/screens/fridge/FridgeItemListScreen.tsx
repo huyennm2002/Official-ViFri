@@ -37,7 +37,6 @@ export default function FridgeItemListScreen({navigation}) {
                                 color="crimson"
                                 style={{ marginBottom: 8 }}
                                 size="large"
-
                             />
                         </Pressable>
                         <Pressable>

@@ -9,18 +9,24 @@ import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../constants/screenNames';
 import { s3URL } from '../constants/URL';
 import { AUTHENTICATED_AXIOS_HEADER, ITEMS_API } from '../constants/APIs';
 import { RootState } from '../redux/store';
-import { DELETE_ITEM } from '../redux/action';
+import { DELETE_ITEM, UPDATE_ITEM } from '../redux/action';
 
 export default function FridgeItem({ navigation, item }) {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(item.quantity);
   const token = useSelector((state: RootState) => state.user.token);
   const imageUri = item.image ? s3URL + item.image : ''
   const updateQuanity = (value: Number) => {
-    const newQuantity = quantity + value;
+    const newQuantity = item.quantity + value;
     if (newQuantity >= 0) {
-      setQuantity(newQuantity);
+      dispatch(UPDATE_ITEM({
+        token,
+        data: {
+          id: item.id,
+          quantity: newQuantity
+        }
+      }))
     }
+
   }
   const daysLeft = () => {
     const oneDay = 24 * 60 * 60 * 1000;
@@ -69,7 +75,7 @@ export default function FridgeItem({ navigation, item }) {
                 <FontAwesomeIcon icon={faPlus} size={24} color='green' />
               </View>
             </Pressable>
-            <Text style={styles.quantityText}>{quantity}</Text>
+            <Text style={styles.quantityText}>{item.quantity}</Text>
             <Pressable onPress={() => updateQuanity(-1)}>
               <View style={styles.minusIconContainer}>
                 <FontAwesomeIcon icon={faMinus} size={24} color='crimson' />

@@ -35,23 +35,15 @@ export default function ShowFridgeItemDetailScreen({ route, navigation }) {
     }));
   }
   const handleUpdate = () => {
-    const formData = new FormData();
-    formData.append("quantity", data.quantity);
-    formData.append("unit", value);
-    formData.append("expiration", data.expiration.toString());
-    console.log(data.expiration)
-    axios({
-      url: ITEMS_API,
-      method: 'PUT',
-      data,
-      headers: AUTHENTICATED_AXIOS_HEADER(token),      
-    }).then((res) => {
-      Alert.alert('Item updated');
-      dispatch(UPDATE_ITEM);
-      navigation.navigate(FRIDGE_ITEM_LIST_SCREEN);
-    }).catch((err) => {
-      Alert.alert(err.message);
-    })
+    dispatch(UPDATE_ITEM({
+      token,
+      data: {
+        ...data,
+        unit: value,
+        expiration: moment(data.expiration).format('YYYY-MM-DDTHH:mm:ss').split('T')[0]}
+      })
+    );
+    navigation.navigate(FRIDGE_ITEM_LIST_SCREEN);
   }
 
   return (
@@ -95,7 +87,7 @@ export default function ShowFridgeItemDetailScreen({ route, navigation }) {
           minimumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
           value={new Date(moment(data.expiration).toDate())}
           onChange={(e) => {
-            handleChange('expiration', moment(e.nativeEvent.timestamp).format('YYYY-MM-DDTHH:mm:ss').split('T')[0])
+            handleChange('expiration', e.nativeEvent.timestamp)
           }}
         />
         <Button
