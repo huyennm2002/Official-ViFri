@@ -46,7 +46,6 @@ export default function FridgeItem({ navigation, item }) {
       Alert.alert('Item deleted');
       dispatch(DELETE_ITEM);
     }).catch((e) => {
-      console.log(item);
       console.log(e);
     })
   }
@@ -81,7 +80,11 @@ export default function FridgeItem({ navigation, item }) {
         </View>
       </ListItem.Content>
       <View style={styles.editActionsContainer}>
-        <Pressable onPress={() => {navigation.navigate(SHOW_FRIDGE_ITEM_DETAIL_SCREEN)}}>
+        <Pressable 
+          onPress={() => {
+            navigation.navigate(SHOW_FRIDGE_ITEM_DETAIL_SCREEN, { item })
+          }}
+        >
           <FontAwesomeIcon icon={faPenToSquare} size={24} />
         </Pressable>
         <Pressable onPress={() => handleDeleteItem()}>
