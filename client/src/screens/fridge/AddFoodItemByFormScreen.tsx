@@ -100,7 +100,8 @@ export default function AddFoodItemByFormScreen({navigation, route}) {
             value={data.name}
             onChangeText={(e) => handleChange('name', e)}
           />
-          <TextInput style={formStyles.textInput}
+          <TextInput
+            style={formStyles.textInput}
             placeholder="Quantity"
             keyboardType='numeric'
             onChangeText={(e) => handleChange('quantity', e)}
