@@ -7,7 +7,7 @@ const itemSlice = createSlice({
     name: 'items',
     initialState,
     reducers: {
-        handleUpdateItemList: (state, action: PayloadAction<ItemType[]>) => action.payload,
+        handleUpdateItemList: (state, action: PayloadAction<ItemType[]>) => (action.payload)
     }
 })
 
