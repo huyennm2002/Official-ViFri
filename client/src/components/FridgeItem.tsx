@@ -1,17 +1,28 @@
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
+import { View, Text, Image, StyleSheet, Pressable, Alert } from 'react-native'
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { ListItem } from '@rneui/themed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMinus, faPenToSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { SHOW_FRIDGE_ITEM_DETAIL_SCREEN } from '../constants/screenNames';
 import { s3URL } from '../constants/URL';
+import { RootState } from '../redux/store';
+import { DELETE_ITEM, UPDATE_ITEM } from '../redux/action';
 
 export default function FridgeItem({ navigation, item }) {
-  const [quantity, setQuantity] = useState(item.quantity);
+  const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.user.token);
+  const imageUri = item.image ? s3URL + item.image : ''
   const updateQuanity = (value: Number) => {
-    const newQuantity = quantity + value;
+    const newQuantity = item.quantity + value;
     if (newQuantity >= 0) {
-      setQuantity(newQuantity);
+      dispatch(UPDATE_ITEM({
+        token,
+        data: {
+          id: item.id,
+          quantity: newQuantity
+        }
+      }));
     }
   }
   const daysLeft = () => {
@@ -28,8 +39,9 @@ export default function FridgeItem({ navigation, item }) {
       return `Expires in ${exp} day`;
     }
   }
-
-  const imageUri = item.image ? s3URL + item.image : ''
+  const handleDeleteItem = () => {
+    dispatch(DELETE_ITEM({ token, id: item.id }))
+  }
 
   return (
     <ListItem containerStyle={styles.container}>
@@ -50,7 +62,7 @@ export default function FridgeItem({ navigation, item }) {
                 <FontAwesomeIcon icon={faPlus} size={24} color='green' />
               </View>
             </Pressable>
-            <Text style={styles.quantityText}>{quantity}</Text>
+            <Text style={styles.quantityText}>{item.quantity}</Text>
             <Pressable onPress={() => updateQuanity(-1)}>
               <View style={styles.minusIconContainer}>
                 <FontAwesomeIcon icon={faMinus} size={24} color='crimson' />
@@ -61,10 +73,14 @@ export default function FridgeItem({ navigation, item }) {
         </View>
       </ListItem.Content>
       <View style={styles.editActionsContainer}>
-        <Pressable onPress={() => {navigation.navigate(SHOW_FRIDGE_ITEM_DETAIL_SCREEN)}}>
+        <Pressable 
+          onPress={() => {
+            navigation.navigate(SHOW_FRIDGE_ITEM_DETAIL_SCREEN, { item })
+          }}
+        >
           <FontAwesomeIcon icon={faPenToSquare} size={24} />
         </Pressable>
-        <Pressable>
+        <Pressable onPress={() => handleDeleteItem()}>
           <FontAwesomeIcon icon={faTrash} size={24} />
         </Pressable>
       </View>

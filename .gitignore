@@ -1,6 +1,6 @@
-backend/node_modules/
-backend/build
-backend/npm-debug.log
-backend/.env
-backend/.DS_Store
-backend/config/config.json
+server/node_modules/
+server/build
+server/npm-debug.log
+server/.env
+server/.DS_Store
+server/config/config.json
