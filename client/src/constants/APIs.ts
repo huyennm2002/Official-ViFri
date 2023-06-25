@@ -1,4 +1,4 @@
-const HOSTNAME = '10.0.75.128'
+const HOSTNAME = '192.168.1.4'
 export const AUTHENTICATED_AXIOS_HEADER = (token: string)  => ({
     'Access-Control-Allow-Origin': '*',
     'Authorization': `Bearer ${token}`
@@ -14,3 +14,4 @@ export const SIGNUP_API = `http://${HOSTNAME}:3005/signup`
 export const GET_USER_INFO_API = `http://${HOSTNAME}:3005/users`
 export const GET_USER_ITEM_LIST_API = `http://${HOSTNAME}:3005/users/items`
 export const ITEMS_API = `http://${HOSTNAME}:3005/items`
+export const GET_HUMAN_RECIPES = `http://${HOSTNAME}:3005/human-recipes`

@@ -11,7 +11,7 @@ import HumanRecipesProvider from './HumanRecipesProvider';
 import GptRecipesProvider from './GptRecipesProvider';
 
 export default function RecipeListScreen({ navigation }) {
-    const [value, setValue] = useState(['']);
+    const [value, setValue] = useState([]);
     const [items, setItems] = useState([
         { label: 'Apple', value: 'apple' },
         { label: 'Avocado', value: 'avocado' },
@@ -46,11 +46,10 @@ export default function RecipeListScreen({ navigation }) {
                 badgeDotColors={["#e76f51", "#00b4d8", "#e9c46a", "#e76f51", "#8ac926", "#00b4d8", "#e9c46a"]}
                 placeholder="Search or add Ingredients" 
                 />
-            <Button title="Let's cook!" />  
             </View>
             <RecipesProvidersTab.Navigator style={styles.recipesNavigationContainer}>
-                <RecipesProvidersTab.Screen name="HumanProvider" component={HumanRecipesProvider} options={{title: "Human Recipes"}}/>
-                <RecipesProvidersTab.Screen name="GptProvider" component={GptRecipesProvider} options={{title: "AI Recipes"}}/>
+                <RecipesProvidersTab.Screen name="HumanProvider" children={() => <HumanRecipesProvider navigation={navigation} ingredients={value}/>} options={{title: "Human Recipes"}}/>
+                <RecipesProvidersTab.Screen name="GptProvider" children={() => <GptRecipesProvider ingredients={value}/>} options={{title: "AI Recipes"}}/>
             </RecipesProvidersTab.Navigator>
         </View>
     )
