@@ -29,7 +29,8 @@ import {
     CAMERA_SCREEN,
     ADD_BY_FORM_NAVIGATION,
     RECIPE_LIST_SCREEN,
-    RECIPE_DETAILS_SCREEN
+    RECIPE_DETAILS_SCREEN,
+    MAIN_NAVIGATION_STACK
 } from '../constants/screenNames';
 import { memo } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -37,6 +38,7 @@ import { RootState } from "../redux/store";
 
 
 const AppNavigationStack = createStackNavigator();
+const MainNavigationStack = createStackNavigator();
 const MainBottomTabBar = createBottomTabNavigator();
 const AuthenticationStack = createStackNavigator();
 const FridgeActionStack = createStackNavigator();
@@ -71,6 +73,16 @@ const RecipesActionNavigation = () => {
     )
 }
 
+const MainNavigation = (props) => {
+    const {routeName} = props;
+    return (
+        <MainNavigationStack.Navigator>
+            <MainNavigationStack.Screen name={MAIN_BOTTOM_TAB_NAVIGATION}children={() => <MainBottomTabNavigation routeName={routeName}/>} options={{ headerShown: false }}/>
+            <MainNavigationStack.Screen name={PROFILE_SCREEN} component={ProfileScreen} options={{ headerShown: false }}/>
+        </MainNavigationStack.Navigator>
+    )
+}
+
 const MainBottomTabNavigation = memo((props: {routeName: string}) => {
     const {routeName}  = props;
     const hide = routeName == CAMERA_SCREEN;
@@ -86,8 +98,6 @@ const MainBottomTabNavigation = memo((props: {routeName: string}) => {
                         iconName = 'fast-food-outline';
                     } else if (route.name === RECIPES_ACTION_NAVIGATION) {
                         iconName = 'book-outline';
-                    } else if (route.name === PROFILE_SCREEN) {
-                        iconName = 'person-outline';
                     }
 
                     return <Icon name={iconName} size={size} color={color} />;
@@ -102,7 +112,6 @@ const MainBottomTabNavigation = memo((props: {routeName: string}) => {
                 tabBarStyle: { display: hide ? "none" : "flex" }
             }} />
             <MainBottomTabBar.Screen name={RECIPES_ACTION_NAVIGATION} component={RecipesActionNavigation} />
-            <MainBottomTabBar.Screen name={PROFILE_SCREEN} component={ProfileScreen} />
         </MainBottomTabBar.Navigator>
     )
 })
@@ -123,9 +132,11 @@ const AppNavigation = (props) => {
         <AppNavigationStack.Navigator screenOptions={{ gestureEnabled: false, headerShown:false }}>
             {
                 loggedIn ?
-                <AppNavigationStack.Screen name={MAIN_BOTTOM_TAB_NAVIGATION} children={() => <MainBottomTabNavigation routeName={routeName}/>} options={{ headerShown: false }} initialParams={{routeName: routeName}} />
+                <AppNavigationStack.Screen name={MAIN_NAVIGATION_STACK} children={() => <MainNavigation routeName={routeName}/>} options={{ headerShown: false }} initialParams={{routeName: routeName}} />
+
                 : <AppNavigationStack.Screen name={AUTHENTICATION_NAVIGATION} component={AuthenticationNavigation} options={{ headerShown: false }}></AppNavigationStack.Screen>
             }
+
         </AppNavigationStack.Navigator>
     )
 }

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlass';
 import { faBell } from '@fortawesome/free-solid-svg-icons/faBell';
@@ -10,13 +10,14 @@ export default function Header() {
     return (
         <HeaderRNE
             backgroundColor='tomato'
-            leftComponent={<ViFriLogo />}
+            leftComponent={<ViFriLogo/>}
             rightComponent={
                 <View style={styles.icons}>
                     <FontAwesomeIcon size={26} style={styles.firstIcon} color='white' icon={faMagnifyingGlass} />
                     <FontAwesomeIcon size={26} color='white' icon={faBell} />
                 </View>
-            } />
+            }
+        />
     )
 }
 

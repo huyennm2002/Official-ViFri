@@ -8,6 +8,7 @@ import DismissKeyBoardView from '../../components/DismissKeyboardView';
 import { Alert } from 'react-native';
 import { USER_SIGN_IN } from '../../redux/action';
 import { SignInData } from '../../../types';
+import { SIGNUP_SCREEN } from '../../constants/screenNames';
 
 export default function SignInScreen({navigation}) {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ export default function SignInScreen({navigation}) {
       />
       <Button
         title="Create Account?"
-        onPress={() => navigation.navigate("SignUp")}
+        onPress={() => navigation.navigate(SIGNUP_SCREEN)}
       />
 
       <Image style={styles.logo}
