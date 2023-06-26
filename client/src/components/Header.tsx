@@ -1,16 +1,18 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlass';
 import { faBell } from '@fortawesome/free-solid-svg-icons/faBell';
 import { Header as HeaderRNE } from '@rneui/themed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import ViFriLogo from './ViFriLogo';
+import { useNavigation } from '@react-navigation/core';
 
 export default function Header() {
+    const navigation = useNavigation();
     return (
         <HeaderRNE
             backgroundColor='tomato'
-            leftComponent={<ViFriLogo/>}
+            leftComponent={<ViFriLogo navigation={navigation}/> }
             rightComponent={
                 <View style={styles.icons}>
                     <FontAwesomeIcon size={26} style={styles.firstIcon} color='white' icon={faMagnifyingGlass} />

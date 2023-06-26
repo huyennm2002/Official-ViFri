@@ -5,11 +5,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import { useNavigation } from '@react-navigation/core';
 import { PROFILE_SCREEN } from '../constants/screenNames';
 
-export default function ViFriLogo() {
-  const navigation = useNavigation()
+export default function ViFriLogo({navigation}) {
   const user = useSelector((state: RootState) => state.user.info)
   return (
     <View style={styles.iconGroup}>
