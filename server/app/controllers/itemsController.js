@@ -2,7 +2,7 @@ import Item from "../models/item.js";
 import { handleUploadFile } from "../services/fileHandler.js";
 import { getAuthorization } from "../helpers/APIHelper.js";
 
-export const addItem = (req, res) => {
+export const addItem = async (req, res) => {
     if (!req.body) {
         res.status(400).send({
             message: "Content cannot be empty"
@@ -11,7 +11,7 @@ export const addItem = (req, res) => {
     }
     let imageUrl = ''
     if (req.file) {
-        imageUrl = handleUploadFile(req.file, req.file.filename);
+        imageUrl = await handleUploadFile(req.file, req.file.filename);
     }
     const { user_id } = getAuthorization(req.headers)
     const newItem = new Item({

@@ -33,7 +33,7 @@ app.get('/users/items', (req, res) => User.getItemList(req, res));
 app.get('/users/reminder', (req, res) => User.getReminderList(req, res));
 
 //item
-app.post('/items', upload.single('image'), (req, res) => Item.addItem(req, res));
+app.post('/items', upload.single('image'), async (req, res) => Item.addItem(req, res));
 app.get('/items', (req, res) => Item.getItemInfo(req, res))
 app.put('/items', (req, res) => Item.updateItemInfo(req, res))
 app.delete('/items', (req, res) => Item.deleteItem(req, res))
