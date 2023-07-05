@@ -1,22 +1,24 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, StyleSheet, TextInput, Button, Image } from 'react-native'
+import { Text, StyleSheet, TextInput, Button, Image, View, Pressable } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DismissKeyboardView from '../../components/DismissKeyboardView'
 import Header from '../../components/Header';
 import { USER_LOG_OUT } from '../../redux/action';
 import { RootState, store } from '../../redux/store';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import UserProfileHeader from '../../components/user/UserProfileHeader';
 
 export default function ProfileScreen({navigation}) {
   const dispatch = useDispatch();
-  const { info } = useSelector((state: RootState) => state.user)
+  const user = useSelector((state: RootState) => state.user.info)
   const handleLogOut = () => {
     dispatch(USER_LOG_OUT);
   }
   return (
     <SafeAreaProvider>
       <Header/>
-      <DismissKeyboardView style={styles.container}>
+      {/* <DismissKeyboardView style={styles.container}>
         <Image style={styles.logo}
           source={{
             uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${info.id}.jpg`,
@@ -36,7 +38,30 @@ export default function ProfileScreen({navigation}) {
           title="Logout"
           onPress={handleLogOut}
         />
-      </DismissKeyboardView>
+      </DismissKeyboardView> */}
+      <UserProfileHeader/>
+      <View style={styles.container}>
+        <View>
+          <Pressable>
+            <View>
+              <Text>Settings</Text>
+              {/* <FontAwesomeIcon icon={faMi} size={24} color='crimson' /> */}
+            </View>
+          </Pressable>
+          <Pressable>
+            <View>
+              <Text>User Management</Text>
+              {/* <FontAwesomeIcon icon={faMi} size={24} color='crimson' /> */}
+            </View>
+          </Pressable>
+          <Pressable>
+            <View>
+              <Text>Log Out</Text>
+              {/* <FontAwesomeIcon icon={faMi} size={24} color='crimson' /> */}
+            </View>
+          </Pressable>
+        </View>
+      </View>
     </SafeAreaProvider>
   )
 }
@@ -76,9 +101,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 10
   },
-  logo: {
-    width: 300,
-    height: 300,
-    margin: 20
+  avatarImage: {
+    marginRight: 5,
+    width: 150,
+    height: 150,
+    borderRadius: 200/2
   },
+  upperView: {
+    height: 100,
+  },
+  lowerView: {
+    height: 400,
+  }
 });

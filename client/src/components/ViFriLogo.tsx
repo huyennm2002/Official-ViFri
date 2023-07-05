@@ -12,14 +12,14 @@ export default function ViFriLogo({navigation}) {
   return (
     <View style={styles.iconGroup}>
       <TouchableOpacity onPress={() => navigation.navigate(PROFILE_SCREEN)}>
-        {/* {
+        {
           user.avatar
             ?  <Image
-              source={{uri: `s3://vifri-s3-bucket/avatar_${user.id}.jpg`}}
-              ></Image>
+                source={{uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${user.id}.jpg`}}
+                style={styles.avatarImage}
+              />
             : <FontAwesomeIcon icon={faCircleUser} size={30} style={styles.avatarIcon} />
-        } */}
-        <FontAwesomeIcon icon={faCircleUser} size={30} style={styles.avatarIcon} />
+        }
       </TouchableOpacity>
       <Text style = {styles.title}>ViFri</Text>
     </View>
@@ -40,10 +40,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   avatarIcon: {
-    marginRight: 10,
+    marginRight: 5,
     width: 30,
     height: 30,
     borderRadius: 30/ 2,
     color: 'white'
+  },
+  avatarImage: {
+    marginRight: 5,
+    width: 30,
+    height: 30,
+    borderRadius: 30/ 2
   }
 })
