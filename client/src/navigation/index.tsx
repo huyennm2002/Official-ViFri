@@ -1,7 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { TouchableOpacity, View } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
     SignUpScreen,
     SignInScreen,
@@ -30,12 +34,11 @@ import {
     ADD_BY_FORM_NAVIGATION,
     RECIPE_LIST_SCREEN,
     RECIPE_DETAILS_SCREEN,
-    MAIN_NAVIGATION_STACK
+    MAIN_NAVIGATION_STACK,
+    EDIT_PROFILE_SCREEN
 } from '../constants/screenNames';
-import { memo } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { RootState } from "../redux/store";
-
+import EditProfileScreen from "../screens/profile/EditProfileScreen";
 
 const AppNavigationStack = createStackNavigator();
 const MainNavigationStack = createStackNavigator();
@@ -79,6 +82,23 @@ const MainNavigation = (props) => {
         <MainNavigationStack.Navigator>
             <MainNavigationStack.Screen name={MAIN_BOTTOM_TAB_NAVIGATION}children={() => <MainBottomTabNavigation routeName={routeName}/>} options={{ headerShown: false }}/>
             <MainNavigationStack.Screen name={PROFILE_SCREEN} component={ProfileScreen} options={{ headerShown: false }}/>
+            <MainNavigationStack.Screen
+                name={EDIT_PROFILE_SCREEN}
+                component={EditProfileScreen}
+                options={({navigation}) => ({
+                    title: 'Edit Profile',
+                    headerStyle: {
+                        backgroundColor: 'tomato'
+                    },
+                    headerLeft: () => (
+                        <View>
+                            <TouchableOpacity style={{ marginLeft: 15 }} onPress={() => navigation.goBack()}>
+                                <FontAwesomeIcon icon={faAngleLeft} />
+                            </TouchableOpacity>
+                        </View>
+                    )
+                })}
+            />
         </MainNavigationStack.Navigator>
     )
 }
@@ -108,9 +128,13 @@ const MainBottomTabNavigation = memo((props: {routeName: string}) => {
                 tabBarStyle: { display: hide ? 'none' : 'flex' }
             })}>
             <MainBottomTabBar.Screen name={HOME_SCREEN} component={HomeScreen} />
-            <MainBottomTabBar.Screen name={FRIDGE_ACTION_NAVIGATION} component={FridgeActionNavigation} options= {{
-                tabBarStyle: { display: hide ? "none" : "flex" }
-            }} />
+            <MainBottomTabBar.Screen 
+                name={FRIDGE_ACTION_NAVIGATION}
+                component={FridgeActionNavigation}
+                options= {{
+                    tabBarStyle: { display: hide ? "none" : "flex" },
+                }}
+            />
             <MainBottomTabBar.Screen name={RECIPES_ACTION_NAVIGATION} component={RecipesActionNavigation} />
         </MainBottomTabBar.Navigator>
     )
@@ -136,7 +160,6 @@ const AppNavigation = (props) => {
 
                 : <AppNavigationStack.Screen name={AUTHENTICATION_NAVIGATION} component={AuthenticationNavigation} options={{ headerShown: false }}></AppNavigationStack.Screen>
             }
-
         </AppNavigationStack.Navigator>
     )
 }
