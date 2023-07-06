@@ -7,6 +7,7 @@ import { getAuthorization } from '../helpers/APIHelper.js';
 
 export const getUserInfo = (req, res) => {
     const { user_id } = getAuthorization(req.headers);
+
     User.get(user_id, (err, data) => {
         if (err) {
             return res.status(500).send({message: "Cannot retrieve user info"})
@@ -16,7 +17,8 @@ export const getUserInfo = (req, res) => {
             first_name: data[0].first_name,
             last_name: data[0].last_name,
             email: data[0].email,
-            avatar: data[0].avatar
+            avatar: data[0].avatar,
+            dob: data[0].dob
         }
         return res.status(200).json(result);
     })
@@ -28,6 +30,7 @@ export const updateUserInfo = (req, res) => {
             message: "Content cannot be empty"
         })
     }
+
     const { user_id } = getAuthorization(req.headers);
     let updatedInfo = req.body;
 
@@ -37,7 +40,7 @@ export const updateUserInfo = (req, res) => {
                 message: err.message || "An error has occured while creating new user"
             })
         } else {
-            return res.send(data);
+            return res.status(204);
         }
     })
 }
@@ -57,6 +60,7 @@ export const getItemList = (req, res) => {
 
 export const getReminderList = (req, res) => {
     const { user_id } = getAuthorization(req.headers);
+
     Item.getReminder(user_id, (err, data) => {
         if (err) {
             return res.status(500).send({

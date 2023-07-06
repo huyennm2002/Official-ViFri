@@ -14,16 +14,14 @@ import { UPDATE_USER } from "../../redux/action";
 export default function EditProfileScreen() {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.info)
-  const [data, setData] = useState<User>(user);
+  const token = useSelector((state: RootState) => state.user.token)
+  const [data, setData] = useState({
+    first_name: user.first_name,
+    last_name: user.last_name,
+    email: user.email,
+    dob: user.dob
+  });
   const [showPicker, setShowPicker] = useState(false);
-  const {
-    id,
-    email,
-    first_name,
-    last_name,
-    dob
-  } = user;
-  console.log(data);
   const handleChange = (key : string, value: any) => {
     setData(currentData => ({
       ...currentData,
@@ -31,11 +29,6 @@ export default function EditProfileScreen() {
     }));
   }
   const handleSave = () => {
-    const formData = new FormData();
-    formData.append("first_name", first_name);
-    formData.append("last_name", last_name);
-    formData.append("email", email);
-    formData.append("dob", dob.toString());
     dispatch(UPDATE_USER({ token, data }));
   }
 
@@ -58,7 +51,7 @@ export default function EditProfileScreen() {
           <TextInput
             style={styles.input}
             placeholder="First name"
-            value={first_name}
+            value={data.first_name}
             onChangeText={text => handleChange('first_name', text)}
           />
         </View>
@@ -69,7 +62,7 @@ export default function EditProfileScreen() {
             <TextInput
               style={styles.input}
               placeholder="Last name"
-              value={last_name}
+              value={data.last_name}
               onChangeText={text => handleChange('last_name', text)}
             />  
           </View>
@@ -80,7 +73,7 @@ export default function EditProfileScreen() {
             <TextInput
               style={styles.input}
               placeholder="Email"
-              value={email}
+              value={data.email}
               onChangeText={text => handleChange('email', text)}
               keyboardType="email-address"
             />
@@ -88,17 +81,17 @@ export default function EditProfileScreen() {
           <View>
             <Text>Date of birth</Text>
             {
-              dob &&
+              data.dob &&
               <DateTimePicker
                 maximumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
-                value={dob}
+                value={data.dob}
                 onChange={(e) => {
                   handleChange('dob', new Date(e.nativeEvent.timestamp))
                 }}
               />
             }
             {
-              !dob && !showPicker && <Button onPress={() => setShowPicker(true)}>Choose Date</Button>
+              !data.dob && !showPicker && <Button onPress={() => setShowPicker(true)}>Choose Date</Button>
             }
             { showPicker &&
               <DateTimePicker

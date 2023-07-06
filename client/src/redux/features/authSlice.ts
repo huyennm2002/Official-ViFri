@@ -38,8 +38,11 @@ const authSlice = createSlice({
             token: '',
             isLoggedIn: false
         }),
+        updateUserInfo: (state, action: PayloadAction<User>) => {
+            state.info = action.payload
+        }
     }
 })
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, updateUserInfo } = authSlice.actions;
 export default authSlice.reducer;
