@@ -40,7 +40,7 @@ export const updateUserInfo = (req, res) => {
                 message: err.message || "An error has occured while creating new user"
             })
         } else {
-            return res.status(204);
+            return res.status(204).end();
         }
     })
 }

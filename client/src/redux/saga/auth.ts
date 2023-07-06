@@ -6,14 +6,14 @@ import { AUTHENTICATED_AXIOS_HEADER, AUTHENTICATED_AXIOS_HEADER_FORM, LOGIN_API,
 import { handleFetchItems } from './items';
 import { handleUpdateItemList } from '../features/itemSlice';
 
-const handleSignIn = (data) => {
-	return axios({
+const handleSignIn = (data) => (
+	axios({
 		url: LOGIN_API,
 		method: 'POST',
 		data,
 		headers: { 'Access-Control-Allow-Origin': '*'}
 	})
-}
+)
 
 const getUserInfo = (token) => {
 	return axios({
@@ -36,22 +36,14 @@ function* signInFlow(action) {
 	}
 }
 
-const handleLogOut = () => {
-	return axios({
+const handleLogOut = () => (
+	axios({
 		url: LOGOUT_API,
 		method: 'POST',
 		headers: { 'Access-Control-Allow-Origin': '*'}
 	})
-}
+)
 
-const handleUpdateUser = (token, data) => {
-	axios({
-		url: USERS_API,
-		method: 'PUT',
-		data,
-		headers: AUTHENTICATED_AXIOS_HEADER(token)
-	});
-  }
 function* logOutFlow() {
 	try {
 		yield call(handleLogOut);
@@ -61,6 +53,14 @@ function* logOutFlow() {
 	}
 }
 
+const handleUpdateUser = (token, data) => (
+	axios({
+		url: USERS_API,
+		method: 'PUT',
+		data,
+		headers: AUTHENTICATED_AXIOS_HEADER(token)
+	})
+)
 function* updateUserFlow(action) {
 	const {token, data} = action.payload;
 	try {
