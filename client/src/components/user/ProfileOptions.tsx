@@ -6,8 +6,9 @@ import { Pressable, View, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { USER_LOG_OUT } from "../../redux/action";
+import { EDIT_PROFILE_SCREEN } from "../../constants/screenNames";
 
-export default function ProfileOptions() {
+export default function ProfileOptions({navigation: {navigate}}) {
 	const dispatch = useDispatch();
   const handleLogOut = () => {
     dispatch(USER_LOG_OUT);
@@ -22,7 +23,10 @@ export default function ProfileOptions() {
 						<FontAwesomeIcon icon={faAngleRight} />
 					</View>
 				</Pressable>
-				<Pressable style={styles.option}>
+				<Pressable
+					style={styles.option}
+					onPress={() => navigate(EDIT_PROFILE_SCREEN)}
+				>
 					<View style={styles.contentView}>
 						<FontAwesomeIcon icon={faUser} />
 						<Text style={styles.text}>User Mangagement</Text>

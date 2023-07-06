@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { View, Text, StyleSheet, Image } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { RootState } from '../redux/store';
 import { PROFILE_SCREEN } from '../constants/screenNames';
 
 export default function ViFriLogo({navigation}) {

@@ -14,6 +14,7 @@ const ADD_BY_FORM_NAVIGATION = "AddByFormNavigation";
 const RECIPE_LIST_SCREEN = "RecipeListScreen";
 const RECIPE_DETAILS_SCREEN = "RecipeDetailScreen";
 const MAIN_NAVIGATION_STACK = "MainNavigation";
+const EDIT_PROFILE_SCREEN = "EditProfileScreen";
 
 export {
     FRIDGE_ITEM_LIST_SCREEN,
@@ -31,5 +32,6 @@ export {
     ADD_BY_FORM_NAVIGATION,
     RECIPE_LIST_SCREEN,
     RECIPE_DETAILS_SCREEN,
-    MAIN_NAVIGATION_STACK
+    MAIN_NAVIGATION_STACK,
+    EDIT_PROFILE_SCREEN
 }
