@@ -12,7 +12,7 @@ import {
     AddFoodItemByFormScreen,
     RecipeListScreen,
     CameraScreen,
-    RecipeDetailScreen
+    RecipeDetailScreen,
 } from '../screens';
 import {
     FRIDGE_ITEM_LIST_SCREEN,
@@ -34,6 +34,7 @@ import {
 import { memo } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RootState } from "../redux/store";
+import { Tab } from "@rneui/base";
 
 
 const AppNavigationStack = createStackNavigator();

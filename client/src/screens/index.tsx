@@ -8,6 +8,8 @@ import RecipeDetailScreen from "./recipes/RecipeDetailScreen";
 import ShowFridgeItemDetailScreen from "./fridge/ShowFridgeItemDetailScreen";
 import AddFoodItemByFormScreen from "./fridge/AddFoodItemByFormScreen";
 import CameraScreen from "./fridge/CameraScreen";
+import HumanRecipesProvider from "./recipes/HumanRecipesProvider";
+import GptRecipesProvider from "./recipes/GptRecipesProvider";
 
 export {
     ProfileScreen,
@@ -19,5 +21,7 @@ export {
     AddFoodItemByFormScreen,
     ShowFridgeItemDetailScreen,
     CameraScreen,
-    RecipeDetailScreen
+    RecipeDetailScreen,
+    HumanRecipesProvider,
+    GptRecipesProvider
 }
