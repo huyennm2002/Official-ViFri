@@ -28,7 +28,7 @@ app.post('/logout', (req, res) => Auth.logOut(req,res));
 
 //user
 app.get('/users', (req, res) => User.getUserInfo(req, res));
-app.put('/users', (req, res) => User.updateUserInfo(req, res));
+app.put('/users', upload.single('avatar'), async (req, res) => User.updateUserInfo(req, res));
 app.get('/users/items', (req, res) => User.getItemList(req, res));
 app.get('/users/reminder', (req, res) => User.getReminderList(req, res));
 
