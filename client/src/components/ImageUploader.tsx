@@ -12,19 +12,23 @@ const ImageUploader = (props) => {
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status === 'granted') {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-        base64: true,
-      });
-      if (!result.canceled) {
-        setImage({
-          name: new Date() + '_avatar',
-          uri: result.assets[0].uri,
-          type: 'image/jpg',
+      try {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+          base64: true,
         });
+        if (!result.canceled) {
+          setImage({
+            name: new Date() + '_avatar',
+            uri: result.assets[0].uri,
+            type: 'image/jpg',
+          });
+        }
+      } catch(e) {
+        Alert.alert("Unable to set image.")
       }
     } else {
       Alert.alert("Please enable access to camera.")
@@ -33,8 +37,8 @@ const ImageUploader = (props) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
+      <Button title="Upload image" onPress={pickImage} />
+      {image && <Image source={{ uri: image.uri }} style={{ width: 200, height: 200, borderRadius: 200 }} />}
     </View>
   );
 }
