@@ -4,7 +4,7 @@ import { RootState } from "../../redux/store"
 
 const Avatar = (props) => {
   const { id, avatar }= useSelector((state: RootState) => state.user.info)
-
+  const { customStyle } = props;
   return (
     <Image
       style={customStyle ? customStyle : styles.avatarImage}
@@ -29,4 +29,3 @@ Avatar.defaultProps = {
 }
 
 export default Avatar;
-
