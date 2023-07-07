@@ -2,11 +2,7 @@ import { useSelector } from "react-redux"
 import { Image, StyleSheet } from "react-native"
 import { RootState } from "../../redux/store"
 
-type Props = {
-  customStyle: any
-}
-
-const Avatar = ({customStyle = styles.avatarImage} : Props) => {
+const Avatar = (props) => {
   const { id, avatar }= useSelector((state: RootState) => state.user.info)
 
   return (
@@ -18,9 +14,6 @@ const Avatar = ({customStyle = styles.avatarImage} : Props) => {
     />
   )
 }
-
-export default Avatar;
-
 const styles = StyleSheet.create({
   avatarImage: {
     flex: 1,
@@ -31,3 +24,9 @@ const styles = StyleSheet.create({
     borderWidth: 4,
   },
 })
+Avatar.defaultProps = {
+  customStyle: styles.avatarImage
+}
+
+export default Avatar;
+
