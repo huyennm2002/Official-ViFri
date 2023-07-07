@@ -1,9 +1,10 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import User from "../models/user.js";
 import Item from '../models/item.js';
 import { getAuthorization } from '../helpers/APIHelper.js';
+import pkg from 'lodash';
+import { handleUploadFile } from "../services/fileHandler.js";
 
+const { isEmpty } = pkg;
 
 export const getUserInfo = (req, res) => {
     const { user_id } = getAuthorization(req.headers);
@@ -24,16 +25,26 @@ export const getUserInfo = (req, res) => {
     })
 }
 
-export const updateUserInfo = (req, res) => {
-    if (!req.body) {
+export const updateUserInfo = async (req, res) => {
+    const { user_id } = getAuthorization(req.headers);
+
+    if (req.file) {
+        try {
+            const avatarKey = `avatar_${user_id}.jpg`;
+            await handleUploadFile(req.file, avatarKey);
+            return res.status(201).end();
+        } catch(e) {
+            console.log(e);
+            return res.status(500).send({message: "Unable to upload avatar"});
+        }
+    }
+
+    if (isEmpty(req.body)) {
         return res.status(400).send({
             message: "Content cannot be empty"
         })
     }
-
-    const { user_id } = getAuthorization(req.headers);
     let updatedInfo = req.body;
-
     User.update(updatedInfo, user_id, (err, data) => {
         if (err) {
             return res.status(500).send({

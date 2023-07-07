@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { View, StyleSheet, TextInput, Text, Image } from "react-native";
+import { View, StyleSheet, TextInput, Text, Image, Alert } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button } from "@rneui/base";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { User } from "../../../types";
+import axios from "axios";
 import moment from "moment";
-import UserProfileHeader from "../../components/user/UserProfileHeader";
 import { UPDATE_USER } from "../../redux/action";
+import ImageUploader from "../../components/ImageUploader";
+import { AUTHENTICATED_AXIOS_HEADER_FORM, USERS_API } from "../../constants/APIs";
 
 export default function EditProfileScreen() {
   const dispatch = useDispatch();
@@ -32,6 +34,21 @@ export default function EditProfileScreen() {
     const date = moment(data.dob).format('YYYY-MM-DD').toString();
     dispatch(UPDATE_USER({ token, data: {...data, dob: date} }));
   }
+  const handleChangeAvatar = (image: Blob) => {
+    const formData = new FormData();
+    formData.append("avatar", image);
+    axios({
+      url: USERS_API,
+      method: 'PUT',
+      headers: AUTHENTICATED_AXIOS_HEADER_FORM(token),
+      data: formData
+    }).then((res) => {
+      Alert.alert('Avatar updated');
+    }).catch((e) => {
+      console.log(e);
+      Alert.alert('Cannot update');
+    })
+  }
 
   return (
     <SafeAreaProvider>
@@ -43,6 +60,10 @@ export default function EditProfileScreen() {
               source={{uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${user.id}.jpg`}}
             />
           </View>
+          <ImageUploader
+            image={null}
+            setImage={handleChangeAvatar}
+          />
         </View>
         <View style={styles.container}>
         <View>
@@ -108,9 +129,10 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    alignItems: 'center',
+    paddingStart: 50,
     justifyContent: 'center',
     padding: 20,
+    flexDirection: 'row',
   },
   imageWrap: {
     width: 100,

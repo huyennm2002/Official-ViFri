@@ -12,24 +12,23 @@ const ImageUploader = (props) => {
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status === 'granted') {
-      try {
-        let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-          base64: true,
-        });
+      ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+        base64: true,
+      }).then((result) => {
         if (!result.canceled) {
           setImage({
             name: new Date() + '_avatar',
             uri: result.assets[0].uri,
             type: 'image/jpg',
-          });
+          })
         }
-      } catch(e) {
-        Alert.alert("Unable to set image.")
-      }
+      }).catch((e) => {
+        Alert.alert(e);
+      })
     } else {
       Alert.alert("Please enable access to camera.")
     }
