@@ -34,7 +34,7 @@ export const createUser = (req, res) => {
             dob: new Date(req.body.dob) || null,
             avatar: null,
         })
-        User.create(newUser, (err, data) => {
+        User.create(newUser, async (err, data) => {
             if (err) {
                 return res.status(500).send({
                     message: err.message || "An error has occured while creating new user"
@@ -42,14 +42,14 @@ export const createUser = (req, res) => {
             } else {
                 const avatarKey = `avatar_${data}.jpg`;
                 if (req.file) {
-                    const result = handleUploadFile(req.file, avatarKey);
-                    if (result) {
+                    try {
+                        const result = await handleUploadFile(req.file, avatarKey);
                         User.update({...newUser, avatar: avatarKey}, data, (error, res) => {})
-                    } else {
-                        User.update(newUser, data, (error, res) => {})
+                        return res.status(201).end();
+                    } catch(e) {
+                        return res.status(200).send({message: "Unable to upload avatar"});
                     }
                 }
-                return res.status(200).json(newUser);
             }
         })
     });  
