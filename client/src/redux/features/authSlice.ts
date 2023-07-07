@@ -38,8 +38,8 @@ const authSlice = createSlice({
             token: '',
             isLoggedIn: false
         }),
-        updateUserInfo: (state, action: PayloadAction<User>) => {
-            state.info = action.payload
+        updateUserInfo: (state, action) => {
+            state.info = {...state.info, ...action.payload}
         }
     }
 })

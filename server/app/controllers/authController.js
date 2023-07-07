@@ -32,7 +32,7 @@ export const createUser = (req, res) => {
             email: req.body.email,
             encrypted_password: hashPassword(req.body.password),
             dob: new Date(req.body.dob) || null,
-            avatar: null,
+            avatar: 0,
         })
         User.create(newUser, async (err, data) => {
             if (err) {
@@ -43,8 +43,7 @@ export const createUser = (req, res) => {
                 const avatarKey = `avatar_${data}.jpg`;
                 if (req.file) {
                     try {
-                        const result = await handleUploadFile(req.file, avatarKey);
-                        User.update({...newUser, avatar: avatarKey}, data, (error, res) => {})
+                        await handleUploadFile(req.file, avatarKey);
                         return res.status(201).end();
                     } catch(e) {
                         return res.status(200).send({message: "Unable to upload avatar"});

@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { Text, StyleSheet, Image, View, ImageBackground } from 'react-native'
 import { RootState } from '../../redux/store';
+import Avatar from '../shared/Avatar';
 
 export default function UserProfileHeader() {
     const user = useSelector((state: RootState) => state.user.info)
@@ -10,15 +11,11 @@ export default function UserProfileHeader() {
         <ImageBackground style={styles.container} source={require('../../assets/images/profile-bg.jpeg')}>
             <View style={styles.header}>  
                 <View style={styles.imageWrap}>
-                    <Image
-                        style={styles.avatarImage}
-                        source={{uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${user.id}.jpg`}}
-                    />
+                    <Avatar/>
                  </View>
                 <Text style={styles.name}>{user.first_name} {user.last_name}</Text>
             </View>
         </ImageBackground>
-            
     )
 }
 
@@ -41,14 +38,6 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         borderColor: 'rgba(0,0,0, 0.4)',
         borderWidth: 4
-    },
-    avatarImage: {
-        flex: 1,
-        width: null,
-        alignSelf: 'stretch',
-        borderRadius: 100,
-        borderColor: '#fff',
-        borderWidth: 4,
     },
     name: {
         marginTop: 10,

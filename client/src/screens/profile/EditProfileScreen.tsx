@@ -1,17 +1,17 @@
-import React, { useImperativeHandle, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import axios from "axios";
+import moment from "moment";
 import { View, StyleSheet, TextInput, Text, Image, Alert } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button } from "@rneui/base";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { User } from "../../../types";
-import axios from "axios";
-import moment from "moment";
+import { RootState } from "../../redux/store";
 import { UPDATE_USER } from "../../redux/action";
 import ImageUploader from "../../components/ImageUploader";
 import { AUTHENTICATED_AXIOS_HEADER_FORM, USERS_API } from "../../constants/APIs";
+import Avatar from "../../components/shared/Avatar";
 
 export default function EditProfileScreen() {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export default function EditProfileScreen() {
     email: user.email,
     dob: new Date(user.dob)
   });
-  const [showPicker, setShowPicker] = useState(false);
+  const [showPicker, setShowPicker] = useState<boolean>(false);
   const handleChange = (key : string, value: any) => {
     setData(currentData => ({
       ...currentData,
@@ -36,7 +36,8 @@ export default function EditProfileScreen() {
   }
   const handleChangeAvatar = (image: Blob) => {
     const formData = new FormData();
-    formData.append("avatar", image);
+    formData.append("avatarFile", image);
+    formData.append("avatar", user.avatar + 1);
     axios({
       url: USERS_API,
       method: 'PUT',
@@ -55,10 +56,7 @@ export default function EditProfileScreen() {
       <ScrollView style={styles.main}>
         <View style={styles.header}>  
           <View style={styles.imageWrap}>
-            <Image
-              style={styles.avatarImage}
-              source={{uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${user.id}.jpg`}}
-            />
+            <Avatar/>
           </View>
           <ImageUploader
             image={null}
@@ -140,14 +138,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: 'rgba(0,0,0, 0.4)',
     borderWidth: 4
-  },
-  avatarImage: {
-    flex: 1,
-    width: null,
-    alignSelf: 'stretch',
-    borderRadius: 100,
-    borderColor: '#fff',
-    borderWidth: 4,
   },
   container: {
     flex: 1,

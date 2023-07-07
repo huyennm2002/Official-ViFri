@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { RootState } from '../redux/store';
 import { PROFILE_SCREEN } from '../constants/screenNames';
+import Avatar from './shared/Avatar';
 
 export default function ViFriLogo({navigation}) {
   const user = useSelector((state: RootState) => state.user.info)
@@ -14,10 +15,8 @@ export default function ViFriLogo({navigation}) {
       <TouchableOpacity onPress={() => navigation.navigate(PROFILE_SCREEN)}>
         {
           user.avatar
-            ?  <Image
-                source={{uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${user.id}.jpg`}}
-                style={styles.avatarImage}
-              />
+            ?
+              <Avatar customStyle={styles.avatarImage}/>
             : <FontAwesomeIcon icon={faCircleUser} size={30} style={styles.avatarIcon} />
         }
       </TouchableOpacity>

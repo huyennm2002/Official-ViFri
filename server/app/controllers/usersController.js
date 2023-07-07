@@ -32,18 +32,16 @@ export const updateUserInfo = async (req, res) => {
         try {
             const avatarKey = `avatar_${user_id}.jpg`;
             await handleUploadFile(req.file, avatarKey);
-            return res.status(201).end();
         } catch(e) {
             console.log(e);
             return res.status(500).send({message: "Unable to upload avatar"});
         }
-    }
-
-    if (isEmpty(req.body)) {
+    } else if (isEmpty(req.body)) {
         return res.status(400).send({
             message: "Content cannot be empty"
         })
     }
+
     let updatedInfo = req.body;
     User.update(updatedInfo, user_id, (err, data) => {
         if (err) {
