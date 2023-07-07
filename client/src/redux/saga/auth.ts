@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Alert } from 'react-native';
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { login, logout, updateUserInfo } from '../features/authSlice';
-import { AUTHENTICATED_AXIOS_HEADER, AUTHENTICATED_AXIOS_HEADER_FORM, LOGIN_API, LOGOUT_API, USERS_API } from '../../constants/APIs';
+import { AUTHENTICATED_AXIOS_HEADER, LOGIN_API, LOGOUT_API, USERS_API } from '../../constants/APIs';
 import { handleFetchItems } from './items';
 import { handleUpdateItemList } from '../features/itemSlice';
 

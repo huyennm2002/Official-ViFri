@@ -19,7 +19,7 @@ export default function EditProfileScreen() {
     first_name: user.first_name,
     last_name: user.last_name,
     email: user.email,
-    dob: user.dob
+    dob: new Date(user.dob)
   });
   const [showPicker, setShowPicker] = useState(false);
   const handleChange = (key : string, value: any) => {
@@ -29,7 +29,8 @@ export default function EditProfileScreen() {
     }));
   }
   const handleSave = () => {
-    dispatch(UPDATE_USER({ token, data }));
+    const date = moment(data.dob).format('YYYY-MM-DD').toString();
+    dispatch(UPDATE_USER({ token, data: {...data, dob: date} }));
   }
 
   return (
@@ -80,27 +81,17 @@ export default function EditProfileScreen() {
           </View>
           <View>
             <Text>Date of birth</Text>
-            {
-              data.dob &&
+            { data.dob || showPicker
+              ?
               <DateTimePicker
-                maximumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
-                value={data.dob}
+                maximumDate={new Date(moment().format('YYYY-MM-DD'))}
+                value={data.dob || new Date()}
                 onChange={(e) => {
                   handleChange('dob', new Date(e.nativeEvent.timestamp))
                 }}
               />
-            }
-            {
-              !data.dob && !showPicker && <Button onPress={() => setShowPicker(true)}>Choose Date</Button>
-            }
-            { showPicker &&
-              <DateTimePicker
-              maximumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
-              value={new Date()}
-              onChange={(e) => {
-                handleChange('dob', new Date(e.nativeEvent.timestamp))
-              }}
-            />
+              :
+              <Button onPress={() => setShowPicker(true)}>Choose Date</Button>
             }
           </View>
         </View>
