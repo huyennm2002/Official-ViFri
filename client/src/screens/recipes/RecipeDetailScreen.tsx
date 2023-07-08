@@ -17,29 +17,33 @@ const missingIngredients = [
   "Lorem ipsum dolo"
 ];
 
-export default function RecipeDetailScreen() {
+export default function RecipeDetailScreen({route, navigation}) {
+  const {recipe} = route.params
+  const serializeIngredient = (ingredient) => {
+      return String(ingredient.amount + " " + ingredient.unit + " " + ingredient.name); 
+  }
+
   return (
     <View style={{flex: 1}}>
       <Header />
       <ScrollView>
-
         <Card containerStyle={styles.container}>
-          <Card.Title style={styles.title}>Honey Soy Sauce Chicken Breast</Card.Title>
+          <Card.Title style={styles.title}>{recipe.title}</Card.Title>
           <Card.Divider />
-          <Card.Image source={require('../../assets/images/honey-garlic-chicken.jpg')} />
+          <Card.Image source={{uri: recipe.image}} />
           <View style={{ flexDirection: 'row' }}>
             <FontAwesomeIcon style={styles.icon} icon={faCheck} size={20} color='green' />
             <Card.FeaturedSubtitle style={styles.subTitle}> Ready Ingredients: </Card.FeaturedSubtitle>
           </View>
           <View>
-            {usedIngredients.map(ingredient => <Text style={styles.ingredientText} key={ingredient}>{`\u2023 ${ingredient}`}</Text>)}
+            {recipe.usedIngredients.map(ingredient => <Text style={styles.ingredientText} key={ingredient.name}>{`\u2023 ${serializeIngredient(ingredient)}`}</Text>)}
           </View>
           <View style={{ flexDirection: 'row' }}>
             <FontAwesomeIcon style={styles.icon} icon={faXmark} size={20} color='red' />
             <Card.FeaturedSubtitle style={styles.subTitle}>Missing Ingredients: </Card.FeaturedSubtitle>
           </View>
           <View>
-            {missingIngredients.map(ingredient => <Text style={styles.ingredientText} key={ingredient}>{`\u2023 ${ingredient}`}</Text>)}
+            {recipe.missedIngredients.map(ingredient => <Text style={styles.ingredientText} key={ingredient.name}>{`\u2023 ${serializeIngredient(ingredient)}`}</Text>)}
           </View>
           <Card.FeaturedSubtitle style={styles.subTitle}> Cooking Instructions: </Card.FeaturedSubtitle>
           <Text style={styles.instructions}>

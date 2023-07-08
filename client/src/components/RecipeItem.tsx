@@ -7,17 +7,17 @@ import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons/faHea
 import { faShareNodes } from '@fortawesome/free-solid-svg-icons/faShareNodes';
 import { RECIPE_DETAILS_SCREEN } from '../constants/screenNames';
 
-export default function RecipeItem({navigation}) {
+export default function RecipeItem({navigation, recipe}) {
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouritePress = () => {
         setFavourite(!isFavourite);
     }
 
     return (
-        <Pressable onPress={() => navigation.navigate(RECIPE_DETAILS_SCREEN)}>
+        <Pressable onPress={() => navigation.navigate(RECIPE_DETAILS_SCREEN, {recipe})}>
             <Card containerStyle={styles.container}>
-                <Card.Title>Honey Soy Sauce Chicken breast</Card.Title>
-                <Card.Image containerStyle={styles.thumbnail} source={require('../assets/images/honey-garlic-chicken.jpg')} />
+                <Card.Title>{recipe.title}</Card.Title>
+                <Card.Image containerStyle={styles.thumbnail} source={{uri: recipe.image}} />
                 <Text style={styles.recipePreview}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                 </Text>

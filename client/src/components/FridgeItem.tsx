@@ -98,7 +98,8 @@ const styles = StyleSheet.create({
       height: 2
     },
     shadowRadius: 4,
-    elevation: 2
+    elevation: 2,
+    marginBottom: 15
   },
   itemImage: {
     height: 100,

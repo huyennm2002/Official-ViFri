@@ -38,7 +38,9 @@ app.get('/items', (req, res) => Item.getItemInfo(req, res))
 app.put('/items', (req, res) => Item.updateItemInfo(req, res))
 app.delete('/items', (req, res) => Item.deleteItem(req, res))
 
-app.get('/recipes', (req, res) => getRecipesList(req, res));
+//recipes
+app.get('/human-recipes', async (req, res) => await getRecipesList(req, res));
+app.get('/human-recipes/:recipe-id', async (req, res) => await getRecipesList(req, res));
 const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);

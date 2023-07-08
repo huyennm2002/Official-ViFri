@@ -16,7 +16,7 @@ import {
     AddFoodItemByFormScreen,
     RecipeListScreen,
     CameraScreen,
-    RecipeDetailScreen
+    RecipeDetailScreen,
 } from '../screens';
 import {
     FRIDGE_ITEM_LIST_SCREEN,

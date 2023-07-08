@@ -12,6 +12,7 @@ import { UPDATE_USER } from "../../redux/action";
 import ImageUploader from "../../components/ImageUploader";
 import { AUTHENTICATED_AXIOS_HEADER_FORM, USERS_API } from "../../constants/APIs";
 import Avatar from "../../components/shared/Avatar";
+import { handleChangeAvatarAction } from "../../redux/features/authSlice";
 
 export default function EditProfileScreen() {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ export default function EditProfileScreen() {
       headers: AUTHENTICATED_AXIOS_HEADER_FORM(token),
       data: formData
     }).then((res) => {
+      dispatch(handleChangeAvatarAction())
       Alert.alert('Avatar updated');
     }).catch((e) => {
       console.log(e);
