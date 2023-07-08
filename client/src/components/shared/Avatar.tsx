@@ -9,7 +9,7 @@ const Avatar = (props) => {
     <Image
       style={customStyle ? customStyle : styles.avatarImage}
       source={{
-        uri: `https://vifri-s3-bucket.s3.us-west-1.amazonaws.com/avatar_${id}.jpg?${avatar}`,
+        uri: `https://d31nw62mg4zmmx.cloudfront.net/avatar_${id}.jpg?v=${avatar}`,
       }}
     />
   )
