@@ -33,7 +33,7 @@ const ImageUploader = (props) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      <Button title="Upload Profile Picture" onPress={pickImage} />
       {image && <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
     </View>
   );
