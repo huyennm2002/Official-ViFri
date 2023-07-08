@@ -40,9 +40,12 @@ const authSlice = createSlice({
         }),
         updateUserInfo: (state, action) => {
             state.info = {...state.info, ...action.payload}
+        },
+        handleChangeAvatarAction: (state) => {
+            state.info.avatar += 1;
         }
     }
 })
 
-export const { login, logout, updateUserInfo } = authSlice.actions;
+export const { login, logout, updateUserInfo, handleChangeAvatarAction } = authSlice.actions;
 export default authSlice.reducer;
