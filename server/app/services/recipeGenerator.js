@@ -21,7 +21,7 @@ export const getRecipeInstructions = async (req, res) => {
     const instructionResponse = [];
     if (spoonacularResponse.status != 200) {
         return res.send({
-            message: "Failed to fetch cooking instructions from spoonacular";
+            message: "Failed to fetch cooking instructions from spoonacular"
         });
     }
 
