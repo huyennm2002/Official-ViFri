@@ -134,10 +134,10 @@ export default function SignUpScreen({ navigation }) {
                   onChange={handlePickerChange}
                 />
                 <Pressable
-                  style={styles.confirmButton}
+                  style={formStyles.confirmButton}
                   onPress={() => handleOpenTimePicker()}
                 >
-                  <Text style={styles.confirmButtonText}>Confirm</Text>
+                  <Text style={formStyles.confirmButtonText}>Confirm</Text>
                 </Pressable>
               </View>
             </View>
@@ -155,15 +155,9 @@ export default function SignUpScreen({ navigation }) {
           </Pressable>
         </View>
 
-        {/* Image Uploader input */}
-        {/* <ImageUploader
-          image={data.avatar}
-          setImage={(image) => handleChange('avatar', image)}
-        /> */}
-
         {/* Submit buttons */}
-        <Pressable onPress={handleSubmit} style={{...styles.confirmButton, width: 350, height: 50}}>
-          <Text style={styles.confirmButtonText}>Sign Up</Text>
+        <Pressable onPress={handleSubmit} style={{...formStyles.confirmButton, width: 350, height: 50}}>
+          <Text style={formStyles.confirmButtonText}>Sign Up</Text>
         </Pressable>
         <View style={styles.returnSignInContainer}>
           <Text>Already have an Account?</Text>

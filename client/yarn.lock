@@ -3674,7 +3674,7 @@
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.4.4.tgz"
   "version" "1.4.4"
 
-"expo@*", "expo@>=47.0.0", "expo@~48.0.18":
+"expo@*", "expo@~48.0.18":
   "integrity" "sha512-mRsOQC3e+VhUKEaYJlvIDiqwaQtFEJv9JZZ8yRkofsj1y+9WoQFq5WN+w2sKg+aMvTE3ReNzhhwBM7QMVy5FrA=="
   "resolved" "https://registry.npmjs.org/expo/-/expo-48.0.18.tgz"
   "version" "48.0.18"

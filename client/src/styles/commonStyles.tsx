@@ -30,6 +30,18 @@ export const formStyles = StyleSheet.create({
         width: 290,
         borderRadius: 23
     },
+    confirmButton: {
+        backgroundColor: '#FF9966',
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        borderRadius: 10
+    },
+    confirmButtonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
     submit: {
         
     }
