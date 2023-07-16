@@ -5,7 +5,6 @@ import createSagaMiddleware from "@redux-saga/core";
 import persistStore from "redux-persist/lib/persistStore";
 import userReducer from "./features/authSlice";
 import itemReducer from "./features/itemSlice";
-import authWatcher from "./saga/auth";
 import RootSaga from "./saga";
 
 //middleware
