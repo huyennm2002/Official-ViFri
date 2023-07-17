@@ -6,7 +6,7 @@ import multer from 'multer';
 import * as Auth from './app/controllers/authController.js'
 import * as User from './app/controllers/usersController.js';
 import * as Item from './app/controllers/itemsController.js';
-import { getRecipesList } from './app/services/recipeGenerator.js';
+import { getRecipeInstructions, getRecipesList } from './app/services/recipeGenerator.js';
 
 dotenv.config();
 const app = express();
@@ -40,7 +40,7 @@ app.delete('/items', (req, res) => Item.deleteItem(req, res))
 
 //recipes
 app.get('/human-recipes', async (req, res) => await getRecipesList(req, res));
-app.get('/human-recipes/:recipe-id', async (req, res) => await getRecipesList(req, res));
+app.get('/human-recipes/:recipeId', async (req, res) => await getRecipeInstructions(req, res));
 const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);

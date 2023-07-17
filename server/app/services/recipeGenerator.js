@@ -1,13 +1,13 @@
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import { getAuthorization } from '../helpers/APIHelper.js';
-import Item from '../models/item.js';
 
 const SPOONACULAR_API_KEY = 'bb896ca7411a407bb3f3bd96ec379022'
 // Get Recipe Instructions from Spoonacular
 export const getRecipeInstructions = async (req, res) => {
+    console.log("Got recipeId before calling the api: " + req.params.recipeId);
     const { user } = getAuthorization(req.headers);
-    const recipeId = req.params.id;
+    const recipeId = req.params.recipeId;
+    
 
     if (recipeId == null) {
         return res.send({
@@ -15,7 +15,7 @@ export const getRecipeInstructions = async (req, res) => {
         })
     }
 
-    const spoonacularResponse = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions`);
+    const spoonacularResponse = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?apiKey=${SPOONACULAR_API_KEY}`);
 
     // construct api response, a list of objects with number: int and step: string 
     const instructionResponse = [];
@@ -24,8 +24,21 @@ export const getRecipeInstructions = async (req, res) => {
             message: "Failed to fetch cooking instructions from spoonacular"
         });
     }
-
+    const spoonacularData = spoonacularResponse.data;
+    const steps = [];
+    if (spoonacularData !== null || spoonacularData != []) {
+        // Generate a list of steps
+        if (spoonacularData[0].steps !== null) {
+            spoonacularData[0].steps.forEach(instructionStep => {
+                steps.push({
+                    number: instructionStep.number,
+                    step: instructionStep.step
+                });
+            })
+        }
+    }
     
+    return res.json(steps);
 }
 
 export const getRecipesList = async (req, res) => {
