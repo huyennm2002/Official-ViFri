@@ -4,7 +4,6 @@ import { getAuthorization } from '../helpers/APIHelper.js';
 const SPOONACULAR_API_KEY = 'bb896ca7411a407bb3f3bd96ec379022'
 // Get Recipe Instructions from Spoonacular
 export const getRecipeInstructions = async (req, res) => {
-    console.log("Got recipeId before calling the api: " + req.params.recipeId);
     const { user } = getAuthorization(req.headers);
     const recipeId = req.params.recipeId;
     
