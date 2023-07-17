@@ -1,4 +1,4 @@
-import { View, StyleSheet, Dimensions, Pressable } from 'react-native'
+import { View, StyleSheet, Dimensions, Pressable, Text } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FAB } from '@rneui/themed';
@@ -22,8 +22,20 @@ export default function FridgeItemListScreen({navigation}) {
         <SafeAreaProvider style={{ flex: 1 }}>
             <Header/>
             <ScrollView style={styles.container}>
-                {items.map(item => <FridgeItem key={item.id.toString()} item={item} navigation={navigation} />)}
-            </ScrollView>
+            {
+                items.length > 0 
+                ? 
+                (
+                    items.map(item => <FridgeItem key={item.id.toString()} item={item} navigation={navigation} />)
+                )
+                :
+                (
+                    <View style={{flex: 1, alignItems: 'center'}}>
+                        <Text style={{fontWeight: 'bold', fontSize: 16}}>Your fridge is empty. Please add more items</Text>
+                    </View>
+                )
+            }
+            </ScrollView> 
             <View style={styles.fabContainer}>
                 {isSubFabOpen && (
                     <View style={styles.subFabContainer}>

@@ -1,27 +1,50 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Header from '../../components/Header';
+import {AUTHENTICATED_AXIOS_HEADER} from '../../constants/APIs';
 import { Card } from '@rneui/themed';
+import { store } from '../../redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
-
-const usedIngredients = [
-  "Lorem ipsum dolor",
-  "Lorem ipsum do",
-  "Lorem ipsum dolo"
-];
-
-const missingIngredients = [
-  "Lorem ipsum dolor",
-  "Lorem ipsum do",
-  "Lorem ipsum dolo"
-];
+import { faCheck, faXmark, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 export default function RecipeDetailScreen({route, navigation}) {
   const {recipe} = route.params
   const serializeIngredient = (ingredient) => {
-      return String(ingredient.amount + " " + ingredient.unit + " " + ingredient.name); 
+      return String(roundUpIngredientNumber(ingredient.amount) + " " + ingredient.unit + " " + ingredient.name); 
   }
+  const [ instructions, setInstructions ] = useState(null);
+  const { token, info } = store.getState().user;
+
+  function roundUpIngredientNumber(number) {
+    if (Number.isInteger(number)) {
+      return number;
+    }
+    else {
+      return Math.ceil(number * 100) / 100;
+    }
+  }
+
+  useEffect(() => {
+    const fetchInstructions = async () => {
+      try {
+        const response = await axios({
+          method: 'get',
+          url: `http://localhost:3005/human-recipes/${recipe.id}`,
+          headers: AUTHENTICATED_AXIOS_HEADER(token)
+        })
+        console.log(response.data)
+        setInstructions(response.data)
+      }
+      catch(error) {
+        console.log(error);
+      }
+    }
+
+    if (instructions === null) {
+      fetchInstructions();
+    }
+  }, [])
 
   return (
     <View style={{flex: 1}}>
@@ -45,10 +68,25 @@ export default function RecipeDetailScreen({route, navigation}) {
           <View>
             {recipe.missedIngredients.map(ingredient => <Text style={styles.ingredientText} key={ingredient.name}>{`\u2023 ${serializeIngredient(ingredient)}`}</Text>)}
           </View>
-          <Card.FeaturedSubtitle style={styles.subTitle}> Cooking Instructions: </Card.FeaturedSubtitle>
-          <Text style={styles.instructions}>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. dafafer dasdeaad, Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <FontAwesomeIcon style={styles.icon} icon={faCheck} size={20} />
+            <Card.FeaturedSubtitle style={styles.subTitle}> Cooking Instructions: </Card.FeaturedSubtitle>
+          </View>
+          {
+            instructions ? (
+              <View>
+                {instructions.map(instruction => 
+                <View style={{marginBottom: 5}}>
+                  <Text style={styles.stepTitle}>Step {instruction.number}:</Text>
+                  <Text style={styles.ingredientText} key={instruction.number}>{`\u2023 ${instruction.step}`}</Text>
+                </View>
+                )}
+              </View>
+
+            ) :
+            <Text>Cooking instructions are not yet specified</Text>
+          }
+          
         </Card>
       </ScrollView>
     </View>
@@ -87,5 +125,9 @@ const styles = StyleSheet.create({
   },
   instructions: {
     fontSize: 16
+  },
+  stepTitle: {
+    fontWeight: 'bold',
+    marginBottom: 5
   }
 })

@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Button } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import RecipeItem from '../../components/RecipeItem';
@@ -9,19 +9,28 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import DropDownPicker from 'react-native-dropdown-picker';
 import HumanRecipesProvider from './HumanRecipesProvider';
 import GptRecipesProvider from './GptRecipesProvider';
+import { useSelector } from 'react-redux';
+import { RootState, store } from '../../redux/store';
 
 export default function RecipeListScreen({ navigation }) {
     const [value, setValue] = useState([]);
-    const [items, setItems] = useState([
-        { label: 'Apple', value: 'apple' },
-        { label: 'Avocado', value: 'avocado' },
-        { label: 'Banana', value: 'banana' },
-        { label: 'Basil', value: 'basil' },
-        { label: 'Beef', value: 'beef' },
-        { label: 'Beer', value: 'beer' },
-        { label: 'Bell peppers', value: 'bell peppers' },
-        { label: 'Bread', value: 'bread' },
-    ]);
+    const items = useSelector((state: RootState) => state.items);
+
+    useEffect(() => {
+        const result = []
+        items.forEach(item => {
+            if (item.name !== null) {
+                const newItem = {
+                    label: item.name,
+                    value: item.name.toLowerCase()
+                }
+                result.push(newItem);
+            }
+        })
+        setItems(prevState => result);
+    }, [items])
+
+    const [selectableItems, setItems] = useState([]);
     const [open, setOpen] = useState(false);
 
     const RecipesProvidersTab = createMaterialTopTabNavigator();
@@ -36,7 +45,7 @@ export default function RecipeListScreen({ navigation }) {
                 style={styles.dropdownStyle}
                 open={open}
                 multiple={true}
-                items={items}
+                items={selectableItems}
                 value={value}
 
                 setOpen={setOpen}
