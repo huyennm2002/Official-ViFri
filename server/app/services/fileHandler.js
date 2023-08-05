@@ -1,6 +1,7 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3"
 import fs from 'fs';
 import util from 'util';
+import sharp from 'sharp';
 
 const unlinkFile = util.promisify(fs.unlink);
 const bucketName = process.env.AWS_BUCKET_NAME;
@@ -19,10 +20,9 @@ const s3 = new S3Client({
 
 //upload function
 const uploadFileS3 = (file, key) => {
-    const fileStream = fs.createReadStream(file.path);
     const uploadParams = new PutObjectCommand({
         Bucket: bucketName,
-        Body: fileStream,
+        Body: file,
         Key: key,
     })
     return s3.send(uploadParams)
@@ -39,7 +39,8 @@ const downloadFileS3 = (fileKey) => {
 
 const handleUploadFile = async (file, key) => {
     try {
-        await uploadFileS3(file, key);
+        const compressedFile = await sharp(file.path).jpeg({ quality: 70 }).toBuffer();
+        await uploadFileS3(compressedFile, key);
         await unlinkFile(file.path);
         const fileUrl = s3Url + key;
         return fileUrl;

@@ -4,3 +4,4 @@ server/npm-debug.log
 server/.env
 server/.DS_Store
 server/config/config.json
+server/uploads
