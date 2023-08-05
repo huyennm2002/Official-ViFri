@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import { Provider } from 'react-redux';
 import { createNavigationContainerRef, NavigationContainer } from '@react-navigation/native';

@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Image, Button } from 'react-native'
+import { Text, StyleSheet, Image, Button, Pressable, View } from 'react-native'
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { isEmpty } from 'lodash';
@@ -8,7 +8,7 @@ import DismissKeyBoardView from '../../components/DismissKeyboardView';
 import { Alert } from 'react-native';
 import { USER_SIGN_IN } from '../../redux/action';
 import { SignInData } from '../../../types';
-import { SIGNUP_SCREEN } from '../../constants/screenNames';
+import { formStyles } from '../../styles/commonStyles';
 
 export default function SignInScreen({navigation}) {
   const dispatch = useDispatch();
@@ -33,29 +33,31 @@ export default function SignInScreen({navigation}) {
   return (
     <DismissKeyBoardView style={styles.container}>
       <Text style={styles.brandname}>ViFri</Text>
-      <TextInput style={styles.textinput}
+      <TextInput style={formStyles.textInput}
         placeholder="Email"
         onChangeText={(e) => handleChange('email', e)}
       />
-      <TextInput style={styles.textinput}
+      <TextInput style={formStyles.textInput}
         placeholder="Password"
         secureTextEntry={true}
         onChangeText={(e) => handleChange('password', e)}
       />
-      <Button
-        title="Sign In"
-        onPress={handleSubmit}
-      />
-      <Button
-        title="Create Account?"
-        onPress={() => navigation.navigate(SIGNUP_SCREEN)}
-      />
-
-      <Image style={styles.logo}
+      <Pressable style={{...formStyles.confirmButton, width: 350, height: 50}} onPress={handleSubmit}>
+        <Text style={formStyles.confirmButtonText}>
+          Sign In
+        </Text>
+      </Pressable>
+      <View style={styles.createAccountContainer}>
+        <Text>Don't have an account? </Text>
+        <Pressable style={{marginLeft: 5}} onPress={() => navigation.navigate("SignUp")}>
+            <Text style={{color: '#42A1FF'}}>Create one</Text>
+        </Pressable>
+      </View>
+      {/* <Image style={styles.logo}
         source={{
           uri: 'https://www.galanz.com/us/wp-content/uploads/2020/10/GLR31TBEER2_45%C2%B0.png',
         }}
-      />
+      /> */}
     </DismissKeyBoardView>
   )
 }
@@ -92,4 +94,8 @@ const styles = StyleSheet.create({
     height: 300,
     margin: 20
   },
+  createAccountContainer: {
+    flexDirection: 'row',
+    marginTop: 15
+  }
 });

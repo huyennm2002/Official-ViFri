@@ -14,16 +14,34 @@ export const formStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 2,
-        borderRadius: 23,
-        margin: 15,
-        width: 290,
+        borderRadius: 15,
+        borderColor: '#D8D8D8',
+        marginBottom: 10,
+        width: 350,
         fontSize: 20,
-        height: 60
+        height: 50
+    },
+    inputLabel: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 7
     },
     dropDownContainer: {
         width: 290,
         borderRadius: 23
     },
+    confirmButton: {
+        backgroundColor: '#FF9966',
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        borderRadius: 10
+    },
+    confirmButtonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
     submit: {
         
     }
