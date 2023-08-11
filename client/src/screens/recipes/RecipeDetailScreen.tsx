@@ -76,7 +76,7 @@ export default function RecipeDetailScreen({route, navigation}) {
             instructions ? (
               <View>
                 {instructions.map(instruction => 
-                <View style={{marginBottom: 5}}>
+                <View key={instruction.number} style={{marginBottom: 5}}>
                   <Text style={styles.stepTitle}>Step {instruction.number}:</Text>
                   <Text style={styles.ingredientText} key={instruction.number}>{`\u2023 ${instruction.step}`}</Text>
                 </View>

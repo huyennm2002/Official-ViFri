@@ -64,6 +64,7 @@ export const logIn = (req, res) => {
                 process.env.TOKEN_KEY,
                 { expiresIn: "2h" }
             )
+            console.log(token)
             return res.status(200).send(token);
         }
         return res.status(401).send({message: "Invalid Credentials"});
