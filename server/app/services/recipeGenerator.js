@@ -3,7 +3,7 @@ import { getAuthorization } from '../helpers/APIHelper.js';
 import { Configuration, OpenAIApi } from 'openai';
 
 const SPOONACULAR_API_KEY = 'bb896ca7411a407bb3f3bd96ec379022';
-const OPEN_AI_API_KEY = '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';
+const OPEN_AI_API_KEY = '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';
 const configuration = new Configuration({
     apiKey: OPEN_AI_API_KEY,
   });

@@ -5,9 +5,9 @@ import {AUTHENTICATED_AXIOS_HEADER} from '../../constants/APIs';
 import { store } from '../../redux/store';
 import RecipeItem from '../../components/RecipeItem';
 import CookingButton from '../../components/CookingButton';
-
-export default function HumanRecipesProvider({navigation, ingredients}) {
-  const [ recipes, setRecipes ] = useState([]);
+import { HumanRecipe, HumanRecipesProviderPropsType, Ingredient } from './recipesType';
+export default function HumanRecipesProvider({navigation, ingredients}: HumanRecipesProviderPropsType) {
+  const [ recipes, setRecipes ] = useState<HumanRecipe[] | []>([]);
   const { token, info } = store.getState().user;
 
   const onCookingButtonPress = async () => {

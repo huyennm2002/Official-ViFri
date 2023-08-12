@@ -6,16 +6,8 @@ import { store } from '../../redux/store';
 import { Card } from '@rneui/themed';
 import { AUTHENTICATED_AXIOS_HEADER } from '../../constants/APIs';
 import { ScrollView } from 'react-native-gesture-handler';
+import { AIRecipeType, GptRecipesProviderProps } from './recipesType';
 
-interface GptRecipesProviderProps {
-  ingredients: string[]
-}
-
-interface AIRecipeType {
-  title: string,
-  ingredients: string[],
-  instructions: string[]
-}
 export default function GptRecipesProvider({ingredients}: GptRecipesProviderProps) {
   const [AIRecipe, setAIRecipe] = useState<AIRecipeType | null>(null);
   const { token, info } = store.getState().user;

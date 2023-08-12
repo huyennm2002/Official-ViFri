@@ -6,8 +6,13 @@ import { faHeart as faHeartReg } from '@fortawesome/free-regular-svg-icons/faHea
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons/faHeart';
 import { faShareNodes } from '@fortawesome/free-solid-svg-icons/faShareNodes';
 import { RECIPE_DETAILS_SCREEN } from '../constants/screenNames';
+import { HumanRecipe } from '../screens/recipes/recipesType';
 
-export default function RecipeItem({navigation, recipe}) {
+interface RecipeItemPropsType {
+    navigation: any,
+    recipe: HumanRecipe
+}
+export default function RecipeItem({navigation, recipe}: RecipeItemPropsType) {
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouritePress = () => {
         setFavourite(!isFavourite);
