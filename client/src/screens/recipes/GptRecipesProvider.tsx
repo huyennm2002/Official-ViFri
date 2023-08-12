@@ -7,8 +7,17 @@ import { Card } from '@rneui/themed';
 import { AUTHENTICATED_AXIOS_HEADER } from '../../constants/APIs';
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default function GptRecipesProvider({ingredients}) {
-  const [AIRecipe, setAIRecipe] = useState(null);
+interface GptRecipesProviderProps {
+  ingredients: string[]
+}
+
+interface AIRecipeType {
+  title: string,
+  ingredients: string[],
+  instructions: string[]
+}
+export default function GptRecipesProvider({ingredients}: GptRecipesProviderProps) {
+  const [AIRecipe, setAIRecipe] = useState<AIRecipeType | null>(null);
   const { token, info } = store.getState().user;
   const onCookingButtonPress = async () => {
     try {
@@ -43,11 +52,6 @@ export default function GptRecipesProvider({ingredients}) {
             {AIRecipe.instructions.map(step => <Text key={step[0]}>{step}</Text>)}
           </View>
         </Card>
-        {/* <Text>{AIRecipe.title}</Text>
-        <Text>Ingredients: </Text>
-        <Text>{AIRecipe.ingredients}</Text>
-        <Text>Instructions:</Text>
-        <Text>{AIRecipe.instructions}</Text> */}
       </ScrollView>}
     </View>
   )
