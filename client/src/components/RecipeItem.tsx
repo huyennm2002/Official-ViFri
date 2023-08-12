@@ -18,9 +18,6 @@ export default function RecipeItem({navigation, recipe}) {
             <Card containerStyle={styles.container}>
                 <Card.Title>{recipe.title}</Card.Title>
                 <Card.Image containerStyle={styles.thumbnail} source={{uri: recipe.image}} />
-                <Text style={styles.recipePreview}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                </Text>
                 <View style={styles.footer}>
                     <Pressable onPress={handleFavouritePress}>
                         <FontAwesomeIcon icon={isFavourite ? faHeartSolid : faHeartReg} color={isFavourite ? 'crimson' : 'black'} size={30} />

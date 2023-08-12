@@ -1,13 +1,83 @@
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import { getAuthorization } from '../helpers/APIHelper.js';
-import Item from '../models/item.js';
+import { Configuration, OpenAIApi } from 'openai';
 
-const SPOONACULAR_API_KEY = 'bb896ca7411a407bb3f3bd96ec379022'
+const SPOONACULAR_API_KEY = 'bb896ca7411a407bb3f3bd96ec379022';
+const OPEN_AI_API_KEY = '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';
+const configuration = new Configuration({
+    apiKey: OPEN_AI_API_KEY,
+  });
+const openai = new OpenAIApi(configuration)
+
+export const getAIrecipeInstructions = async (req, res) => {
+    const { user } = getAuthorization(req.headers);
+    const ingredients = req.query.ingredients;
+
+    if (ingredients == null) {
+        return res.status(400).json({
+            message: "Ingredients are not specified"
+        })
+    }
+
+    const model = "text-davinci-003";
+    const recipeCompletion = await submitOpenAIrequest(model, generateCookingRecipePrompt(ingredients), 2048);
+    if (recipeCompletion == null) {
+        return res.status(500).json({message: "Unable to retrieve recipe title from openAPI", status: 500});
+    }
+    const lines = recipeCompletion.data.choices[0].text.split('\n');
+    
+    let completeRecipeTitle = "";
+    let completeIngredients = [];
+    let completeInstructions = [];
+
+    const recipeTitleIndex = lines.findIndex(line => line.includes("Recipe Title:"));
+    const ingredientsIndex = lines.findIndex(line => line.includes("Ingredients:"));
+    const instructionsIndex = lines.findIndex(line => line.includes("Instructions:"));
+    
+    completeRecipeTitle = lines[recipeTitleIndex].substring("Recipe Title:".length);
+    
+    for (let i = ingredientsIndex + 1; i < instructionsIndex; i++) {
+        if (lines[i].trim() == "") continue;
+        completeIngredients.push(lines[i].trim());
+    }
+
+    for (let i = instructionsIndex + 1; i < lines.length; i++) {
+        if (lines[i].trim() == "") continue;
+        completeInstructions.push(lines[i].trim());
+    }
+
+    const completeRecipe = {
+        title: completeRecipeTitle,
+        ingredients: completeIngredients,
+        instructions: completeInstructions
+    };
+    return res.status(200).json(completeRecipe);
+}
+
+const submitOpenAIrequest = async (model, promptText, maxTokens) => {
+    try {
+        const completion = await openai.createCompletion({
+            model: model,
+            prompt: promptText,
+            temperature: 0.6,
+            max_tokens: maxTokens
+        });
+        return completion;
+    } catch(error) {
+        console.log(error);
+        return null;
+    }
+}
+
+const generateCookingRecipePrompt = (ingredients) => {
+    return `Generate a cooking recipe with sections recipe title, ingredients, and instructions with these ingredients${ingredients}`
+}
+
 // Get Recipe Instructions from Spoonacular
 export const getRecipeInstructions = async (req, res) => {
     const { user } = getAuthorization(req.headers);
-    const recipeId = req.params.id;
+    const recipeId = req.params.recipeId;
+    
 
     if (recipeId == null) {
         return res.send({
@@ -15,7 +85,7 @@ export const getRecipeInstructions = async (req, res) => {
         })
     }
 
-    const spoonacularResponse = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions`);
+    const spoonacularResponse = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?apiKey=${SPOONACULAR_API_KEY}`);
 
     // construct api response, a list of objects with number: int and step: string 
     const instructionResponse = [];
@@ -24,8 +94,21 @@ export const getRecipeInstructions = async (req, res) => {
             message: "Failed to fetch cooking instructions from spoonacular"
         });
     }
-
+    const spoonacularData = spoonacularResponse.data;
+    const steps = [];
+    if (spoonacularData !== null || spoonacularData != []) {
+        // Generate a list of steps
+        if (spoonacularData[0].steps !== null) {
+            spoonacularData[0].steps.forEach(instructionStep => {
+                steps.push({
+                    number: instructionStep.number,
+                    step: instructionStep.step
+                });
+            })
+        }
+    }
     
+    return res.json(steps);
 }
 
 export const getRecipesList = async (req, res) => {

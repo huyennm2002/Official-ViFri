@@ -1,5 +1,5 @@
-import { View, StyleSheet, Dimensions, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Dimensions, Pressable, Text } from 'react-native'
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FAB } from '@rneui/themed';
 import FridgeItem from '../../components/FridgeItem';
@@ -8,8 +8,7 @@ import Header from '../../components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ADD_BY_FORM_NAVIGATION } from '../../constants/screenNames';
-import { RootState, store } from '../../redux/store';
-import { useFocusEffect } from '@react-navigation/native';
+import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 
 export default function FridgeItemListScreen({navigation}) {
@@ -22,8 +21,20 @@ export default function FridgeItemListScreen({navigation}) {
         <SafeAreaProvider style={{ flex: 1 }}>
             <Header/>
             <ScrollView style={styles.container}>
-                {items.map(item => <FridgeItem key={item.id.toString()} item={item} navigation={navigation} />)}
-            </ScrollView>
+            {
+                items.length > 0 
+                ? 
+                (
+                    items.map(item => <FridgeItem key={item.id.toString()} item={item} navigation={navigation} />)
+                )
+                :
+                (
+                    <View style={{flex: 1, alignItems: 'center'}}>
+                        <Text style={{fontWeight: 'bold', fontSize: 16}}>Your fridge is empty. Please add more items</Text>
+                    </View>
+                )
+            }
+            </ScrollView> 
             <View style={styles.fabContainer}>
                 {isSubFabOpen && (
                     <View style={styles.subFabContainer}>
