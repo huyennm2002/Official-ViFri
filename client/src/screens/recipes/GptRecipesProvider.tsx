@@ -32,7 +32,7 @@ export default function GptRecipesProvider({ingredients}: GptRecipesProviderProp
   }
   
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, alignItems: 'center'}}>
       <CookingButton onPress={async () => await onCookingButtonPress()}/>
       {
         isLoading ? <ActivityIndicator />

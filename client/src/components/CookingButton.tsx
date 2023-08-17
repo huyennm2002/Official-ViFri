@@ -1,8 +1,13 @@
-import { View, Text, Button } from 'react-native'
-import React from 'react'
+import { View, Text, Button, Pressable } from 'react-native'
+import React from 'react';
+import { formStyles } from '../styles/commonStyles';
 
 export default function CookingButton({onPress}) {
   return (
-    <Button title="Let's cook!" onPress={onPress}/>
+    <Pressable style={{...formStyles.confirmButton, width: '50%', marginTop: 10}} onPress={onPress}>
+      <Text style={formStyles.confirmButtonText}>
+      Let's Cook!
+      </Text>
+    </Pressable>
   )
 }

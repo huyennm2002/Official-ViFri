@@ -18,7 +18,7 @@ import { AUTHENTICATED_AXIOS_HEADER, ITEMS_API } from '../../constants/APIs';
 import { ADD_ITEM } from '../../redux/action';
 import { ItemData } from '../../../types';
 
-export default function AddFoodItemByFormScreen({navigation, route}) {
+export default function AddFoodItemByFormScreen({ navigation, route }) {
   const [items, setItems] = useState(foodItemUnits)
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
@@ -33,7 +33,7 @@ export default function AddFoodItemByFormScreen({navigation, route}) {
   const { token, info } = store.getState().user;
   const dispatch = useDispatch();
   const checkEmpty = () => {
-    return isEmpty(data.name) || data.quantity == 0 || isEmpty(value) || isNull(data.expiration) ;
+    return isEmpty(data.name) || data.quantity == 0 || isEmpty(value) || isNull(data.expiration);
   }
   const handleChange = (key: string, value: any) => {
     if (key === 'expiration') {
@@ -87,47 +87,45 @@ export default function AddFoodItemByFormScreen({navigation, route}) {
   }, [route.params?.image]);
 
   return (
-    <ScrollView>
-      <SafeAreaProvider>
-        <Header />
-        <DismissKeyboardView style={formStyles.container}>
-          {data.image && 
-            <Image source={{ uri: 'data:image/jpg;base64,' + route.params?.image.base64 }} style={{ width: 200, height: 200 }} />
-          }
-          <Button title='Add food photo' onPress={() => { navigation.navigate(CAMERA_SCREEN) }}/>
-          <TextInput style={formStyles.textInput}
-            placeholder="Item Name"
-            value={data.name}
-            onChangeText={(e) => handleChange('name', e)}
-          />
-          <TextInput
-            style={formStyles.textInput}
-            placeholder="Quantity"
-            keyboardType='numeric'
-            onChangeText={(e) => handleChange('quantity', e)}
-          />
-          <DropDownPicker
-            multiple={false}
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-            containerStyle={formStyles.dropDownContainer} 
-            addCustomItem={true}
-          />
-          {data.unit == 'custom' ? 
-          <TextInput style={formStyles.textInput} placeholder='Please enter your custom unit'/> : null}
-          <Text> Expiration Date </Text> 
-          <DateTimePicker
-            value={new Date()}
-            display="spinner"
-            onChange={(e) => handleChange('expiration', e)}
-          />
-          <Button title="Submit" onPress={handleSubmit}/>
-        </DismissKeyboardView>
-      </SafeAreaProvider>
-    </ScrollView>
+    <SafeAreaProvider>
+      <Header />
+      <DismissKeyboardView style={formStyles.container}>
+        {data.image &&
+          <Image source={{ uri: 'data:image/jpg;base64,' + route.params?.image.base64 }} style={{ width: 200, height: 200 }} />
+        }
+        <Button title='Add food photo' onPress={() => { navigation.navigate(CAMERA_SCREEN) }} />
+        <TextInput style={formStyles.textInput}
+          placeholder="Item Name"
+          value={data.name}
+          onChangeText={(e) => handleChange('name', e)}
+        />
+        <TextInput
+          style={formStyles.textInput}
+          placeholder="Quantity"
+          keyboardType='numeric'
+          onChangeText={(e) => handleChange('quantity', e)}
+        />
+        <DropDownPicker
+          multiple={false}
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+          containerStyle={formStyles.dropDownContainer}
+          addCustomItem={true}
+        />
+        {value == 'custom' ?
+          <TextInput style={formStyles.textInput} placeholder='Please enter your custom unit' /> : null}
+        <Text> Expiration Date </Text>
+        <DateTimePicker
+          value={new Date()}
+          display="spinner"
+          onChange={(e) => handleChange('expiration', e)}
+        />
+        <Button title="Submit" onPress={handleSubmit} />
+      </DismissKeyboardView>
+    </SafeAreaProvider>
   )
 }

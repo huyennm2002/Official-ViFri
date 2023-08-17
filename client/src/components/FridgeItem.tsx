@@ -29,7 +29,17 @@ export default function FridgeItem({ navigation, item }) {
     const oneDay = 24 * 60 * 60 * 1000;
     const today = new Date();
     const itemExp = new Date(item.expiration);
-    return Math.round(Math.abs(itemExp.getTime() - today.getTime()) / oneDay);
+
+    today.setHours(0, 0, 0, 0);
+    itemExp.setHours(0, 0, 0, 0);
+    
+    const difference = itemExp.getTime() - today.getTime();
+    if (difference <= 0) {
+      return 0;
+    }
+    const days = Math.round(difference) / oneDay
+    console.log(days)
+    return days;
   }
   const getExpiration = () => {
     const exp = daysLeft();

@@ -31,7 +31,7 @@ export default function HumanRecipesProvider({navigation, ingredients}: HumanRec
   }
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{alignItems:'center'}}>
       <CookingButton onPress={() => onCookingButtonPress()}/>
       {isLoading ? <ActivityIndicator/>
       : recipes.map(recipe => <RecipeItem navigation={navigation} key={recipe.id} recipe={recipe}/>)}
