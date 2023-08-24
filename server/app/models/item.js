@@ -1,7 +1,6 @@
 import { NoSuchKey } from "@aws-sdk/client-s3";
 import { query } from "express";
 import sql from "../../config/sql.js";
-import { promisify } from "util";
 import { runQuery } from "../../common/sqlUtils.js";
 
 const Item = function(item) {
@@ -14,29 +13,26 @@ const Item = function(item) {
     this.user_id = item.user_id;
 }
 
-Item.create = (newItem, result) => {
-    let query = "INSERT INTO items SET ?"
-    sql.query(query, newItem, (err, res)=> {
-        if (err) {
-            console.log("Failed to create add new item: ", err);
-            result(err, null);
-            return;
-        }
-        return result(null, res);
-    })
+Item.create = async (newItem, result) => {
+    let query = "INSERT INTO items SET ?";
+    try {
+        const rows = await runQuery(query, [newItem]);
+        return rows;
+    } catch(err) {
+        console.log("Failed to add new item: ", err);
+        throw err;
+    }
 }
 
-Item.get = (id, result) => {
+Item.get = async (id, result) => {
     let query = `SELECT id, name, image, quantity, unit, expiration, grocery_product_id, added_time, is_active, user_id FROM items WHERE id = ?`;
-    sql.query(query, [id], (err, res) => {
-        if (err) {
-            console.log("Cannot get: ", err);
-            result(err,null);
-        } else {
-            console.log("Item: ", res);
-            result(null,res);
-        }
-    })
+    try {
+        const rows = await runQuery(query, [id]);
+        return rows;
+    } catch(err) {
+        console.log("Cannot get: ", err);
+        throw err;
+    }
 }
 
 Item.update = (updated_info, id, result) => {
