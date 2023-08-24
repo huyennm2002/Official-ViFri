@@ -105,3 +105,26 @@ export const deleteItem = (req, res) => {
     })
     return res.status(204).end();
 }
+
+export const getSummary = async (req, res) => {
+    const { user_id } = getAuthorization(req.headers);
+    console.log("user id is: " + user_id);
+    const result = new Object();
+    try {
+        const totalItems = await Item.getTotalItemsInFridge(user_id);
+        const totalExpiredItems = await Item.getTotalExpiredItemsInFridge(user_id);
+        const totalExpiringInOneDay = await Item.getTotalItemsExpiringInOneDay(user_id);
+        
+        const result = {
+            totalItems,
+            totalExpiredItems,
+            totalExpiringInOneDay
+        }
+        return res.json(result);
+    } catch(error) {
+        console.log(error)
+        return res.status(500).send({
+            message: "Unable to fetch summarries of items"
+        })
+    }
+}

@@ -23,21 +23,21 @@ app.use(express.json());
 
 //auth
 app.post('/signup', upload.single('avatar'), (req, res) => Auth.createUser(req, res));
-app.post('/login', (req, res) => Auth.logIn(req, res));
+app.post('/login', async (req, res) => await Auth.logIn(req, res));
 app.post('/logout', (req, res) => Auth.logOut(req,res));
 
 //user
-app.get('/users', (req, res) => User.getUserInfo(req, res));
+app.get('/users', async (req, res) => await User.getUserInfo(req, res));
 app.put('/users', upload.single('avatarFile'), async (req, res) => User.updateUserInfo(req, res));
-app.get('/users/items', (req, res) => User.getItemList(req, res));
+app.get('/users/items', async (req, res) => await User.getItemList(req, res));
 app.get('/users/reminder', (req, res) => User.getReminderList(req, res));
 
 //item
 app.post('/items', upload.single('image'), async (req, res) => Item.addItem(req, res));
-app.get('/items', (req, res) => Item.getItemInfo(req, res))
-app.put('/items', (req, res) => Item.updateItemInfo(req, res))
-app.delete('/items', (req, res) => Item.deleteItem(req, res))
-
+app.get('/items', (req, res) => Item.getItemInfo(req, res));
+app.put('/items', (req, res) => Item.updateItemInfo(req, res));
+app.delete('/items', (req, res) => Item.deleteItem(req, res));
+app.post('/items:getSummary', (req, res) => Item.getSummary(req, res));
 //recipes
 app.get('/human-recipes', async (req, res) => await getRecipesList(req, res));
 app.get('/human-recipes/:recipeId', async (req, res) => await getRecipeInstructions(req, res));

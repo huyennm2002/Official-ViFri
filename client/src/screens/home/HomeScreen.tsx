@@ -1,10 +1,36 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Header from '../../components/Header';
+import { store } from '../../redux/store';
+import axios from 'axios';
+import { AUTHENTICATED_AXIOS_HEADER } from '../../constants/APIs';
+import { err } from 'react-native-svg/lib/typescript/xml';
+
+const { token, info } = store.getState().user;
 
 export default function HomeScreen() {
+  const [summary, setSummary] = useState(null);
+
+  useEffect(() => {
+    if (token != undefined) {
+      axios({
+        url: `http://localhost:3005/items:getSummary`,
+        headers: AUTHENTICATED_AXIOS_HEADER(token),
+        method: `post`
+      })
+      .then(res => {
+        console.log(res.data);
+        setSummary(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+    
+  }, [])
+
   return (
       <SafeAreaProvider>
         <Header/>

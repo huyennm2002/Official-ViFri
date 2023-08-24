@@ -1,5 +1,6 @@
 import { query } from "express";
 import sql from "../../config/sql.js";
+import { runQuery} from "../../common/sqlUtils.js";
 
 const User = function(user) {
     this.first_name = user.first_name;
@@ -11,30 +12,24 @@ const User = function(user) {
     this.provider = user.provider;
 }
 
-User.create = (newUser, result) => {
-    let query = "INSERT INTO users SET ?"
-    sql.query(query, newUser, (err, res)=> {
-        if (err) {
-            console.log("Failed to create new user: ", err);
-            result(err, null);
-            return;
-        }
-        result(null, res.insertId);
-        return;
-    })
+User.create = async (newUser, result) => {
+    let query = "INSERT INTO users SET ?";
+    try {
+        const rows = await runQuery(query, [newUser]);
+        return rows.insertId;
+    } catch(err) {
+        throw err;
+    }
 }
 
-User.get = (id, result) => {
+User.get = async (id) => {
     let query = `SELECT * FROM users WHERE id = ?`;
-    sql.query(query, [id], (err, res) => {
-        if (err) {
-            console.log("Cannot update: ", err);
-            result(err,null);
-        } else {
-            console.log("User: ", res);
-            result(null,res);
-        }
-    })
+    try {
+        const rows = await runQuery(query, [id]);
+        return rows;
+    } catch(err) {
+        throw err;
+    }
 }
 
 User.update = (updated_user, id, result) => {
@@ -50,16 +45,14 @@ User.update = (updated_user, id, result) => {
     })
 }
 
-User.getFromEmail = (email, result) => {
+User.getFromEmail = async (email) => {
     let query = `SELECT * FROM users WHERE email = ?`;
-    sql.query(query, [email], (err, res) => {
-        if (err) {
-            console.log("Cannot update: ", err);
-            result(err,null);
-        } else {
-            result(null,res);
-        }
-    })
+    try {
+        const rows = await runQuery(query, [email]);
+        return rows;
+    } catch(err) {
+        throw err;
+    }
 }
 
 export default User;
