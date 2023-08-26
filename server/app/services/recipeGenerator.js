@@ -2,10 +2,8 @@ import axios from 'axios';
 import { getAuthorization } from '../helpers/APIHelper.js';
 import { Configuration, OpenAIApi } from 'openai';
 
-const SPOONACULAR_API_KEY = 'bb896ca7411a407bb3f3bd96ec379022';
-const OPEN_AI_API_KEY = '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';
 const configuration = new Configuration({
-    apiKey: OPEN_AI_API_KEY,
+    apiKey: process.env.OPEN_AI_API_KEY,
   });
 const openai = new OpenAIApi(configuration)
 
@@ -85,7 +83,7 @@ export const getRecipeInstructions = async (req, res) => {
         })
     }
 
-    const spoonacularResponse = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?apiKey=${SPOONACULAR_API_KEY}`);
+    const spoonacularResponse = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?apiKey=${process.env.SPOONACULAR_API_KEY}`);
 
     // construct api response, a list of objects with number: int and step: string 
     const instructionResponse = [];
@@ -126,7 +124,7 @@ export const getRecipesList = async (req, res) => {
 
 async function getRecipes(itemList) {
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${SPOONACULAR_API_KEY}&ingredients=${itemList}&number=3`)
+        const response = await axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.SPOONACULAR_API_KEY}&ingredients=${itemList}&number=3`)
         const recipes = [];
         const data = response.data;
         data.forEach(recipe => {

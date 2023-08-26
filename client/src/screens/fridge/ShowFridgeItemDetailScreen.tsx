@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { View, Text, Button, Image, StyleSheet } from 'react-native'
+import React, {useEffect, useState} from 'react';
+import { View, Text, Button, Image, StyleSheet, Animated } from 'react-native'
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { isEmpty, isNull } from 'lodash';
@@ -19,6 +19,9 @@ import { RootState } from '../../redux/store';
 import moment from 'moment';
 import { s3URL } from '../../constants/URL';
 
+// Current work around to prevent the onAnimatedValueUpdate with no listener
+const av = new Animated.Value(0);
+av.addListener(() => {return});
 
 export default function ShowFridgeItemDetailScreen({ route, navigation }) {
   const [units, setUnits] = useState(foodItemUnits)
@@ -26,7 +29,9 @@ export default function ShowFridgeItemDetailScreen({ route, navigation }) {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(route.params.item);
   const token = useSelector((state: RootState) => state.user.token);
-  const imageUri = data.image ? s3URL + data.image : ''
+  const imageUri = data.image ? s3URL + data.image : '';
+  const expirationDate = new Date(data.expiration);
+
   const dispatch = useDispatch();
   const handleChange = (key: string, value: any) => {
     setData(currentData => ({
@@ -84,8 +89,7 @@ export default function ShowFridgeItemDetailScreen({ route, navigation }) {
           : null
         }
         <DateTimePicker
-          minimumDate={new Date(moment().format('YYYY-MM-DDTHH:mm:ss'))}
-          value={new Date(moment(data.expiration).toDate())}
+          value={expirationDate}
           onChange={(e) => {
             handleChange('expiration', e.nativeEvent.timestamp)
           }}
