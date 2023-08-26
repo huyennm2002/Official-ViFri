@@ -60,7 +60,7 @@ export const getItemInfo = async (req, res) => {
     }
 }
 
-export const updateItemInfo = (req, res) => {
+export const updateItemInfo = async (req, res) => {
     if (!req.body) {
         return res.status(400).send({
             message: "Content cannot be empty"
@@ -68,24 +68,24 @@ export const updateItemInfo = (req, res) => {
     }
     const { user_id } = getAuthorization(req.headers);
     const updatedInfo = req.body;
-    Item.get(updatedInfo.id, (err, data) => {
-        if (err) {
-            return res.status(500).send({
-                message: "An error has occured"
+
+    try {
+        const data = await Item.get(updatedInfo.id);
+        if (data[0].user_id !== user_id) {
+            return res.status(403).send({
+                message: "Unauthorized to update items"
             })
         }
-        if (data[0].user_id !== user_id) {
-            return res.status(403).end();
-        }
-    })
-
-    Item.update(updatedInfo, updatedInfo.id, (err, data) => {
-        if (err) return res.status(500).send({message: "An error has occured"});
-        return res.status(200).end();
-    })
+        const rows = await Item.update(updatedInfo, updatedInfo.id);
+        return res.status(200).json(updatedInfo);
+    } catch (err) {
+        return res.status(500).send({
+            message: "Internal Error. Unable to udpate item"
+        })
+    }
 }
 
-export const deleteItem = (req, res) => {
+export const deleteItem = async (req, res) => {
     if (!req.body) {
         return res.status(400).send({
             message: "Content cannot be empty"
@@ -93,21 +93,23 @@ export const deleteItem = (req, res) => {
     }
     const { user_id } = getAuthorization(req.headers);
     const { id } = req.query;
-    Item.get(id, (err, data) => {
-        if (err) {
-            return res.status(500).send({
-                message: "An error has occured"
+
+    try {
+        const data = await Item.get(id);
+
+        if (data[0].user_id !== user_id) {
+            return res.status(403).send({
+                message: "Unauthorized to delete items"
             })
         }
-        if (data[0].user_id !== user_id) {
-            return res.status(403).end();
-        }
-    })
 
-    Item.update({ is_active: false }, id, (err, data) => {
-        if (err) return res.status(500);
-    })
-    return res.status(204).end();
+        const rows = await Item.update({ is_active: false}, id);
+        return res.status(204).end();
+    } catch(err) {
+        return res.status(500).send({
+            message: "Internal Server Error. Unable to delete item"
+        })
+    }
 }
 
 export const getSummary = async (req, res) => {

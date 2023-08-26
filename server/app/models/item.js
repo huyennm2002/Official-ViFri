@@ -35,17 +35,14 @@ Item.get = async (id, result) => {
     }
 }
 
-Item.update = (updated_info, id, result) => {
+Item.update = async (updated_info, id, result) => {
     let query = `UPDATE items SET ? WHERE id = ?`;
-    sql.query(query, [updated_info, id], (err, res) => {
-        if (err) {
-            console.log("Cannot update: ", err);
-            result(err,null);
-        } else {
-            console.log("Updated: ", res);
-            result(null,res);
-        }
-    })
+    try {
+        const rows = await runQuery(query, [updated_info, id]);
+        return rows;
+    } catch(err) {
+        console.log("Cannot update item: " , err);
+    }
 }
 
 Item.getActiveItemList = async (user_id, result) => {
