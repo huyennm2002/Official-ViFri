@@ -18,7 +18,6 @@ export const getUserInfo = async (req, res) => {
             avatar: user[0].avatar,
             dob: user[0].dob
         }
-        console.log("user_id: " + result.id);
         return res.status(200).json(result);
     } catch (err) {
         console.log(err);

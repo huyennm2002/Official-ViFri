@@ -7,36 +7,23 @@ import { store } from '../../redux/store';
 import axios from 'axios';
 import { AUTHENTICATED_AXIOS_HEADER } from '../../constants/APIs';
 import { err } from 'react-native-svg/lib/typescript/xml';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const { token, info } = store.getState().user;
 
 export default function HomeScreen() {
-  const [summary, setSummary] = useState(null);
-
-  useEffect(() => {
-    if (token != undefined) {
-      axios({
-        url: `http://localhost:3005/items:getSummary`,
-        headers: AUTHENTICATED_AXIOS_HEADER(token),
-        method: `post`
-      })
-      .then(res => {
-        console.log(res.data);
-        setSummary(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-    }
-    
-  }, [])
+  const summary = useSelector((state: RootState) => state.items.summary); 
 
   return (
       <SafeAreaProvider>
         <Header/>
-        <Text style={styles.hometitle}>Welcome Back!</Text>
-        <Text style={styles.itemcounttitle}>Number of Items in Fridge: ???</Text>
-        <Text style={styles.itemcounttitle}>Number of items about to expire: ???</Text>
+        <View>
+          <Text style={styles.hometitle}>Welcome Back!</Text>
+          <Text style={styles.itemcounttitle}>{"Number of Items in Fridge: " + summary?.totalItems}</Text>
+          <Text style={styles.itemcounttitle}>{"Number of items expiring in 1 day: " +  summary?.totalExpiringInOneDay}</Text>
+          <Text style={styles.itemcounttitle}>{"Number of expired items: " + summary?.totalExpiredItems}</Text>
+        </View>
       </SafeAreaProvider>
   )
 }

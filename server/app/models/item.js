@@ -74,7 +74,7 @@ Item.getTotalItemsInFridge = async (user_id) => {
 }
 
 Item.getTotalExpiredItemsInFridge = async (user_id, result) => {
-    let query = "SELECT COUNT(*) AS expired_count FROM items where is_active = true and quantity = 0 and user_id = ?;";
+    let query = "SELECT COUNT(*) AS expired_count FROM items where is_active = true and quantity > 0 and user_id = ? and expiration <= NOW();";
     try {
         const rows = await runQuery(query, [user_id]);
         return rows[0].expired_count;

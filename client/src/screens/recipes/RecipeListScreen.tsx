@@ -14,7 +14,7 @@ import { RootState, store } from '../../redux/store';
 
 export default function RecipeListScreen({ navigation }) {
     const [value, setValue] = useState([]);
-    const items = useSelector((state: RootState) => state.items);
+    const items = useSelector((state: RootState) => state.items.itemList);
 
     useEffect(() => {
         const result = []
