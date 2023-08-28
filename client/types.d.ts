@@ -33,6 +33,7 @@ export type ItemData = {
     unit: string,
     expiration: Date
 }
+
 export type ItemType = {
     id: Number,
     name: string,
@@ -42,6 +43,17 @@ export type ItemType = {
     amount: Number,
     unit: string,
     added_at: Date
+}
+
+export type ItemSummary = {
+    totalItems: Number, 
+    totalExpiredItems: Number,
+    totalExpiringInOneDay: Number
+}
+
+export type ItemReport = {
+    summary: ItemSummary,
+    itemList: ItemType[]
 }
 
 //share

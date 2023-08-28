@@ -3,8 +3,9 @@ import { Alert } from 'react-native';
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { login, logout, updateUserInfo } from '../features/authSlice';
 import { AUTHENTICATED_AXIOS_HEADER, LOGIN_API, LOGOUT_API, USERS_API } from '../../constants/APIs';
-import { handleFetchItems } from './items';
-import { handleUpdateItemList } from '../features/itemSlice';
+import { getItemSummary, handleFetchItems } from './items';
+import { handleUpdateItemReport } from '../features/itemSlice';
+import { ItemReport } from '../../../types';
 
 const handleSignIn = (data) => (
 	axios({
@@ -29,8 +30,14 @@ function* signInFlow(action) {
 		const token = res.data;
 		const { data } = yield call(getUserInfo, token);
 		yield put(login({user: data, token}));
+		const summary = yield call(getItemSummary, token);
 		const items = yield call(handleFetchItems, token);
-		yield put(handleUpdateItemList(items.data));
+
+		const report : ItemReport = {
+			summary: summary.data,
+			itemList: items.data
+		}
+		yield put(handleUpdateItemReport(report));
 	} catch(error) {
 		Alert.alert('Unable to login!\nPlease try again.');
 	}

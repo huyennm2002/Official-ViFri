@@ -38,7 +38,6 @@ export default function FridgeItem({ navigation, item }) {
       return 0;
     }
     const days = Math.round(difference) / oneDay
-    console.log(days)
     return days;
   }
   const getExpiration = () => {

@@ -6,23 +6,23 @@ import { handleUploadFile } from "../services/fileHandler.js";
 
 const { isEmpty } = pkg;
 
-export const getUserInfo = (req, res) => {
+export const getUserInfo = async (req, res) => {
     const { user_id } = getAuthorization(req.headers);
-
-    User.get(user_id, (err, data) => {
-        if (err) {
-            return res.status(500).send({message: "Cannot retrieve user info"})
-        }
+    try {
+        const user = await User.get(user_id);
         const result = {
-            id: data[0].id,
-            first_name: data[0].first_name,
-            last_name: data[0].last_name,
-            email: data[0].email,
-            avatar: data[0].avatar,
-            dob: data[0].dob
+            id: user[0].id,
+            first_name: user[0].first_name,
+            last_name: user[0].last_name,
+            email: user[0].email,
+            avatar: user[0].avatar,
+            dob: user[0].dob
         }
         return res.status(200).json(result);
-    })
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({message: "Internal Sever error. Can't retrieve user info"});
+    }
 }
 
 export const updateUserInfo = async (req, res) => {
@@ -54,17 +54,16 @@ export const updateUserInfo = async (req, res) => {
     })
 }
 
-export const getItemList = (req, res) => {
+export const getItemList = async (req, res) => {
     const { user_id } = getAuthorization(req.headers);
-
-    Item.getActiveItemList(user_id, (err, data) => {
-        if (err) {
-            return res.status(500).send({
-                message: "An error has occured"
-            })
-        }
+    try {
+        const data = await Item.getActiveItemList(user_id);
         return res.status(200).json(data);
-    })
+    } catch(err) {
+        return res.status(500).send({
+            message: "Internal Sever Error. Unable to retrieve item list"
+        });
+    }
 }
 
 export const getReminderList = (req, res) => {

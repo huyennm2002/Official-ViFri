@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from "../models/user.js";
 import { handleUploadFile } from '../services/fileHandler.js';
@@ -14,18 +15,19 @@ const checkPassword = (password, User) => {
     return match;
 }
 
-export const createUser = (req, res) => {
+export const createUser = async (req, res) => {
     if (!req.body) {
         res.status(400).send({
             message: "Content cannot be empty"
         })
         return;
     }
-    User.getFromEmail(req.body.email.toLowerCase(), (err,data) => {
-        if (err) res.status(500).send({message: "Internal Error"})
+    try {
+        const data = await User.getFromEmail(req.body.email.toLowerCase());
         if (data.length > 0) {
-            return res.status(409).send({message: "User already exist!"})
+            return res.status(409).send({message: "User already exist!"});
         }
+        
         const newUser = new User({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -34,41 +36,43 @@ export const createUser = (req, res) => {
             dob: new Date(req.body.dob) || null,
             avatar: 0,
         })
-        User.create(newUser, async (err, data) => {
-            if (err) {
-                return res.status(500).send({
-                    message: err.message || "An error has occured while creating new user"
-                })
-            } else {
-                const avatarKey = `avatar_${data}.jpg`;
-                if (req.file) {
-                    try {
-                        await handleUploadFile(req.file, avatarKey);
-                        return res.status(201).end();
-                    } catch(e) {
-                        return res.status(200).send({message: "Unable to upload avatar"});
-                    }
-                }
+        const insertId = await User.create(newUser);
+        const avatarKey = `avatar_${insertId}.jpg`;
+
+        if (req.file) {
+            try {
+                await handleUploadFile(req.file, avatarKey);
+                return res.status(201).end();
+            } catch(e) {
+                return res.status(200).send({message: "Unable to upload avatar"});
             }
-        })
-    });  
+        }
+    } catch(err) {
+        return res.status(500).send({ message: "Internal Error. Unable to create user"});
+    } 
 };
 
-export const logIn = (req, res) => {
-    const { email, password } = req.body;
-    User.getFromEmail(email, (err,user) => {
-        if (err) res.status(500).send({message: "Internal Error"})
+export const logIn = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.getFromEmail(email);
+        console.log(user);
         if (user.length > 0 && checkPassword(password, user[0])) {
             const token = jwt.sign(
                 { user_id: user[0].id, email },
                 process.env.TOKEN_KEY,
                 { expiresIn: "2h" }
-            )
-            console.log(token)
+            );
+            console.log(token);
             return res.status(200).send(token);
         }
-        return res.status(401).send({message: "Invalid Credentials"});
-    });
+        return res.status(401).send({
+            message: "Invalid Credentials"
+        });
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send({message: "Internal Error"});
+    }
 }
 
 export const logOut = (req, res) => {

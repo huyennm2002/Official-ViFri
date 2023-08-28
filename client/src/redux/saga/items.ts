@@ -1,8 +1,9 @@
 import axios from "axios"
 import { call, put, select, takeLatest } from "redux-saga/effects"
 import { Alert } from "react-native"
-import { AUTHENTICATED_AXIOS_HEADER, GET_USER_ITEM_LIST_API, ITEMS_API } from "../../constants/APIs"
-import { handleUpdateItemList } from "../features/itemSlice"
+import { AUTHENTICATED_AXIOS_HEADER, GET_USER_ITEM_LIST_API, ITEMS_API, ITEMS_SUMMARY_API } from "../../constants/APIs"
+import { handleUpdateItemReport } from "../features/itemSlice"
+import { ItemReport } from "../../../types"
 
 export const handleFetchItems = (token: string) => {
     return axios({
@@ -30,6 +31,14 @@ const deleteItem = (token: string, id) => {
     })
 }
 
+export const getItemSummary = (token: string) => {
+    return axios({
+        url: ITEMS_SUMMARY_API,
+        method: 'POST',
+        headers: AUTHENTICATED_AXIOS_HEADER(token)
+    })
+}
+
 function *updateItemFlow(action) {
     try {
         const { payload } = action;
@@ -53,9 +62,16 @@ function* deleteItemFlow(action) {
 
 function* itemListFlow() {
     try {
-        const state = yield select()
-        const res = yield call(handleFetchItems, state.user.token);
-        yield put(handleUpdateItemList(res.data));
+        const state = yield select();
+        const userToken = state.user.token;
+        const summary = yield call(getItemSummary, userToken)
+        const itemList = yield call(handleFetchItems, userToken);
+
+        const itemReport: ItemReport = {
+            summary: summary.data,
+            itemList: itemList.data
+        }
+        yield put(handleUpdateItemReport(itemReport));
     } catch(e) {
         Alert.alert('Unable to update item list');
     }

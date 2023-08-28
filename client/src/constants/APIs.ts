@@ -14,4 +14,5 @@ export const SIGNUP_API = `http://${HOSTNAME}:3005/signup`
 export const USERS_API = `http://${HOSTNAME}:3005/users`
 export const GET_USER_ITEM_LIST_API = `http://${HOSTNAME}:3005/users/items`
 export const ITEMS_API = `http://${HOSTNAME}:3005/items`
+export const ITEMS_SUMMARY_API = `http://${HOSTNAME}:3005/items:getSummary`
 export const GET_HUMAN_RECIPES = `http://${HOSTNAME}:3005/human-recipes`

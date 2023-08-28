@@ -24,18 +24,17 @@ export const addItem = async (req, res) => {
         user_id
     })
 
-    Item.create(newItem, (err, data) => {
-        if (err) {
-            return res.status(500).send({
-                message: "An error has occured"
-            })
-        } else {
-            return res.status(201).end();
-        }
-    })
+    try {
+        const rows = Item.create(newItem);
+        return res.status(201).json(newItem);
+    } catch(err) {
+        return res.status(500).send({
+            message: "Internal Sever Error. Unable to add new item"
+        })
+    }
 }
 
-export const getItemInfo = (req, res) => {
+export const getItemInfo = async (req, res) => {
     if (!req.body) {
         return res.status(400).send({
             message: "Content cannot be empty"
@@ -43,20 +42,24 @@ export const getItemInfo = (req, res) => {
     }
     const { user_id } = getAuthorization(req.headers);
     const { id } = req.query;
-    Item.get(id, (err, data) => {
-        if (err) {
-            return res.status(500).send({
-                message: "An error has occured"
-            })
-        }
+
+    try {
+        const data = await Item.get(id);
         if (data[0].user_id === user_id) {
             return res.status(200).json(data[0]);
+        } else {
+            return res.status(403).send({
+                message: "Unauthorized user"
+            });
         }
-        return res.status(403).end();
-    })
+    } catch(err) {
+        return res.status(500).send({
+            message: "Internal Sever Error. Unable to retrieve item info"
+        });
+    }
 }
 
-export const updateItemInfo = (req, res) => {
+export const updateItemInfo = async (req, res) => {
     if (!req.body) {
         return res.status(400).send({
             message: "Content cannot be empty"
@@ -64,24 +67,24 @@ export const updateItemInfo = (req, res) => {
     }
     const { user_id } = getAuthorization(req.headers);
     const updatedInfo = req.body;
-    Item.get(updatedInfo.id, (err, data) => {
-        if (err) {
-            return res.status(500).send({
-                message: "An error has occured"
+
+    try {
+        const data = await Item.get(updatedInfo.id);
+        if (data[0].user_id !== user_id) {
+            return res.status(403).send({
+                message: "Unauthorized to update items"
             })
         }
-        if (data[0].user_id !== user_id) {
-            return res.status(403).end();
-        }
-    })
-
-    Item.update(updatedInfo, updatedInfo.id, (err, data) => {
-        if (err) return res.status(500).send({message: "An error has occured"});
-        return res.status(200).end();
-    })
+        const rows = await Item.update(updatedInfo, updatedInfo.id);
+        return res.status(200).json(updatedInfo);
+    } catch (err) {
+        return res.status(500).send({
+            message: "Internal Error. Unable to udpate item"
+        })
+    }
 }
 
-export const deleteItem = (req, res) => {
+export const deleteItem = async (req, res) => {
     if (!req.body) {
         return res.status(400).send({
             message: "Content cannot be empty"
@@ -89,19 +92,44 @@ export const deleteItem = (req, res) => {
     }
     const { user_id } = getAuthorization(req.headers);
     const { id } = req.query;
-    Item.get(id, (err, data) => {
-        if (err) {
-            return res.status(500).send({
-                message: "An error has occured"
+
+    try {
+        const data = await Item.get(id);
+
+        if (data[0].user_id !== user_id) {
+            return res.status(403).send({
+                message: "Unauthorized to delete items"
             })
         }
-        if (data[0].user_id !== user_id) {
-            return res.status(403).end();
-        }
-    })
 
-    Item.update({ is_active: false }, id, (err, data) => {
-        if (err) return res.status(500);
-    })
-    return res.status(204).end();
+        const rows = await Item.update({ is_active: false}, id);
+        return res.status(204).end();
+    } catch(err) {
+        return res.status(500).send({
+            message: "Internal Server Error. Unable to delete item"
+        })
+    }
+}
+
+export const getSummary = async (req, res) => {
+    const { user_id } = getAuthorization(req.headers);
+    const result = new Object();
+    try {
+        const totalItems = await Item.getTotalItemsInFridge(user_id);
+        const totalExpiredItems = await Item.getTotalExpiredItemsInFridge(user_id);
+        const totalExpiringInOneDay = await Item.getTotalItemsExpiringInOneDay(user_id);
+        
+        const result = {
+            totalItems,
+            totalExpiredItems,
+            totalExpiringInOneDay
+        }
+
+        return res.json(result);
+    } catch(error) {
+        console.log(error)
+        return res.status(500).send({
+            message: "Unable to fetch summarries of items"
+        })
+    }
 }

@@ -120,7 +120,7 @@ export default function AddFoodItemByFormScreen({ navigation, route }) {
           <TextInput style={formStyles.textInput} placeholder='Please enter your custom unit' /> : null}
         <Text> Expiration Date </Text>
         <DateTimePicker
-          value={new Date()}
+          value={data.expiration || new Date()}
           display="spinner"
           onChange={(e) => handleChange('expiration', e)}
         />

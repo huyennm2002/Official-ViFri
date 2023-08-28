@@ -12,7 +12,7 @@ import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 
 export default function FridgeItemListScreen({navigation}) {
-    const items = useSelector((state: RootState) => state.items);
+    const items = useSelector((state: RootState) => state.items.itemList);
     const [isSubFabOpen, setSubFabOpen] = useState(false);
     const toggleSubFab = () => {
         setSubFabOpen(!isSubFabOpen);
