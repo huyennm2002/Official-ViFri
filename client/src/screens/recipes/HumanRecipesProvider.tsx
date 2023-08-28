@@ -33,7 +33,7 @@ export default function HumanRecipesProvider({navigation, ingredients}: HumanRec
   return (
     <ScrollView contentContainerStyle={{alignItems:'center'}}>
       <CookingButton onPress={() => onCookingButtonPress()}/>
-      {isLoading ? <ActivityIndicator/>
+      {isLoading ? <ActivityIndicator size={"large"} color="#EE8F66"/>
       : recipes.map(recipe => <RecipeItem navigation={navigation} key={recipe.id} recipe={recipe}/>)}
     </ScrollView>
   )

@@ -35,7 +35,7 @@ export default function GptRecipesProvider({ingredients}: GptRecipesProviderProp
     <View style={{flex: 1, alignItems: 'center'}}>
       <CookingButton onPress={async () => await onCookingButtonPress()}/>
       {
-        isLoading ? <ActivityIndicator />
+        isLoading ? <ActivityIndicator size={"large"} color="#EE8F66" />
         :
         AIRecipe && 
           <ScrollView>
