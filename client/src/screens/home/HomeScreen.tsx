@@ -10,6 +10,7 @@ import { err } from 'react-native-svg/lib/typescript/xml';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import {LinearGradient} from 'expo-linear-gradient';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const { token, info } = store.getState().user;
 
@@ -18,7 +19,7 @@ export default function HomeScreen() {
 
   return (
       <SafeAreaProvider style={{backgroundColor: 'white'}}>
-        <Header/>
+        <Header closeModal={() => false}/>
         <View>
           <LinearGradient
           colors={['#DF4630', '#C7166F']}
