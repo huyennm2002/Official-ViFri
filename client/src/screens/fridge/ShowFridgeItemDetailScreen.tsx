@@ -53,7 +53,7 @@ export default function ShowFridgeItemDetailScreen({ route, navigation }) {
 
   return (
     <SafeAreaProvider>
-      <Header/>
+      <Header navigation={navigation}/>
       <DismissKeyboardView style={formStyles.container}>
         <Text
           style={styles.foodTitle}

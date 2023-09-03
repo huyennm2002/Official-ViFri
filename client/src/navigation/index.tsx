@@ -62,7 +62,6 @@ const FridgeActionNavigation = () => {
         <FridgeActionStack.Navigator screenOptions={{headerShown:false}}>
             <FridgeActionStack.Screen name={FRIDGE_ITEM_LIST_SCREEN} component={FridgeItemListScreen}/>
             <FridgeActionStack.Screen name={SHOW_FRIDGE_ITEM_DETAIL_SCREEN} component={ShowFridgeItemDetailScreen}/>
-            <FridgeActionStack.Screen name={ADD_BY_FORM_NAVIGATION} component={AddFoodItemByFormNavigation}/>
         </FridgeActionStack.Navigator>
     )
 }
@@ -99,6 +98,7 @@ const MainNavigation = (props) => {
                     )
                 })}
             />
+            <MainNavigationStack.Screen name={ADD_BY_FORM_NAVIGATION} component={AddFoodItemByFormNavigation} options={{ headerShown: false}}/>
         </MainNavigationStack.Navigator>
     )
 }

@@ -88,7 +88,7 @@ export default function AddFoodItemByFormScreen({ navigation, route }) {
 
   return (
     <SafeAreaProvider>
-      <Header />
+      <Header navigation={navigation}/>
       <DismissKeyboardView style={formStyles.container}>
         {data.image &&
           <Image source={{ uri: 'data:image/jpg;base64,' + route.params?.image.base64 }} style={{ width: 200, height: 200 }} />

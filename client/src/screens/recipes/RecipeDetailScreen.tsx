@@ -48,7 +48,7 @@ export default function RecipeDetailScreen({route, navigation}) {
  
   return (
     <View style={{flex: 1}}>
-      <Header />
+      <Header navigation={navigation}/>
       <ScrollView>
         <Card containerStyle={styles.container}>
           <Card.Title style={styles.title}>{recipe.title}</Card.Title>

@@ -19,7 +19,7 @@ export default function FridgeItemListScreen({navigation}) {
     }
     return (
         <SafeAreaProvider style={{ flex: 1 }}>
-            <Header/>
+            <Header navigation={navigation}/>
             <ScrollView style={styles.container}>
             {
                 items.length > 0 
@@ -35,44 +35,6 @@ export default function FridgeItemListScreen({navigation}) {
                 )
             }
             </ScrollView> 
-            <View style={styles.fabContainer}>
-                {isSubFabOpen && (
-                    <View style={styles.subFabContainer}>
-                        <Pressable>
-                            <FAB
-                                visible={true}
-                                icon={<FontAwesomeIcon
-                                    icon={faBarcode}
-                                    color="white"
-                                />}
-                                color="crimson"
-                                style={{ marginBottom: 8 }}
-                                size="large"
-                            />
-                        </Pressable>
-                        <Pressable>
-                            <FAB
-                                visible={true}
-                                icon={{ name: 'post-add', color: 'white' }}
-                                color="#E63B19"
-                                style={styles.subFab}
-                                size="large"
-                                onPress={() => {navigation.navigate(ADD_BY_FORM_NAVIGATION)}}
-                            />
-                        </Pressable>
-                        
-                    </View>
-                )}
-                <FAB
-                    visible={true}
-                    icon={
-                        { name: 'add', color: 'white' }
-                    }
-                    color="tomato"
-                    onPress={toggleSubFab}
-                    style={styles.fab}
-                />
-            </View>
         </SafeAreaProvider>
     )
 }

@@ -14,12 +14,12 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const { token, info } = store.getState().user;
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   const summary = useSelector((state: RootState) => state.items.summary); 
 
   return (
       <SafeAreaProvider style={{backgroundColor: 'white'}}>
-        <Header closeModal={() => false}/>
+        <Header navigation={navigation}/>
         <View>
           <LinearGradient
           colors={['#DF4630', '#C7166F']}
