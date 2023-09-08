@@ -4,21 +4,18 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Header from '../../components/Header';
 import { store } from '../../redux/store';
-import axios from 'axios';
-import { AUTHENTICATED_AXIOS_HEADER } from '../../constants/APIs';
-import { err } from 'react-native-svg/lib/typescript/xml';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import {LinearGradient} from 'expo-linear-gradient';
 
 const { token, info } = store.getState().user;
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   const summary = useSelector((state: RootState) => state.items.summary); 
 
   return (
       <SafeAreaProvider style={{backgroundColor: 'white'}}>
-        <Header/>
+        <Header navigation={navigation}/>
         <View>
           <LinearGradient
           colors={['#DF4630', '#C7166F']}
@@ -49,27 +46,6 @@ export default function HomeScreen() {
               <Text style={styles.summaryStat}>{String(summary?.totalExpiringInOneDay)}</Text>
             </View>
           </View>
-
-          {/* <View style={styles.summaryContainer}>
-            <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Items in Fridge</Text>
-              <Text style={styles.summaryNumber}>{String(summary?.totalItems)}</Text>
-            </View>
-            <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Expired items</Text>
-              <Text style={styles.summaryNumber}>{String(summary?.totalExpiredItems)}</Text>
-            </View>
-          </View>
-          <View style={styles.summaryContainer}>
-            <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Expring tomrrow</Text>
-              <Text style={styles.summaryNumber}>{String(summary?.totalExpiringInOneDay)}</Text>
-            </View>
-            <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Days with no waste</Text>
-              <Text style={styles.summaryNumber}>{String(summary?.totalExpiringInOneDay)}</Text>
-            </View>
-          </View> */}
         </View>
       </SafeAreaProvider>
   )

@@ -7,7 +7,7 @@ import ProfileOptions from '../../components/user/ProfileOptions';
 export default function ProfileScreen({navigation}) {
   return (
     <SafeAreaProvider>
-      <Header/>
+      <Header navigation={navigation}/>
       <UserProfileHeader/>
       <ProfileOptions navigation={navigation}/>
     </SafeAreaProvider>

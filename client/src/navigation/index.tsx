@@ -17,6 +17,7 @@ import {
     RecipeListScreen,
     CameraScreen,
     RecipeDetailScreen,
+    SearchScreen
 } from '../screens';
 import {
     FRIDGE_ITEM_LIST_SCREEN,
@@ -35,7 +36,8 @@ import {
     RECIPE_LIST_SCREEN,
     RECIPE_DETAILS_SCREEN,
     MAIN_NAVIGATION_STACK,
-    EDIT_PROFILE_SCREEN
+    EDIT_PROFILE_SCREEN, 
+    SEARCH_SCREEN
 } from '../constants/screenNames';
 import { RootState } from "../redux/store";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
@@ -62,7 +64,6 @@ const FridgeActionNavigation = () => {
         <FridgeActionStack.Navigator screenOptions={{headerShown:false}}>
             <FridgeActionStack.Screen name={FRIDGE_ITEM_LIST_SCREEN} component={FridgeItemListScreen}/>
             <FridgeActionStack.Screen name={SHOW_FRIDGE_ITEM_DETAIL_SCREEN} component={ShowFridgeItemDetailScreen}/>
-            <FridgeActionStack.Screen name={ADD_BY_FORM_NAVIGATION} component={AddFoodItemByFormNavigation}/>
         </FridgeActionStack.Navigator>
     )
 }
@@ -99,6 +100,8 @@ const MainNavigation = (props) => {
                     )
                 })}
             />
+            <MainNavigationStack.Screen name={ADD_BY_FORM_NAVIGATION} component={AddFoodItemByFormNavigation} options={{ headerShown: false}}/>
+            <MainNavigationStack.Screen name={SEARCH_SCREEN} component={SearchScreen} options={{ headerShown: false }}/>
         </MainNavigationStack.Navigator>
     )
 }

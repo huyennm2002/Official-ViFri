@@ -37,7 +37,7 @@ export default function RecipeListScreen({ navigation }) {
 
     return (
         <View style={{ flex: 1 }}>
-            <Header />
+            <Header navigation={navigation}/>
             <View style={styles.dropdownContainer}>
             <DropDownPicker
                 searchable={true}

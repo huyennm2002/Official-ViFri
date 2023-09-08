@@ -15,6 +15,8 @@ const RECIPE_LIST_SCREEN = "RecipeListScreen";
 const RECIPE_DETAILS_SCREEN = "RecipeDetailScreen";
 const MAIN_NAVIGATION_STACK = "MainNavigation";
 const EDIT_PROFILE_SCREEN = "EditProfileScreen";
+const SEARCH_SCREEN = "SearchScreen";
+const FOCUSED_SEARCH_SCREEN = "FocusedSearchScreen";
 
 export {
     FRIDGE_ITEM_LIST_SCREEN,
@@ -33,5 +35,7 @@ export {
     RECIPE_LIST_SCREEN,
     RECIPE_DETAILS_SCREEN,
     MAIN_NAVIGATION_STACK,
-    EDIT_PROFILE_SCREEN
+    EDIT_PROFILE_SCREEN, 
+    SEARCH_SCREEN, 
+    FOCUSED_SEARCH_SCREEN
 }
