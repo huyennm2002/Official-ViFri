@@ -7,19 +7,8 @@ import { faBell } from '@fortawesome/free-solid-svg-icons/faBell';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import SearchInput from './SearchInput';
 
-export default function SearchHeader({ navigation, autoFocus }) {
-    const [isFocused, setIsFocused] = useState(autoFocus);
+export default function SearchHeader({ navigation, isFocused, handleFocus, handleBlur }) {
     const containerWidth = isFocused ? 320 : 300;
-
-    const handleFocus = () => {
-        setIsFocused(true);
-    };
-
-    const handleBlur = () => {
-        setIsFocused(false);
-    };
-
-    
 
     return (
         <HeaderRNE
