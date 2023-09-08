@@ -4,16 +4,13 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyin
 import { faBell } from '@fortawesome/free-solid-svg-icons/faBell';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { Header as HeaderRNE } from '@rneui/themed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import ViFriLogo from './ViFriLogo';
-import { useNavigation, ParamListBase } from '@react-navigation/core';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import AddOptionsDropDown from './AddOptionsDropDown';
 import { ADD_BY_FORM_NAVIGATION } from '../constants/screenNames';
-import { PROFILE_SCREEN } from '../constants/screenNames';
+import { SEARCH_SCREEN } from '../constants/screenNames';
 
 export default function Header({navigation}) {
     // const navigation = useNavigation();
@@ -53,7 +50,7 @@ export default function Header({navigation}) {
                         <Pressable onPress={toggleDropdown} style={styles.firstIcon}>
                             <FontAwesomeIcon size={26} color='white' icon={faPlus} />
                         </Pressable>
-                        <Pressable style={styles.firstIcon}>
+                        <Pressable onPress={() => navigation.navigate(SEARCH_SCREEN)} style={styles.firstIcon}>
                             <FontAwesomeIcon size={26} color='white' icon={faMagnifyingGlass} />
                         </Pressable>
                         <Pressable>

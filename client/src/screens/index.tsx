@@ -10,6 +10,7 @@ import AddFoodItemByFormScreen from "./fridge/AddFoodItemByFormScreen";
 import CameraScreen from "./fridge/CameraScreen";
 import HumanRecipesProvider from "./recipes/HumanRecipesProvider";
 import GptRecipesProvider from "./recipes/GptRecipesProvider";
+import SearchScreen from "./search/SearchScreen";
 
 export {
     ProfileScreen,
@@ -23,5 +24,6 @@ export {
     CameraScreen,
     RecipeDetailScreen,
     HumanRecipesProvider,
-    GptRecipesProvider
+    GptRecipesProvider,
+    SearchScreen
 }

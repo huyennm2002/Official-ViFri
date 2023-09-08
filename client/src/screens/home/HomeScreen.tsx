@@ -4,13 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Header from '../../components/Header';
 import { store } from '../../redux/store';
-import axios from 'axios';
-import { AUTHENTICATED_AXIOS_HEADER } from '../../constants/APIs';
-import { err } from 'react-native-svg/lib/typescript/xml';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import {LinearGradient} from 'expo-linear-gradient';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const { token, info } = store.getState().user;
 
@@ -50,27 +46,6 @@ export default function HomeScreen({navigation}) {
               <Text style={styles.summaryStat}>{String(summary?.totalExpiringInOneDay)}</Text>
             </View>
           </View>
-
-          {/* <View style={styles.summaryContainer}>
-            <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Items in Fridge</Text>
-              <Text style={styles.summaryNumber}>{String(summary?.totalItems)}</Text>
-            </View>
-            <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Expired items</Text>
-              <Text style={styles.summaryNumber}>{String(summary?.totalExpiredItems)}</Text>
-            </View>
-          </View>
-          <View style={styles.summaryContainer}>
-            <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Expring tomrrow</Text>
-              <Text style={styles.summaryNumber}>{String(summary?.totalExpiringInOneDay)}</Text>
-            </View>
-            <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Days with no waste</Text>
-              <Text style={styles.summaryNumber}>{String(summary?.totalExpiringInOneDay)}</Text>
-            </View>
-          </View> */}
         </View>
       </SafeAreaProvider>
   )
